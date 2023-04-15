@@ -1,0 +1,204 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="card-box">
+                <h4 class="header-title mb-3">Liste des demandes</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-centered m-0">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Demande</th>
+                                <th>Etat</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let request of requests">
+                                <td>
+                                    {{request.id}}
+                                </td>
+
+                                <td>
+                                    <h5 class="m-0 font-weight-normal">Chef du demartement</h5>
+                                    <!-- <p class="mb-0 text-muted"><small> {{request.motif}}</small></p> -->
+                                </td>
+                                <td>
+                                    <!-- <span *ngIf="request.traite">Traite</span>
+                                    <span  *ngIf="!request.traite">En traitement</span> -->
+                                
+                                </td>
+                                <td>
+                                    <!-- <button  *ngIf="request.traite"class="btn btn-dark btn-sm disabled"> <i class="mdi mdi-minus"></i></button>
+                                    <button (click)="getBesoin(request.id)"  *ngIf="!request.traite"  data-toggle="modal" data-target="#add-resource" 
+                                    class="btn btn-sm btn-custom">
+                                 <i class="mdi mdi-plus"></i></button> -->
+
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+   
+<!-- ajouter ressource -->
+   <!-- Signup modal content -->
+   <div id="add-resource" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h2 class="text-uppercase text-center m-b-30">
+                    <a href="index.html" class="text-success">
+                        <span><img src="assets/images/logo.png" alt="" height="28"></span>
+                    </a>
+                </h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+                            <h4 class="header-title m-t-0 m-b-30">Ajouter Ressource</h4>
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link active ">
+                                       <i class="fi-monitor mr-2"></i> Ordinateur
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                                        <i class="fi-head mr-2"></i>Imprimante
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="home">
+                                    <div class="form-group row">
+                                        <label class="col-4 col-form-label">RAM</label>
+                                        <div class="col-8">
+
+                                            <select [(ngModel)]="computer.ram" class="form-control">
+                                                <option value="0">non renseigné</option>
+                                                <option value="4">4 GB</option>
+                                                <option value="8">8 GB</option>
+                                                <option value="16">16 GB</option>
+                                                <option value="32">32 GB</option>
+        
+                                            </select>
+                                    
+                                        </div>
+                                        
+                                    </div>  
+                                    <div class="form-group row">
+                                        <label class="col-4 col-form-label">Disque dur</label>
+                                        <div class="col-8">
+                                            <select [(ngModel)]="computer.disk" class="form-control">
+                                                <option value="0">non renseigné</option>
+                                                <option value="128">128 GB</option>
+                                                <option value="512">512 GB</option>
+                                                <option value="1024">1024 GB</option>
+                                            </select>
+                                    
+                                        </div>
+                                        
+                                    </div>    
+                                    <div class="form-group row">
+                                        <label class="col-4 col-form-label">Ecran</label>
+                                        <div class="col-8">
+                                            <select [(ngModel)]="computer.screen" class="form-control">
+                                                <option value="0">non renseigné</option>
+                                                <option value="16">16</option>
+                                                <option value="18">18</option>
+                                            </select>
+                                    
+                                        </div>
+                                        
+                                    </div>  
+                                    <div class="form-group row">
+                                        <label class="col-4 col-form-label">CPU</label>
+                                        <div class="col-8">
+                                            <select [(ngModel)]="computer.cpu" class="form-control">
+                                                <option value="">non renseigné</option>
+                                                <option value="i3">i3</option>
+                                                <option value="i5" >i5</option>
+                                                <option value="i7">i7</option>
+                            
+                                            </select>
+                                    
+                                        </div>
+                                        
+                                    </div>  
+                                </div>
+                                <div class="tab-pane" id="profile">
+                                    <div class="form-group row">
+                                        <label class="col-4 col-form-label">Resolution</label>
+                                        <div class="col-8">
+                                            <select [(ngModel)]="printer.resolution" class="form-control">
+                                                <option value="">non renseigné</option>
+                                                <option value="3">3</option>
+                                                <option value="5">5</option>
+                                                <option value="7">7</option>
+                            
+                                            </select>
+                                    
+                                        </div>
+                                        
+                                    </div>  
+                                    <div class="form-group row">
+                                        <label class="col-4 col-form-label">Vitesse</label>
+                                        <div class="col-8">
+                                            <select [(ngModel)]="printer.printSpeed" class="form-control">
+                                                <option value="">non renseigné</option>
+                                                <option value="24">24</option>
+                                                <option value="26">26</option>
+                                                <option value="28">28</option>
+                                            </select>
+                                    
+                                        </div>
+                                        
+                                    </div>               
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+ 
+                </div>
+            </div>
+            <div class="modal-footer">
+                {{printer | json}}
+                <button (click)="save(computer,printer)" type="button" class="btn btn-primary">Envoye la demande</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- end ajouter ressource -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

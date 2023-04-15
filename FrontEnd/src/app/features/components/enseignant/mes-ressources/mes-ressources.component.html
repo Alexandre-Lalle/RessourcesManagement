@@ -1,0 +1,211 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box">
+                <h4 class="header-title mb-3">Liste des ressources</h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                        <i class="fi-monitor mr-2"></i> Ordinateur
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                                        <i class="fi-head mr-2"></i>Imprimante
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="home">
+                                    <div class="container-fluid">
+
+
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-box">
+                                                    <h4 class="header-title mb-3">Liste des Ordinateurs</h4>
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-centered m-0">
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>code</th>
+                                                                    <th>Marque </th>
+                                                                    <th>Date Liveraisent</th>
+                                                                    <th>RAM</th>
+                                                                    <th>Disque Dur</th>
+                                                                    <th>CPU</th>
+                                                                    <th>Signaler Panne</th>
+                                                                   
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let computer of computers">
+                                                                    <td>
+                                                                      {{computer.barCode}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.brand}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.deliveryDate}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.cpu}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.ram}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.disk}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <button (click)="remplir(computer.id)" data-toggle="modal" data-target="#ajouter-panne" 
+                                                                        class="btn btn-sm btn-custom">
+                                                                     <i class="mdi mdi-plus"></i></button> 
+
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="profile">
+                                    <div class="container-fluid">
+
+
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-box">
+                                                    <h4 class="header-title mb-3">Liste des Imprimantes</h4>
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-centered m-0">
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#code</th>
+                                                                    <th>Marque</th>
+                                                                    <th>Date Liveraisent</th>
+                                                                    <th>Resolution</th>
+                                                                    <th>Vitesse</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let printer of printers">
+                                                                    <td>
+                                                                        {{printer.barCode}}
+                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                        {{printer.barCode}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                        {{printer.deliveryDate}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{printer.resolution}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{printer.printSpeed}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button (click)="remplir(printer.id)" data-toggle="modal" data-target="#ajouter-panne" 
+                                                                        class="btn btn-sm btn-custom">
+                                                                        <i class="mdi mdi-plus"></i></button>
+                                                                    </td> 
+                                                                </tr>
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- ajouter panne -->
+       <!-- Signup modal content -->
+   <div id="ajouter-panne" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h2 class="text-uppercase text-center m-b-30">
+                    <a href="index.html" class="text-success">
+                        <span><img src="assets/images/logo.png" alt="" height="28"></span>
+                    </a>
+                </h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+                            <h4 class="header-title m-t-0 m-b-30">Ajouter Panne</h4>
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Date Apparaition:</label>
+                                <div class="col-8">
+                                    <input [(ngModel)]="panne.dateApp"  class="form-control" type="date" name="date">
+            
+                                </div>       
+                            </div> 
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Explication :</label>
+                                <div class="col-8">
+                                    <input [(ngModel)]="panne.explication"  class="form-control" type="text">
+                            
+                                </div>
+                                
+                            </div> 
+                             
+                              
+                        </div>
+                    </div> <!-- end col -->
+ 
+                </div>
+            </div>
+            <div class="modal-footer">
+                {{panne | json}}
+                <button (click)="savePane()"   type="button" class="btn btn-primary">Ajouter panne</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</div>
