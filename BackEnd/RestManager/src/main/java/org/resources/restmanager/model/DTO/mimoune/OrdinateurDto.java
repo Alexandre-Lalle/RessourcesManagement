@@ -4,7 +4,9 @@ import lombok.*;
 import org.resources.restmanager.model.entities.Computer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -52,6 +54,14 @@ public class OrdinateurDto implements Serializable {
                 ordinateurDto.ecran == computer.getScreen() &&
                 ordinateurDto.ram == computer.getRAM()) ;
     }
+
+  public static List<OrdinateurDto> toDtoList(List<Computer> computerList){
+    List<OrdinateurDto> list = new ArrayList<>();
+      for (Computer computer : computerList){
+         list.add(toDto(computer));
+      }
+    return list;
+  }
 //public static OrdinateurDto toDto(Ordinateur ordinateur){
 //    return OrdinateurDto.builder()
 //            .etat(ordinateur.getEtat())

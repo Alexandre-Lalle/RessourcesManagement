@@ -12,4 +12,5 @@ public interface ResourceRepository extends JpaRepository<Resource,Long> {
     public List<Resource> findAllDemandsByDepartment(@Param("department") String department);
     @Query("SELECT r FROM Resource r,Teacher t, Notification n WHERE t.id=:idEns AND t MEMBER r.teachers AND r MEMBER n.resources AND n.id =:id")
     List<Resource> findByEnseignant_IdAndDemande_Id(@Param("idEns") long enseignant_id,@Param("id") long demande_id);
+    public Iterable<Resource> findByState(int state);
 }

@@ -274,4 +274,118 @@ public class ResourcesService {
         });
         return besoinDto;
     }
+
+    ////////////////////////////// Méthodes de gestion des ressources par le Responsable  /////////////////////////////////////////////////////////////////
+
+    public List<RessourceDto> getAllRessources(){
+        List<RessourceDto> ressourceDtoList= new ArrayList<>();
+        resourceRepository.findAll().forEach(
+                printer -> { ressourceDtoList.add(RessourceDto.toDto(printer));}
+        );
+        return ressourceDtoList;
+    }
+
+    public List<OrdinateurDto> getAllComputers(){
+        List<OrdinateurDto> ordinateurDtoList= new ArrayList<>();
+        ordinateurRepo.findAll().forEach(
+                printer -> { ordinateurDtoList.add(OrdinateurDto.toDto(printer));}
+        );
+        return ordinateurDtoList;
+    }
+
+    public List<OrdinateurDto> getComputersByState(int state){
+        List<OrdinateurDto> ordinateurDtoList= new ArrayList<>();
+        ordinateurRepo.findByState(state).forEach(
+                printer -> { ordinateurDtoList.add(OrdinateurDto.toDto(printer)); });
+        return ordinateurDtoList;
+    }
+
+    public OrdinateurDto updateComputerById(Long id, OrdinateurDto ordinateurDetails) {
+        Optional<Computer> currentOrdinateur = ordinateurRepo.findById(id);
+
+        if(currentOrdinateur.isPresent()) {
+            Computer ordinateur = currentOrdinateur.get();
+            ordinateur.setBrand(ordinateurDetails.getMarque());
+            ordinateur.setState(ordinateurDetails.getEtat());
+            ordinateur.setBarCode(ordinateurDetails.getCode());
+            ordinateur.setCPU(ordinateurDetails.getCpu());
+            ordinateur.setScreen(ordinateurDetails.getCode());
+            ordinateur.setRAM(ordinateurDetails.getRam());
+            ordinateur.setAssignmentDate(ordinateurDetails.getDateLiv());// DateAffectation ?
+            ordinateur.setDeliveryDate(ordinateurDetails.getDateLiv());
+            ordinateur.setWarrantyDate(ordinateurDetails.getDateGarantie());
+            //ordinateur.setTeachers(ordinateurDetails.getEnseignantDto());
+            OrdinateurDto updated = OrdinateurDto.toDto(ordinateurRepo.save(ordinateur));
+            return updated;
+        }
+        else {
+            // Throw new ResourceNotFoundException("Ordinateur", "id", id)) ?
+        }
+        return null;
+    }
+
+    public List<ImprimanteDto> getPrintersByState(int state) {
+        List<ImprimanteDto> imprimanteDtoList= new ArrayList<>();
+        imprimanteRepo.findByState(state).forEach(
+                printer -> {
+                    imprimanteDtoList.add(ImprimanteDto.toDto(printer));
+                }
+        );
+        return imprimanteDtoList;
+    }
+
+    public List<ImprimanteDto> getAllPrinters() {
+        List<ImprimanteDto> imprimanteDtoList= new ArrayList<>();
+        imprimanteRepo.findAll().forEach(
+                printer -> {
+                    imprimanteDtoList.add(ImprimanteDto.toDto(printer));
+                }
+        );
+        return imprimanteDtoList;
+    }
+
+    public ImprimanteDto updatePrinterById(Long id, ImprimanteDto PrinterDto) {
+        Optional<Printer> currentPrinter = imprimanteRepo.findById(id);
+
+        if(currentPrinter.isPresent()) {
+            Printer printer = currentPrinter.get();
+            printer.setBrand(PrinterDto.getMarque());
+            printer.setState(PrinterDto.getEtat());
+            printer.setBarCode(PrinterDto.getCode());
+            printer.setPrintSpeed(PrinterDto.getVitesse());
+            printer.setResolution(PrinterDto.getResolution());
+            printer.setAssignmentDate(PrinterDto.getDateLiv());// DateAffectation ?
+            printer.setDeliveryDate(PrinterDto.getDateLiv());
+            printer.setWarrantyDate(PrinterDto.getDateGarantie());
+            //ordinateur.setTeachers(ordinateurDetails.getEnseignantDto());
+            ImprimanteDto updated = ImprimanteDto.toDto(imprimanteRepo.save(printer));
+            return updated;
+        }
+        else {
+            // Throw new ResourceNotFoundException("Ordinateur", "id", id)) ?
+        }
+        return null;
+    }
+
+
+
+    /*public Ressource updateRessource(final Long ressource_id, Ressource ressourceDetails){
+        Optional<Ressource> currentRessource = findRessourceById(ressource_id);
+
+        if(currentRessource.isPresent()) {
+
+            Ressource ressource = currentRessource.get();
+            ressource.setCodeBar(ressourceDetails.getCodeBar());
+            ressource.setEtat(ressourceDetails.getEtat());
+            ressource.setDateAffectation(ressourceDetails.getDateAffectation());
+            ressource.setDateLivraison(ressourceDetails.getDateLivraison());
+            ressource.setDureeGarantie(ressourceDetails.getDureeGarantie());
+            ressource.setEnseignant_id(ressourceDetails.getEnseignant_id());
+            return SaveRessource(ressource);
+        }
+        else return null;
+
+    }*/
+
+
 }
