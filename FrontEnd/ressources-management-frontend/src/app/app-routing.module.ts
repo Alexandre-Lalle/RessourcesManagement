@@ -20,6 +20,9 @@ const routes: Routes = [
   {path: 'provider',
   loadChildren: () => import('src/app/features/components/fournisseur/fournisseur.module').then(m => m.FournisseurModule)
   },
+  {path: 'manager',
+  loadChildren: () => import('src/app/features/components/responsable/responsable.module').then(m => m.ResponsableModule)
+  },
   {path:"login",component:LoginComponent},
   {path:"register",component:RegisterComponent},
   {path:"**",redirectTo:"",pathMatch:'full'}

@@ -12,7 +12,7 @@ import { Printer } from '../models/printer.model';
 export class EnseignantService {
   constructor(private http:HttpClient) { }
 
-  apiUrl="http://localhost:8080/enseignant"; 
+  apiUrl="http://localhost:8085/enseignant"; 
    
 
 

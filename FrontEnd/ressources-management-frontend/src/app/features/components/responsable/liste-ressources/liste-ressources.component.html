@@ -43,12 +43,12 @@
                                                                     <th>RAM</th>
                                                                     <th>Disque Dur</th>
                                                                     <th>CPU</th>
-                                                                    <th>Signaler Panne</th>
+                                                                    <th></th>
                                                                    
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let computer of computers">
+                                                                <tr *ngFor="let computer of computers$ | async">
                                                                     <td>
                                                                       {{computer.barCode}}
                                                                     </td>
@@ -72,11 +72,13 @@
                                         
                                                                     </td>
                                                                     <td>
-                                                                        <button (click)="remplir(computer.id)" data-toggle="modal" data-target="#ajouter-panne" 
+                                                                        
+                                                                        <button (click)="onConsultResource(computer.id)" 
                                                                         class="btn btn-sm btn-custom">
-                                                                     <i class="mdi mdi-plus"></i></button> 
-
+                                                                        <i class="fa fa-eye"></i>  </button>
+                                                                        
                                                                     </td>
+
                                                                 </tr>
 
 
@@ -104,16 +106,16 @@
 
                                                             <thead>
                                                                 <tr>
-                                                                    <th>#code</th>
+                                                                    <th>Code bar</th>
                                                                     <th>Marque</th>
-                                                                    <th>Date Liveraisent</th>
+                                                                    <th>Date Livraison</th>
                                                                     <th>Resolution</th>
                                                                     <th>Vitesse</th>
-                                                                    <th>Action</th>
+                                                                    <th>    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let printer of printers">
+                                                                <tr *ngFor="let printer of printers$ | async">
                                                                     <td>
                                                                         {{printer.barCode}}
                                                                         <span *ngIf="printer.deliveryDate == null">null</span>
@@ -133,9 +135,9 @@
                                                                         {{printer.printSpeed}}
                                                                     </td>
                                                                     <td>
-                                                                        <button (click)="remplir(printer.id)" data-toggle="modal" data-target="#ajouter-panne" 
+                                                                        <button (click)="onConsultResource(printer.id)" 
                                                                         class="btn btn-sm btn-custom">
-                                                                        <i class="mdi mdi-plus"></i></button>
+                                                                        <i class="fa fa-eye"></i>  </button>
                                                                     </td> 
                                                                 </tr>
 
@@ -161,51 +163,7 @@
 
         </div>
     </div>
-    <!-- ajouter panne -->
-       <!-- Signup modal content -->
-   <div id="ajouter-panne" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <h2 class="text-uppercase text-center m-b-30">
-                    <a href="index.html" class="text-success">
-                        <span><img src="assets/images/logo.png" alt="" height="28"></span>
-                    </a>
-                </h2>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-box">
-                            <h4 class="header-title m-t-0 m-b-30">Ajouter Panne</h4>
-                            <div class="form-group row">
-                                <label class="col-4 col-form-label">Date Apparaition:</label>
-                                <div class="col-8">
-                                    <input [(ngModel)]="panne.dateApp"  class="form-control" type="date" name="date">
-            
-                                </div>       
-                            </div> 
-                            <div class="form-group row">
-                                <label class="col-4 col-form-label">Explication :</label>
-                                <div class="col-8">
-                                    <input [(ngModel)]="panne.explication"  class="form-control" type="text">
-                            
-                                </div>
-                                
-                            </div> 
-                             
-                              
-                        </div>
-                    </div> <!-- end col -->
  
-                </div>
-            </div>
-            <div class="modal-footer">
-                {{panne | json}}
-                <button (click)="savePane()"   type="button" class="btn btn-primary">Ajouter panne</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-              </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 
 </div>

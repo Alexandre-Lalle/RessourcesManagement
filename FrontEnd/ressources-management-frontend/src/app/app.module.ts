@@ -14,11 +14,14 @@ import { UpdateReportComponent } from './features/components/technician/update-r
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserService } from './auth/services/user.service';
 import { AuthInterceptor } from './auth/guards/auth.interceptor';
 import { EnseignantModule } from './features/components/enseignant/enseignant.module';
 import { FournisseurModule } from './features/components/fournisseur/fournisseur.module';
+import { ResponsableModule } from './features/components/responsable/responsable.module';
+import { ResponsableRoutingModule } from './features/components/responsable/responsable-routing.module';
+import { ListeRessourcesComponent } from './features/components/responsable/liste-ressources/liste-ressources.component';
 
 
 
@@ -27,7 +30,7 @@ import { FournisseurModule } from './features/components/fournisseur/fournisseur
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    RecoverPasswordComponent,
+    RecoverPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -36,8 +39,10 @@ import { FournisseurModule } from './features/components/fournisseur/fournisseur
     DirectorModule,
     EnseignantModule,
     FournisseurModule,
+    ResponsableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     AuthGuard,
