@@ -15,6 +15,9 @@ import { TeacherLayoutComponent } from './components/teacher/teacher-layout/teac
 import { FournisseurLayoutComponent } from './components/fournisseur/fournisseur-layout/fournisseur-layout.component';
 import { FournisseurHeaderComponent } from './components/fournisseur/fournisseur-header/fournisseur-header.component';
 import { FournisseurSideBarComponent } from './components/fournisseur/fournisseur-side-bar/fournisseur-side-bar.component';
+import { ResponsableHeaderComponent } from './components/responsable/responsable-header/responsable-header.component';
+import { ResponsableLayoutComponent } from './components/responsable/responsable-layout/responsable-layout.component';
+import { ResponsableSideBarComponent } from './components/responsable/responsable-side-bar/responsable-side-bar.component';
 
 
 
@@ -33,7 +36,10 @@ import { FournisseurSideBarComponent } from './components/fournisseur/fournisseu
     TeacherLayoutComponent,
     FournisseurLayoutComponent,
     FournisseurHeaderComponent,
-    FournisseurSideBarComponent
+    FournisseurSideBarComponent,
+    ResponsableHeaderComponent,
+    ResponsableLayoutComponent,
+    ResponsableSideBarComponent
   ],
   imports: [
     CommonModule,

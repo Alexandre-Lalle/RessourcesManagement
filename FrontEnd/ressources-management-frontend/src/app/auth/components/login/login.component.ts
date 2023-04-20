@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
       switch(role){
         case "DIRECTOR":this.router.navigate(["/director"]);break;
         case "TECHNICIAN":this.router.navigate(['/technician']);break;
+        //case "MANAGER":this.router.navigate(['/manager']);break;
       }
     }, (err) => {
       console.log("Error when connectiong ! : ", err)

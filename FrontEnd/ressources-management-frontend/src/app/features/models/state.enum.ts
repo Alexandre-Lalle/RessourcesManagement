@@ -1,5 +1,6 @@
 export enum state {
     available = 1,
     processing = 0,
-    not_available = -1
+    not_available = -1,
+    'broken-down' = 2
 }

@@ -8,7 +8,8 @@ import { ResourceDetailComponent } from './resource-detail/resource-detail.compo
 
 
 @NgModule({
-  declarations: [ListeRessourcesComponent, ResourceDetailComponent],
+  declarations: [ListeRessourcesComponent, 
+    ResourceDetailComponent],
   imports: [
     CommonModule,
     ResponsableRoutingModule,
