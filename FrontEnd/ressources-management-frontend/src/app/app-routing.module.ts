@@ -21,7 +21,7 @@ const routes: Routes = [
   loadChildren: () => import('src/app/features/components/fournisseur/fournisseur.module').then(m => m.FournisseurModule)
   },
   {path: 'manager',
-  loadChildren: () => import('src/app/features/components/responsable/responsable.module').then(m => m.ResponsableModule), canActivate:[AuthGuard], data:{roles:['MANAGER']}
+  loadChildren: () => import('src/app/features/components/responsable/responsable.module').then(m => m.ResponsableModule)/*, canActivate:[AuthGuard], data:{roles:['MANAGER']}*/
   },
   {path:"login",component:LoginComponent},
   {path:"register",component:RegisterComponent},
