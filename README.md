@@ -7,8 +7,8 @@ Backend Spring boot
 
 ### Membres du groupe ###
 
-Baiou Rachid 
-Abdelghaffour Mouhsine
-Yendoubouam Alexandre Lalle
-Zouine Ayoub
+Baiou Rachid /
+Abdelghaffour Mouhsine /
+Yendoubouam Alexandre Lalle /
+Zouine Ayoub /
 Mimoune Ayoub

@@ -1,0 +1,21 @@
+/* @import url("src/assets/css/bootstrap.min.css");
+@import url("src/assets/css/icons.css");
+@import url("src/assets/css/style.css");
+@import url("src/assets/css/style_cl.css"); */
+
+@import url("/src/assets/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css");
+@import url("/src/assets/plugins/bootstrap-select/css/bootstrap-select.css");
+@import url("/src/assets/plugins/select2/css/select2.css");
+@import url("/src/assets/plugins/switchery/switchery.min.css");
+
+/* .btn-success{
+    background-color: #02c0ce;
+}
+
+.btn-success:hover{
+    background-color: #0ba5b0;
+}
+
+.text-success{
+    color: #1ba0aa !important;
+} */
