@@ -1,3 +1,6 @@
+
+import { Provider } from 'src/app/features/models/provider.model';
+
 export interface Resource{
     id:number;
     barCode:number;
@@ -10,6 +13,10 @@ export interface Resource{
     state:number;
     qty?:0,
     resourceType:string;
+   // provider: Provider;
+   // providerId : number = provider.id
+    // teacherId
+
 
     // constructor(name:string, dateOfRequest:Date, state:number){
     //     this.name = name;

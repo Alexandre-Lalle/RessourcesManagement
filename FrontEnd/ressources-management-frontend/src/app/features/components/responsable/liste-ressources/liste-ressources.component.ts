@@ -22,8 +22,8 @@ export class ListeRessourcesComponent implements OnInit {
     this.printers$ = this.responsableService.findPrinters();
   }
 
-  onConsultResource(computerId : number): void {
-    this.router.navigateByUrl(`resources-list/${computerId}`);
+  onConsultResource(id : number, type : 'computer' | 'printer'): void {
+    this.router.navigateByUrl(`resource-detail/${type}/${id}`);
   }
   
 /*

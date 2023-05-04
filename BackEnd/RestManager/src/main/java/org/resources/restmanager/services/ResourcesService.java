@@ -277,18 +277,11 @@ public class ResourcesService {
 
     ////////////////////////////// Méthodes de gestion des ressources par le Responsable  /////////////////////////////////////////////////////////////////
 
-    public List<RessourceDto> getAllRessources(){
-        List<RessourceDto> ressourceDtoList= new ArrayList<>();
-        resourceRepository.findAll().forEach(
-                printer -> { ressourceDtoList.add(RessourceDto.toDto(printer));}
-        );
-        return ressourceDtoList;
-    }
 
     public List<OrdinateurDto> getAllComputers(){
         List<OrdinateurDto> ordinateurDtoList= new ArrayList<>();
         ordinateurRepo.findAll().forEach(
-                printer -> { ordinateurDtoList.add(OrdinateurDto.toDto(printer));}
+                computer -> { ordinateurDtoList.add(OrdinateurDto.toDto(computer));}
         );
         return ordinateurDtoList;
     }
@@ -296,8 +289,19 @@ public class ResourcesService {
     public List<OrdinateurDto> getComputersByState(int state){
         List<OrdinateurDto> ordinateurDtoList= new ArrayList<>();
         ordinateurRepo.findByState(state).forEach(
-                printer -> { ordinateurDtoList.add(OrdinateurDto.toDto(printer)); });
+                computer -> { ordinateurDtoList.add(OrdinateurDto.toDto(computer)); });
         return ordinateurDtoList;
+    }
+
+    public OrdinateurDto getComputerById(final Long id) {
+        Optional<Computer> ordinateur = ordinateurRepo.findById(id);
+        OrdinateurDto ordinateurDto = OrdinateurDto.toDto(ordinateur.get());
+
+        return ordinateurDto;
+    }
+
+    public void deleteComputerById(final Long id) {
+        ordinateurRepo.deleteById(id);
     }
 
     public OrdinateurDto updateComputerById(Long id, OrdinateurDto ordinateurDetails) {
@@ -314,7 +318,12 @@ public class ResourcesService {
             ordinateur.setAssignmentDate(ordinateurDetails.getDateLiv());// DateAffectation ?
             ordinateur.setDeliveryDate(ordinateurDetails.getDateLiv());
             ordinateur.setWarrantyDate(ordinateurDetails.getDateGarantie());
-            //ordinateur.setTeachers(ordinateurDetails.getEnseignantDto());
+
+            Long Id = ordinateurDetails.getEnseignantDto().getId();
+            List<Teacher> teachers = new ArrayList<>();
+            teachers.add(new Teacher(Id));
+            ordinateur.setTeachers(teachers);
+
             OrdinateurDto updated = OrdinateurDto.toDto(ordinateurRepo.save(ordinateur));
             return updated;
         }
@@ -333,6 +342,17 @@ public class ResourcesService {
         );
         return imprimanteDtoList;
     }
+
+    public ImprimanteDto getPrinterById(final Long id) {
+        Optional<Printer> imprimante = imprimanteRepo.findById(id);
+        ImprimanteDto imprimanteDto = ImprimanteDto.toDto(imprimante.get());
+
+        return imprimanteDto;
+    }
+
+    public void deletePrinterById(final Long id) {
+        imprimanteRepo.deleteById(id);
+        }
 
     public List<ImprimanteDto> getAllPrinters() {
         List<ImprimanteDto> imprimanteDtoList= new ArrayList<>();
@@ -358,6 +378,11 @@ public class ResourcesService {
             printer.setDeliveryDate(PrinterDto.getDateLiv());
             printer.setWarrantyDate(PrinterDto.getDateGarantie());
             //ordinateur.setTeachers(ordinateurDetails.getEnseignantDto());
+            Long Id = PrinterDto.getEnseignantDto().getId();
+            List<Teacher> teachers = new ArrayList<>();
+            teachers.add(new Teacher(Id));
+            printer.setTeachers(teachers);
+
             ImprimanteDto updated = ImprimanteDto.toDto(imprimanteRepo.save(printer));
             return updated;
         }
@@ -367,7 +392,13 @@ public class ResourcesService {
         return null;
     }
 
-
+    public List<RessourceDto> getAllRessources(){
+        List<RessourceDto> ressourceDtoList= new ArrayList<>();
+        resourceRepository.findAll().forEach(
+                ressource -> { ressourceDtoList.add(RessourceDto.toDto(ressource));}
+        );
+        return ressourceDtoList;
+    }
 
     /*public Ressource updateRessource(final Long ressource_id, Ressource ressourceDetails){
         Optional<Ressource> currentRessource = findRessourceById(ressource_id);

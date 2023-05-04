@@ -7,7 +7,7 @@ import { Soumission } from '../models/soumission';
   providedIn: 'root'
 })
 export class FournisseurService {
-  apiUrl="http://localhost:8080/fournisseur"; 
+  apiUrl="http://localhost:8085/fournisseur"; 
 
   constructor(private http:HttpClient) { }
   getOffres(){
