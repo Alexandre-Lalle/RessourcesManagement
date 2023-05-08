@@ -45,4 +45,6 @@ public class Computer extends Resource {
         computer.setState(ordinateurDTO.getEtat());
         return computer;
     }
+
+
 }

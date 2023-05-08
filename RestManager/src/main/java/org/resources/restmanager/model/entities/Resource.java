@@ -42,6 +42,7 @@ public abstract class Resource {
     )
     @JsonIgnore
     private List<Teacher> teachers;
+
     @JsonIgnore
     @OneToMany(mappedBy = "resource", fetch = FetchType.LAZY)
     private List<Failure> failures;
@@ -60,4 +61,12 @@ public abstract class Resource {
     public String getResourceType(){
         return "Resource";
     };
+
+    public String getProviderName() {
+        if (provider == null) {
+            return "No provider";
+        } else {
+            return provider.getName();
+        }
+    }
 }

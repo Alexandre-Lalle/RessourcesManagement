@@ -71,6 +71,14 @@ public class DirectorController {
         return teacherService.getTeacherMails(department);
     }
 
+    @GetMapping(path = "/Recources-Managment/departments",produces = {"application/json"})
+    public List<String> getAllDepartments(){
+        return teacherService.getAllDepartements();
+    }
+
+
+
+
     ///////////////////////////// Failures and Reports /////////////////////////////
 
     @GetMapping(path = "/Recources-Managment/notifications/director/{directorId}",produces = {"application/json"})

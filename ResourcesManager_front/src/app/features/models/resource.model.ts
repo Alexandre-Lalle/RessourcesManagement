@@ -1,7 +1,8 @@
 export interface Resource{
     id:number;
     barCode:number;
-    name:string;
+    name?:string;
+    providerName?:string;
     brand:string;
     dateOfRequest:Date;
     deliveryDate:Date;
@@ -10,6 +11,7 @@ export interface Resource{
     state:number;
     qty?:0,
     resourceType:string;
+   
 
     // constructor(name:string, dateOfRequest:Date, state:number){
     //     this.name = name;

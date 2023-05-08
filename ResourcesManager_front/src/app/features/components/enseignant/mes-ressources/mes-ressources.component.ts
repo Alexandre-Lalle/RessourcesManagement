@@ -38,7 +38,7 @@ export class MesRessourcesComponent implements OnInit{
     this.panne.ressourceDto= {
       id:id,
       barCode: NaN,
-      name: "",
+      name:"",
       assignmentDate: new Date(),
       deliveryDate: new Date(),
       warrantyDate: new Date(),

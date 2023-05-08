@@ -28,7 +28,7 @@ import { ResponsableModule } from './features/components/responsable/responsable
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    RecoverPasswordComponent,
+    RecoverPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,58 @@
+package org.resources.restmanager.services;
+
+import org.resources.restmanager.model.DTO.lalle.AffectationDto;
+import org.resources.restmanager.model.entities.Affectation;
+import org.resources.restmanager.repositories.AffectationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AffectationService {
+
+    @Autowired
+    private AffectationRepository affectationRepository;
+
+    // Fonction pour créer une nouvelle affectation
+    public AffectationDto createAffectation(AffectationDto affectationDto) {
+        Affectation affectation = AffectationDto.toEntity(affectationDto);
+        // Mettre l'état à disponible
+        affectation.getResource().setState(1);
+        return affectationDto.toDto(affectationRepository.save(affectation));
+    }
+
+    // Fonction pour récupérer une affectation par son ID
+    public AffectationDto getAffectationById(Long id) {
+        return AffectationDto.toDto(affectationRepository.findById(id).orElse(null));
+    }
+
+    // Fonction pour supprimer une affectation existante par son ID
+    public void deleteAffectation(Long id) {
+        affectationRepository.deleteById(id);
+    }
+
+    // Fonction pour mettre à jour une affectation existante
+    public AffectationDto updateAffectation(AffectationDto affectationDto) {
+        Affectation existingAffectation = affectationRepository.findById(affectationDto.getId()).orElse(null);
+        if (existingAffectation != null) {
+            Affectation map = AffectationDto.toEntity(affectationDto);
+            existingAffectation.setTeacherList(map.getTeacherList());
+            existingAffectation.setResource(map.getResource());
+            existingAffectation.setDateAffectation(map.getDateAffectation());
+            // Mettre l'état à disponible
+            existingAffectation.getResource().setState(1);
+
+            return affectationDto.toDto(affectationRepository.save(existingAffectation));
+        }
+        return null;
+    }
+
+    public AffectationDto getAffectationByResourceId(Long resourceId) {
+        Affectation affectation = affectationRepository.findByResourceId(resourceId);
+        if(affectation == null) {
+            //throw new NotFoundException("Affectation not found with resource id : " + resourceId);
+            return null;
+        }
+        return AffectationDto.toDto(affectation);
+    }
+
+}

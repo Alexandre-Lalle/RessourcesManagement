@@ -4,6 +4,7 @@ import { Computer } from '../models/computer.model';
 import { Printer } from '../models/printer.model';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { Affectation } from '../models/affectation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,18 @@ export class ResponsableService {
       map((printers: Printer[]) => printers.find(printer => printer.barCode === barCode)),
       filter((printer: Printer | undefined): printer is Printer => !!printer),
     );
+  }
+
+  addAffectation(affectation:Affectation) : Observable<Affectation>{
+    return this.http.post<Affectation>(`${this.apiUrl}/add-affectation`, affectation); 
+  }
+
+  updateAffectation(affectation:Affectation) : Observable<Affectation>{
+    return this.http.put<Affectation>(`${this.apiUrl}/update-affectation`, affectation); 
+  }
+
+  getAffectationByResourceId(resourceId:number) : Observable<Affectation>{
+    return this.http.get<Affectation>(`${this.apiUrl}/affectation/${resourceId}`); 
   }
 
 

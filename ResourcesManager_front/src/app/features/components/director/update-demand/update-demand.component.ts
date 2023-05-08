@@ -79,12 +79,12 @@ export class UpdateDemandComponent implements OnInit {
 
     this.updateFormGroup = this.fb.group({
       printer: this.fb.group({
-        'name': [pr.name, [Validators.minLength(2), Validators.maxLength(20)]],
+        'name': [pr.providerName, [Validators.minLength(2), Validators.maxLength(20)]],
         'printSpeed': [pr.printSpeed, [Validators.required]],
         'resolution': [pr.resolution, [Validators.required]]
       }),
       computer: this.fb.group({
-        'name': [cp?.name, [Validators.minLength(2), Validators.maxLength(20)]],
+        'name': [cp?.providerName, [Validators.minLength(2), Validators.maxLength(20)]],
         'disk': [cp?.disk, [Validators.required]],
         'ram': [cp?.ram, [Validators.required]],
         'cpu': [cp?.cpu, [Validators.required]],

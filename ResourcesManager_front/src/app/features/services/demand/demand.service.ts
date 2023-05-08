@@ -60,4 +60,10 @@ export class DemandsService {
   getTeacherMails(department: string): Observable<any> {
     return this.http.get("http://localhost:8085/Recources-Managment/teachers/mails/" + department);
   }
+
+  getDepartments(): Observable<any> {
+    return this.http.get("http://localhost:8085/Recources-Managment/departments");
+  }
+
+  
 }

@@ -15,4 +15,7 @@ public interface TeacherRepository extends JpaRepository<Teacher,Long> {
     @Query(value = "select d from DepartmentDirector d where d.department=:x ")
     Teacher findByDepartmentAndChef(@Param("x") String department );
     List<Teacher> findByDepartment(String department);
+
+    @Query("SELECT DISTINCT t.department FROM Teacher t")
+    public List<String> findAllDepartments();
 }

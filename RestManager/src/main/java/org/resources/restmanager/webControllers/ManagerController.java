@@ -1,14 +1,14 @@
 package org.resources.restmanager.webControllers;
 
-import org.resources.restmanager.model.DTO.mimoune.ImprimanteDto;
-import org.resources.restmanager.model.DTO.mimoune.OrdinateurDto;
+import org.resources.restmanager.model.DTO.lalle.AffectationDto;
+import org.resources.restmanager.model.DTO.lalle.imprimanteDto;
+import org.resources.restmanager.model.DTO.lalle.ordinateurDto;
 import org.resources.restmanager.model.DTO.mouhsine.OffreDTO;
 import org.resources.restmanager.model.entities.Resource;
+import org.resources.restmanager.services.AffectationService;
 import org.resources.restmanager.services.OffreService;
 import org.resources.restmanager.services.ResourcesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,65 +25,84 @@ public class ManagerController {
     private ResourcesService ressourceService;
     @Autowired
     private OffreService offreService;
+    @Autowired
+    private AffectationService affectationService;
+
 
     @GetMapping("/liste-ordinateurs/{state}")
-    public ResponseEntity<List<OrdinateurDto>> getComputersByState(@PathVariable int state){
+    public List<ordinateurDto> getComputersByState(@PathVariable int state){
 
-        return new ResponseEntity<>(resourcesService.getComputersByState(state) , HttpStatus.OK) ;
+        return resourcesService.getComputersByState(state);
     }
 
     @GetMapping("/liste-ordinateurs")
-    public ResponseEntity<List<OrdinateurDto>> getAllComputers(){
+    public List<ordinateurDto> getAllComputers(){
 
-        return new ResponseEntity<>(resourcesService.getAllComputers() , HttpStatus.OK) ;
+        return resourcesService.getAllComputers();
     }
 
     @GetMapping("/ordinateur/{id}")
-    public ResponseEntity<OrdinateurDto> getComputerById(@PathVariable("id") final long id){
+    public ordinateurDto getComputerById(@PathVariable("id") final long id){
 
-        return new ResponseEntity<>(resourcesService.getComputerById(id) , HttpStatus.OK) ;
+        return resourcesService.getComputerById(id);
     }
 
     @PutMapping("/ordinateur/{id}")
-    public ResponseEntity<OrdinateurDto> updateComputer(@PathVariable("id") final long id, @RequestBody OrdinateurDto ordinateurDto){
+    public ordinateurDto updateComputer(@PathVariable("id") final long id, @RequestBody ordinateurDto ordinateurDto){
 
-        return new ResponseEntity<>(resourcesService.updateComputerById(id, ordinateurDto) , HttpStatus.CREATED) ;
+        return resourcesService.updateComputerById(id, ordinateurDto);
     }
 
     @DeleteMapping("/ordinateur/{id}")
-    public ResponseEntity<Object> deleteComputer(@PathVariable("id") final long id){
+    public void deleteComputer(@PathVariable("id") final long id){
         resourcesService.deleteComputerById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT) ;
     }
 
     @GetMapping("/liste-imprimantes/{state}")
-    public ResponseEntity<List<ImprimanteDto>> getPrintersByState(@PathVariable int state){
-        return new ResponseEntity<>(resourcesService.getPrintersByState(state) , HttpStatus.OK) ;
+    public List<imprimanteDto> getPrintersByState(@PathVariable int state){
+        return resourcesService.getPrintersByState(state);
     }
 
     @GetMapping("/liste-imprimantes")
-    public List<ImprimanteDto> getAllPrinters(){
-        System.out.println("printer ================================================");
+    public List<imprimanteDto> getAllPrinters(){
         return resourcesService.getAllPrinters();
     }
 
     @PutMapping("/imprimante/{id}")
-    public ResponseEntity<ImprimanteDto> updatePrinter(@PathVariable("id") final long id, @RequestBody ImprimanteDto imprimanteDto){
+    public imprimanteDto updatePrinter(@PathVariable("id") final long id, @RequestBody imprimanteDto imprimanteDto){
 
-        return new ResponseEntity<>(resourcesService.updatePrinterById(id, imprimanteDto) , HttpStatus.CREATED) ;
+        return resourcesService.updatePrinterById(id, imprimanteDto);
     }
 
     @GetMapping("/imprimante/{id}")
-    public ResponseEntity<ImprimanteDto> getPrinterById(@PathVariable("id") final long id){
+    public imprimanteDto getPrinterById(@PathVariable("id") final long id){
 
-        return new ResponseEntity<>(resourcesService.getPrinterById(id) , HttpStatus.OK) ;
+        return resourcesService.getPrinterById(id);
     }
 
     @DeleteMapping("/imprimante/{id}")
-    public ResponseEntity<Object> deletePrinter(@PathVariable("id") final long id){
+    public void deletePrinter(@PathVariable("id") final long id){
         resourcesService.deletePrinterById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT) ;
     }
+
+    @PostMapping("/add-affectation")
+    public AffectationDto addAffectation(@RequestBody AffectationDto affectationDto){
+
+        return affectationService.createAffectation(affectationDto);
+    }
+    @GetMapping("/affectation/{id}")
+    public AffectationDto getAffectationByResourceId(@PathVariable("id") final long id){
+
+        return affectationService.getAffectationByResourceId(id);
+    }
+
+    @PutMapping("/update-affectation")
+    public AffectationDto updateAffectation(@RequestBody AffectationDto affectationDto){
+
+        return affectationService.updateAffectation(affectationDto);
+    }
+
+
 
 
     //////////////////////////////////////////// abdel //////////////////////////////////////////////////

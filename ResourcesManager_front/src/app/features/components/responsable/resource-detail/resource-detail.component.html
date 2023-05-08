@@ -17,8 +17,8 @@
                         <td><input [(ngModel)]="computer.barCode"></td>
                       </tr>
                       <tr>
-                        <td>Nom </td>
-                        <td><input [(ngModel)]="computer.name"></td>
+                        <td>Nom du fournisseur </td>
+                        <td> {{computer.providerName}} </td>
                       </tr>
                       <tr>
                         <td>Marque </td>
@@ -36,14 +36,11 @@
                         <td>Durée de garantie </td>
                         <td><input [(ngModel)]="computer.warrantyDate"></td>
                       </tr>
-                      <tr>
-                        <td>Date d'affectation </td>
-                        <td><input [(ngModel)]="computer.assignmentDate"></td>
-                      </tr>
+                      
                       <tr>
                         <td>Etat de la ressource</td>
                         <!-- <td><input [(ngModel)]="computer.state"></td> -->
-                        <td>{{ getStateLabel(computer) }}</td>
+                        <td><span class="badge label-table badge-custom"></span>{{ getStateLabel(computer) }}</td>
                       </tr>
 
                       <tr *ngIf="isComputer()">
@@ -77,8 +74,8 @@
                               <td><input [(ngModel)]="printer.barCode"></td>
                             </tr>
                             <tr>
-                              <td>Nom </td>
-                              <td><input [(ngModel)]="printer.name"></td>
+                              <td>Nom du fournisseur </td>
+                              <td>{{printer.providerName}}</td>
                             </tr>
                             <tr>
                               <td>Marque </td>
@@ -97,13 +94,9 @@
                               <td><input [(ngModel)]="printer.warrantyDate"></td>
                             </tr>
                             <tr>
-                              <td>Date d'affectation </td>
-                              <td><input [(ngModel)]="printer.assignmentDate"></td>
-                            </tr>
-                            <tr>
                               <td>Etat de la ressource</td>
                               <!-- <td><input [(ngModel)]="printer.state"></td> -->
-                              <td>{{ getStateLabel(computer) }}</td>
+                              <td><span class="badge label-table badge-custom"></span>{{ getStateLabel(computer) }}</td>
                             </tr>
       
                             <tr *ngIf="isPrinter()">
@@ -118,9 +111,9 @@
                           </table>
 
                       <div>
-                        <button (click)="cancelChanges()">Annuler</button>
-                        <button (click)="deleteResource()">Supprimer</button>
-                        <button (click)="saveChanges()">Enregistrer</button>
+                        <button class="btn btn-primary"  (click)="cancelChanges()">Annuler</button>
+                        
+                        <button class="btn btn-primary"  (click)="saveChanges()">Enregistrer</button>
                       </div>
 
                     </ng-container>

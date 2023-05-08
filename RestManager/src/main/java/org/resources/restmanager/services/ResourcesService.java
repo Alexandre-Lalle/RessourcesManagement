@@ -1,5 +1,7 @@
 package org.resources.restmanager.services;
 
+import org.resources.restmanager.model.DTO.lalle.imprimanteDto;
+import org.resources.restmanager.model.DTO.lalle.ordinateurDto;
 import org.resources.restmanager.model.DTO.zouine.ComputerDemandDTO;
 import org.resources.restmanager.model.DTO.zouine.DemandDTO;
 import org.resources.restmanager.model.DTO.zouine.FailureDTO;
@@ -279,53 +281,47 @@ public class ResourcesService {
     ////////////////////////////// Méthodes de gestion des ressources par le Responsable  /////////////////////////////////////////////////////////////////
 
 
-    public List<OrdinateurDto> getAllComputers(){
-        List<OrdinateurDto> ordinateurDtoList= new ArrayList<>();
+    public List<ordinateurDto> getAllComputers(){
+        List<ordinateurDto> ordinateurDtoList= new ArrayList<>();
         ordinateurRepo.findAll().forEach(
-                computer -> { ordinateurDtoList.add(OrdinateurDto.toDto(computer));}
+                computer -> { ordinateurDtoList.add(ordinateurDto.toDto(computer));}
         );
         return ordinateurDtoList;
     }
 
-    public List<OrdinateurDto> getComputersByState(int state){
-        List<OrdinateurDto> ordinateurDtoList= new ArrayList<>();
+    public List<ordinateurDto> getComputersByState(int state){
+        List<ordinateurDto> ordinateurDtoList= new ArrayList<>();
         ordinateurRepo.findByState(state).forEach(
-                computer -> { ordinateurDtoList.add(OrdinateurDto.toDto(computer)); });
+                computer -> { ordinateurDtoList.add(ordinateurDto.toDto(computer)); });
         return ordinateurDtoList;
     }
 
-    public OrdinateurDto getComputerById(final Long id) {
+    public ordinateurDto getComputerById(final Long id) {
         Optional<Computer> ordinateur = ordinateurRepo.findById(id);
-        OrdinateurDto ordinateurDto = OrdinateurDto.toDto(ordinateur.get());
+        ordinateurDto ordinateurdto = ordinateurDto.toDto(ordinateur.get());
 
-        return ordinateurDto;
+        return ordinateurdto;
     }
 
     public void deleteComputerById(final Long id) {
         ordinateurRepo.deleteById(id);
     }
 
-    public OrdinateurDto updateComputerById(Long id, OrdinateurDto ordinateurDetails) {
+    public ordinateurDto updateComputerById(Long id, ordinateurDto ordinateurDetails) {
         Optional<Computer> currentOrdinateur = ordinateurRepo.findById(id);
 
         if(currentOrdinateur.isPresent()) {
             Computer ordinateur = currentOrdinateur.get();
-            ordinateur.setBrand(ordinateurDetails.getMarque());
-            ordinateur.setState(ordinateurDetails.getEtat());
-            ordinateur.setBarCode(ordinateurDetails.getCode());
+            ordinateur.setBrand(ordinateurDetails.getBrand());
+            ordinateur.setState(ordinateurDetails.getState());
+            ordinateur.setBarCode(ordinateurDetails.getBarCode());
             ordinateur.setCPU(ordinateurDetails.getCpu());
-            ordinateur.setScreen(ordinateurDetails.getCode());
+            ordinateur.setScreen(ordinateurDetails.getScreen());
             ordinateur.setRAM(ordinateurDetails.getRam());
-            ordinateur.setAssignmentDate(ordinateurDetails.getDateLiv());// DateAffectation ?
-            ordinateur.setDeliveryDate(ordinateurDetails.getDateLiv());
-            ordinateur.setWarrantyDate(ordinateurDetails.getDateGarantie());
+            ordinateur.setDeliveryDate(ordinateurDetails.getDeliveryDate());
+            ordinateur.setWarrantyDate(ordinateurDetails.getWarrantyDate());
 
-            Long Id = ordinateurDetails.getEnseignantDto().getId();
-            List<Teacher> teachers = new ArrayList<>();
-            teachers.add(new Teacher(Id));
-            ordinateur.setTeachers(teachers);
-
-            OrdinateurDto updated = OrdinateurDto.toDto(ordinateurRepo.save(ordinateur));
+            ordinateurDto updated = ordinateurDto.toDto(ordinateurRepo.save(ordinateur));
             return updated;
         }
         else {
@@ -334,57 +330,51 @@ public class ResourcesService {
         return null;
     }
 
-    public List<ImprimanteDto> getPrintersByState(int state) {
-        List<ImprimanteDto> imprimanteDtoList= new ArrayList<>();
+    public List<imprimanteDto> getPrintersByState(int state) {
+        List<imprimanteDto> imprimanteDtoList= new ArrayList<>();
         imprimanteRepo.findByState(state).forEach(
                 printer -> {
-                    imprimanteDtoList.add(ImprimanteDto.toDto(printer));
+                    imprimanteDtoList.add(imprimanteDto.toDto(printer));
                 }
         );
         return imprimanteDtoList;
     }
 
-    public ImprimanteDto getPrinterById(final Long id) {
+    public imprimanteDto getPrinterById(final Long id) {
         Optional<Printer> imprimante = imprimanteRepo.findById(id);
-        ImprimanteDto imprimanteDto = ImprimanteDto.toDto(imprimante.get());
+        imprimanteDto imprimantedto = imprimanteDto.toDto(imprimante.get());
 
-        return imprimanteDto;
+        return imprimantedto;
     }
 
     public void deletePrinterById(final Long id) {
         imprimanteRepo.deleteById(id);
     }
 
-    public List<ImprimanteDto> getAllPrinters() {
-        List<ImprimanteDto> imprimanteDtoList= new ArrayList<>();
+    public List<imprimanteDto> getAllPrinters() {
+        List<imprimanteDto> imprimanteDtoList= new ArrayList<>();
         imprimanteRepo.findAll().forEach(
                 printer -> {
-                    imprimanteDtoList.add(ImprimanteDto.toDto(printer));
+                    imprimanteDtoList.add(imprimanteDto.toDto(printer));
                 }
         );
         return imprimanteDtoList;
     }
 
-    public ImprimanteDto updatePrinterById(Long id, ImprimanteDto PrinterDto) {
+    public imprimanteDto updatePrinterById(Long id, imprimanteDto PrinterDto) {
         Optional<Printer> currentPrinter = imprimanteRepo.findById(id);
 
         if(currentPrinter.isPresent()) {
             Printer printer = currentPrinter.get();
-            printer.setBrand(PrinterDto.getMarque());
-            printer.setState(PrinterDto.getEtat());
-            printer.setBarCode(PrinterDto.getCode());
-            printer.setPrintSpeed(PrinterDto.getVitesse());
+            printer.setBrand(PrinterDto.getBrand());
+            printer.setState(PrinterDto.getState());
+            printer.setBarCode(PrinterDto.getBarCode());
+            printer.setPrintSpeed(PrinterDto.getPrintSpeed());
             printer.setResolution(PrinterDto.getResolution());
-            printer.setAssignmentDate(PrinterDto.getDateLiv());// DateAffectation ?
-            printer.setDeliveryDate(PrinterDto.getDateLiv());
-            printer.setWarrantyDate(PrinterDto.getDateGarantie());
-            //ordinateur.setTeachers(ordinateurDetails.getEnseignantDto());
-            Long Id = PrinterDto.getEnseignantDto().getId();
-            List<Teacher> teachers = new ArrayList<>();
-            teachers.add(new Teacher(Id));
-            printer.setTeachers(teachers);
+            printer.setDeliveryDate(PrinterDto.getDeliveryDate());
+            printer.setWarrantyDate(PrinterDto.getWarrantyDate());
 
-            ImprimanteDto updated = ImprimanteDto.toDto(imprimanteRepo.save(printer));
+            imprimanteDto updated = imprimanteDto.toDto(imprimanteRepo.save(printer));
             return updated;
         }
         else {

@@ -30,7 +30,7 @@ export class DemandeComponent implements OnInit {
     warrantyDate: new Date(),
     dateOfRequest: new Date(),
     brand: "",
-    name: "",
+    providerName: "",
     resourceType: "Computer",
     state: -1,
     cpu: "",
@@ -47,7 +47,7 @@ export class DemandeComponent implements OnInit {
     dateOfRequest: new Date(),
     brand: "",
     resourceType: "Computer",
-    name: "",
+    providerName: "",
     state: -1,
     printSpeed: 0,
     resolution: ""
