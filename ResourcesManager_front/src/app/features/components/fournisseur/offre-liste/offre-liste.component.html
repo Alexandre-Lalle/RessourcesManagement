@@ -1,0 +1,281 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="card-box">
+                <h4 class="header-title mb-3">Liste des Appels d'offres</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-centered m-0">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date Debut</th>
+                                <th>Date Fin</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let offre of offres">
+                                <td>
+                                    {{offre.id}}
+                                </td>
+
+                                <td>
+
+                                    {{offre.dateDebut | date}}
+                                </td>
+                                <td>
+                                    {{offre.dateFin | date}}
+                                </td>
+                                <td>
+ 
+                                    <a (click)="setOffreID(offre.id)" data-toggle="modal" data-target="#add-soumission"
+                                        class="btn btn-sm btn-success"><i class="mdi mdi-plus"></i></a>
+                                    <a (click)="setOffre(offre)" data-toggle="modal" data-target="#plus-info"
+                                        class="btn btn-sm btn-primary ml-1"><i class="mdi mdi-information-outline"></i></a>
+
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr class="active">
+                              <td colspan="7" class="footable-visible">
+                                <div class="text-right">
+                                  <ul
+                                    class="pagination pagination-split justify-content-end footable-pagination m-t-10"
+                                  >
+                                    <li class="footable-page-arrow disabled">
+                                      <a data-page="first" href="#first">«</a>
+                                    </li>
+                                    <li class="footable-page-arrow disabled">
+                                      <a data-page="prev" href="#prev">‹</a>
+                                    </li>
+                                    <li class="footable-page active">
+                                      <a data-page="0" href="#">1</a>
+                                    </li>
+                                    <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                                    <li class="footable-page"><a data-page="2" href="#">3</a></li>
+                                    <li class="footable-page-arrow">
+                                      <a data-page="next" href="#next">›</a>
+                                    </li>
+                                    <li class="footable-page-arrow">
+                                      <a data-page="last" href="#last">»</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </td>
+                            </tr>
+                          </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Signup modal content -->
+    <div id="add-soumission" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel"
+        aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <h2 class="text-uppercase text-center m-b-30">
+                        <!-- <a href="index.html" class="text-success">
+                            <span><img src="assets/images/fstlogo.jpg" alt="" height="80"></span>
+                        </a> -->
+                    </h2>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h4 class="header-title m-t-0 m-b-30">Ajouter Votre Soumission</h4>
+
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Marque Ordinateur (s) :</label>
+                                    <div class="col-6">
+
+                                        <input [(ngModel)]="soumission.marqueOrdinateur" type="text" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Marque Imprimante (s) :</label>
+                                    <div class="col-6">
+
+                                        <input [(ngModel)]="soumission.marqueImprimante" type="text" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Date de garantie :</label>
+                                    <div class="col-6">
+
+                                        <input [(ngModel)]="soumission.dateGarentie" type="date" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Date de livraison  :</label>
+                                    <div class="col-6">
+
+                                        <input [(ngModel)]="soumission.dateLivraison" type="date" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Prix :</label>
+                                    <div class="col-6">
+                                        <input [(ngModel)]="soumission.prix" type="number" class="form-control" min="0">
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div> <!-- end col -->
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button (click)="saveSoumission()" type="button" class="btn btn-primary">Ajouter</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <!--  Modal content for the above example -->
+    <div id="plus-info" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Plus d'informations</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h4 class="header-title m-t-0 m-b-30">La Liste Des Ressources</h4>
+
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                            <i class="fi-monitor mr-2"></i> Ordinateur
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#profile" data-toggle="tab" aria-expanded="true"
+                                            class="nav-link ">
+                                            <i class=" mdi mdi-printer mr-2"></i>Imprimante
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active show" id="home">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-centered m-0">
+
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>CPU</th>
+                                                        <th>RAM</th>
+                                                        <th>Disque Dur</th>
+                                                        <th>Ecran</th>
+                                                        <th>Quantite </th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let ordinateur of offre.ordinateurDtoList">
+                                                        <td>
+                                                            {{ordinateur.cpu}}
+                                                        </td>
+
+                                                        <td>
+                                                            {{ordinateur.ram}} GB
+                                                        </td>
+                                                        <td>
+                                                            {{ordinateur.disk}} GB
+                                                        </td>
+                                                        <td>
+                                                            {{ordinateur.screen}}
+
+                                                        </td>
+                                                        <td>
+                                                            {{ordinateur.qty}}
+                                                        </td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="profile">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-centered m-0">
+
+                                                <thead>
+                                                    <tr>
+
+                                                        <th>Resolution</th>
+                                                        <th>Vitesse</th>
+
+                                                        <th>Quantite </th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let imprimante of offre.imprimanteDtoList">
+                                                        <td>
+                                                            {{imprimante.resolution}}
+                                                        </td>
+
+                                                        <td>
+                                                            {{imprimante.printSpeed}}
+                                                        </td>
+
+                                                        <td>
+                                                            {{imprimante.qty}}
+                                                        </td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div> <!-- end col -->
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
+</div>

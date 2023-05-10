@@ -1,0 +1,168 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box">
+                <h4 class="header-title mb-3">Liste des soumissions</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-centered m-0">
+
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Marque Ordinateur (s)</th>
+                            <th>Marque Imprimante (s)</th>
+                            <th>Date livraison</th>
+                            <th>Date garantie</th>
+                            <th>Prix</th> 
+                            <th>Etat </th> 
+                            <th>Action</th>
+               
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let soumission of soumissions">
+                            <td>
+                                {{soumission.id}}
+                            </td>
+
+                            <td>
+                                {{soumission.marqueOrdinateur}}
+                            </td>
+                            <td>
+                                {{soumission.marqueImprimante}}
+                            </td>
+                            <td>
+                                {{soumission.dateLivraison|date}}
+                            </td>
+                            <td>
+                                {{soumission.dateGarentie|date}}
+                            </td>
+                            <td>
+                                {{soumission.prix}}
+                            </td>
+                            <td>
+                                
+        
+                                <span *ngIf="soumission.etat == 0" class="badge badge-warning"> En traitement</span>
+                                <span  *ngIf="soumission.etat == -1" class="badge badge-danger">Refuse</span>
+                                <span  *ngIf="soumission.etat == 1" class="badge badge-success">Accepte</span>
+                            </td>
+
+                            <td>
+                                <a   *ngIf="soumission.etat != 0"  
+                                class="btn btn-sm btn-secondary"
+            
+                            ><i class="mdi mdi-delete"></i></a>
+                                <a   *ngIf="soumission.etat == 0"  
+                                   class="btn btn-sm btn-danger"
+                                (click)="deleteSoumission(soumission.id)" data-toggle="modal" data-target="#add-soumission"
+                                onclick="return confirm('Voulez-vous vraiment supprimer cette soumission?')"><i class="mdi mdi-delete"></i></a>
+                            
+                                <a    *ngIf="soumission.etat != 0"  
+                                class="ml-1 btn btn-sm btn-secondary"
+            
+                            ><i class="mdi mdi-pencil"></i></a>
+                            
+                                <a   *ngIf="soumission.etat == 0" (click)="editSoumission(soumission)"  data-toggle="modal" data-target="#modifier-soumission"
+                                class="btn btn-sm btn-custom ml-1"><i class="mdi mdi-pencil"></i></a>
+                            </td>
+                        </tr>
+
+
+                        </tbody>
+                            <tfoot>
+                            <tr class="active">
+                              <td colspan="7" class="footable-visible">
+                                <div class="text-right">
+                                  <ul
+                                    class="pagination pagination-split justify-content-end footable-pagination m-t-10"
+                                  >
+                                    <li class="footable-page-arrow disabled">
+                                      <a data-page="first" href="#first">«</a>
+                                    </li>
+                                    <li class="footable-page-arrow disabled">
+                                      <a data-page="prev" href="#prev">‹</a>
+                                    </li>
+                                    <li class="footable-page active">
+                                      <a data-page="0" href="#">1</a>
+                                    </li>
+                                    <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                                    <li class="footable-page"><a data-page="2" href="#">3</a></li>
+                                    <li class="footable-page-arrow">
+                                      <a data-page="next" href="#next">›</a>
+                                    </li>
+                                    <li class="footable-page-arrow">
+                                      <a data-page="last" href="#last">»</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </td>
+                            </tr>
+                          </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+       <!-- Signup modal content -->
+       <div id="modifier-soumission" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel"
+       aria-hidden="true" style="display: none;">
+       <div class="modal-dialog">
+           <div class="modal-content">
+
+               <div class="modal-body">
+                   <h2 class="text-uppercase text-center m-b-30">
+                       <!-- <a href="index.html" class="text-success">
+                           <span><img src="assets/images/fstlogo.jpg" alt="" height="80"></span>
+                       </a> -->
+                   </h2>
+                   <div class="row">
+                       <div class="col-md-12">
+                           <div class="card-box">
+                               <h4 class="header-title m-t-0 m-b-30">Modifier Votre Soumission</h4>
+
+                               <div class="form-group row">
+                                   <label class="col-6 col-form-label">Marque Ordinateur (s) :</label>
+                                   <div class="col-6">
+
+                                       <input [(ngModel)]="soumission.marqueOrdinateur" type="text" class="form-control">
+
+                                   </div>
+
+                               </div>
+                               <div class="form-group row">
+                                   <label class="col-6 col-form-label">Marque Imprimante (s) :</label>
+                                   <div class="col-6">
+
+                                       <input [(ngModel)]="soumission.marqueImprimante" type="text" class="form-control">
+
+                                   </div>
+
+                               </div>
+                               <div class="form-group row">
+                                   <label class="col-6 col-form-label">Prix :</label>
+                                   <div class="col-6">
+                                       <input [(ngModel)]="soumission.prix" type="number" class="form-control" min="0">
+
+                                   </div>
+
+                               </div>
+
+
+                           </div>
+                       </div> <!-- end col -->
+
+                   </div>
+               </div>
+               <div class="modal-footer">
+                   
+                   <button (click)="updateSoumission()" type="button" class="btn btn-primary">Modifier</button>
+                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+               </div>
+           </div><!-- /.modal-content -->
+       </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+</div> 

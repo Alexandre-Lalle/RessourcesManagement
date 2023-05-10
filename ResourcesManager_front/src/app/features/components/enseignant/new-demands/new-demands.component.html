@@ -1,0 +1,284 @@
+<form
+  [formGroup]="addFormGroup"
+  (ngSubmit)="addDemand(addFormGroup.value)"
+  class="row bg-white border py-2"
+>
+  <!-- first Row strat-->
+  <div class="col-md-12 flex-row d-flex bg-white p-0">
+    <form id="printerForm"
+      formGroupName="printer"
+      class="col-lg-6 border border-success"
+      style="
+        border-left: 0px !important;
+        border-top: 0px !important;
+        border-bottom: 0px !important;
+      ">
+      <div class="card-box">
+        <h4 class="header-title m-t-0 text-success">Infos Imprimante</h4>
+        <p class="text-muted font-14 m-b-20">
+          Veulliez indiquer toutes les informations relatives a l'imprimante si
+          vouz voullez le demander.
+        </p>
+        <div role="form" novalidate="">
+          <!-- <div class="container px-0 mb-4">
+            <button type="button" (click)="disablePrinterForm()" class="btn btn-outline-dark btn-rounded btn-sm tooltipstered" title="Disable the printer form">disable</button>
+          </div> -->
+          <!-- <div class="form-group row">
+            <label for="inputEmail3" class="col-4 col-form-label">
+              Nom<span class="text-danger">*</span>
+            </label>
+            <div class="col-7">
+              <input
+                formControlName="name"
+                type="text"
+                required="true"
+                parsley-type="text"
+                class="form-control printer-control"
+                id="inputEmail3"
+                placeholder="Nom imprimente"
+              />
+            </div>
+            <small *ngIf="addFormGroup.get('printer.name')?.errors && addFormGroup.get('printer.name')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Name",addFormGroup.get('printer.name')?.errors)}}
+            </small>
+          </div> -->
+          <div class="form-group row">
+            <label for="hori-pass1" class="col-4 col-form-label">
+              Vitèsse (mots/s)<span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+              <select
+                formControlName="printSpeed"
+                id="hori-pass1"
+                class="form-control printer-control"
+                (change)="setAllP(addFormGroup.value.printer.printSpeed)"
+              >
+                <option value="" selcted>Non renseigner</option>
+                <option value="10000">10000 mots/s</option>
+                <option value="5000">5000 mots/s</option>
+                <option value="2500">2500 mots/s</option>
+                <option value="1000">1000 mots/s</option>
+              </select>
+            </div>
+            <small *ngIf="addFormGroup.get('printer.printSpeed')?.errors && addFormGroup.get('printer.printSpeed')?.touched && (allP!=0 && allP!=2 && allC!=0)" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Vitèsse",addFormGroup.get('printer.printSpeed')?.errors)}}
+            </small>
+          </div>
+          <div class="form-group row">
+            <label for="hori-pass2" class="col-4 col-form-label"
+              >Resolution<span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+              <select
+                formControlName="resolution"
+                class="form-control printer-control"
+                data-parsley-equalto="#hori-pass1"
+                id="hori-pass2"
+                (change)="setAllP(addFormGroup.value.printer.resolution)"
+              >
+                <option value="" selected>Non renseigner</option>
+                <option value="1024x1024">1024x1024</option>
+                <option value="2048x2048">2048x2048</option>
+              </select>
+            </div>
+            <small *ngIf="addFormGroup.get('printer.resolution')?.errors && addFormGroup.get('printer.resolution')?.touched && (allP!=0 && allP!=2 && allC!=0)" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Resolution",addFormGroup.get('printer.resolution')?.errors)}}
+            </small>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="addFormGroup.controls['printer'].invalid && !addFormGroup.controls['printer'].pristine">
+        Please fill out all fields or non of them .
+      </div>
+      <!-- end card-box -->
+    </form>
+    <!-- end col -->
+
+    <div
+      formGroupName="computer"
+      class="col-lg-6 border border-success"
+      style="
+        border-right: 0px !important;
+        border-top: 0px !important;
+        border-bottom: 0px !important;
+      ">
+      <div class="card-box">
+        <h4 class="header-title m-t-0 text-success">Infos ordinateur</h4>
+        <p class="text-muted font-14 m-b-20">
+          Veulliez indiquer toutes les informations relatives a l'ordinateur si
+          vouz voullez le demander.
+        </p>
+
+        <div role="form" novalidate="">
+          <!-- <div class="container px-0 mb-4">
+            <button type="button" (click)="disableComputerForm()" class="btn btn-outline-dark btn-rounded btn-sm tooltipstered" title="Disable the printer form">disable</button>
+          </div> -->
+          <!-- <div class="form-group row">
+            <label for="inputEmail3" class="col-4 col-form-label"
+              >Nom <span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+              <input
+                formControlName="name"
+                type="text"
+                required=""
+                parsley-type="text"
+                class="form-control small"
+                id="inputEmail3"
+                placeholder="Nom ordinateur"
+              />
+            </div>
+          </div> -->
+          <div class="form-group row">
+            <label for="hori-pass1" class="col-4 col-form-label"
+              >Espace disk<span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+              <select
+                formControlName="disk"
+                class="form-control"
+                id="hori-pass1"
+                (change)="setAllP(addFormGroup.value.computer.disk)"
+              >
+                <option value="" selcted>Non renseigner</option>
+                <optgroup label="HDDR">
+                  <option value="128_GB_HDDR">128GB (hddr)</option>
+                  <option value="256_GB_HDDR">256GB (hddr)</option>
+                  <option value="512GB_HDDR">512GB (hddr)</option>
+                  <option value="1_T_HDDR">1T</option>
+                </optgroup>
+                <optgroup label="SSD">
+                  <option value="128_GB_SSD">128GB (ssd)</option>
+                  <option value="256_GB_SSD">256GB (ssd)</option>
+                  <option value="512GB_SSD">512GB (ssd)</option>
+                  <option value="1_T_SSD">1T</option>
+                </optgroup>
+              </select>
+            </div>
+            <small *ngIf="addFormGroup.get('computer.disk')?.errors && addFormGroup.get('computer.disk')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Espace disk",addFormGroup.get('computer.disk')?.errors)}}
+            </small>
+          </div>
+          <div class="form-group row">
+            <label for="hori-pass2" class="col-4 col-form-label"
+              >RAM<span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+              <select
+                formControlName="ram"
+                class="form-control"
+                id="hori-pass2"
+                data-parsley-equalto="#hori-pass1"
+                required=""
+                (change)="setAllP(addFormGroup.value.computer.ram)"
+              >
+                <option value="" selcted>Non renseigner</option>
+                <option value="8">8GB</option>
+                <option value="16">16GB</option>
+                <option value="32">32GB</option>
+                <option value="64">64GB</option>
+              </select>
+            </div>
+            <small *ngIf="addFormGroup.get('computer.ram')?.errors && addFormGroup.get('computer.ram')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("RAM",addFormGroup.get('computer.ram')?.errors)}}
+            </small>
+          </div>
+
+          <div class="form-group row">
+            <label for="webSite" class="col-4 col-form-label"
+              >CPU<span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+              <select
+                formControlName="cpu"
+                required="true"
+                parsley-type="url"
+                class="form-control"
+                id="webSite"
+                (change)="setAllP(addFormGroup.value.computer.cpu)"
+              >
+                <option value="" selcted>Non renseigner</option>
+                <optgroup label="Intel">
+                  <option value="core2 Dio">core2 Dio</option>
+                  <option value="i3 5Gen">i3 5Gen</option>
+                  <option value="i3 6Gen">i3 6Gen</option>
+                  <option value="i3 7Gen">i3 7Gen</option>
+                  <option value="i3 8Gen">i3 8Gen</option>
+                  <option value="i3 9Gen">i3 9Gen</option>
+                  <option value="i3 10Gen">i3 10Gen</option>
+                  <option value="i3 11Gen">i3 11Gen</option>
+                  <option value="i5 5Gen">i5 5Gen</option>
+                  <option value="i5 6Gen">i5 6Gen</option>
+                  <option value="i5 7Gen">i5 7Gen</option>
+                  <option value="i5 8Gen">i5 8Gen</option>
+                  <option value="i5 9Gen">i5 9Gen</option>
+                  <option value="i5 10Gen">i5 10Gen</option>
+                  <option value="i5 11Gen">i5 11Gen</option>
+                  <option value="i7 5Gen">i7 5Gen</option>
+                  <option value="i7 6Gen">i7 6Gen</option>
+                  <option value="i7 7Gen">i7 7Gen</option>
+                  <option value="i7 8Gen">i7 8Gen</option>
+                  <option value="i7 9Gen">i7 9Gen</option>
+                  <option value="i7 10Gen">i7 10Gen</option>
+                  <option value="i7 11Gen">i7 11Gen</option>
+                  <option value="i9 5Gen">i9 5Gen</option>
+                  <option value="i9 6Gen">i9 6Gen</option>
+                  <option value="i9 7Gen">i9 7Gen</option>
+                  <option value="i9 8Gen">i9 8Gen</option>
+                  <option value="i9 9Gen">i9 9Gen</option>
+                  <option value="i9 10Gen">i9 10Gen</option>
+                  <option value="i9 11Gen">i9 11Gen</option>
+                </optgroup>
+                <optgroup label="Razen"></optgroup>
+                <optgroup label="choix3"></optgroup>
+                <optgroup label="choix4"></optgroup>
+              </select>
+            </div>
+            <small *ngIf="addFormGroup.get('computer.cpu')?.errors && addFormGroup.get('computer.cpu')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("CPU",addFormGroup.get('computer.cpu')?.errors)}}
+            </small>
+          </div>
+          <div class="form-group row">
+            <label for="webSite" class="col-4 col-form-label"
+              >Ecran<span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+              <select
+                formControlName="screen"
+                required=""
+                parsley-type="url"
+                class="form-control"
+                id="webSite"
+                (change)="setAllP(addFormGroup.value.computer.screen)"
+              >
+              <option value="" selcted>Non renseigner</option>
+                <optgroup label="Intel">
+                  <option value="intel card">Intel card</option>
+                </optgroup>
+                <optgroup label="Intel"></optgroup>
+                <optgroup label="Intel"></optgroup>
+              </select>
+            </div>
+            <small *ngIf="addFormGroup.get('computer.screen')?.errors && addFormGroup.get('computer.screen')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Ecran",addFormGroup.get('computer.screen')?.errors)}}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+  </div>
+  <!-- first Row end-->
+
+  <hr class="border" style="width: 97%" />
+
+  <!-- second Row strat-->
+  <div class="col-md-12">
+    
+    <div class="form-group text-right m-b-0">
+      <button type="reset" routerLink="/teacher/demands" class="btn btn-light m-1">Cancel</button>
+      <button type="submit" class="btn btn-success m-1" [disabled]="">Ajouter</button>
+    </div>
+  </div>
+  <!-- second Row end-->
+</form>

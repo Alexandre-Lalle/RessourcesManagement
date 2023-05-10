@@ -1,0 +1,318 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box">
+                <h4 class="header-title mb-3">Liste des ressources</h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a href="#home" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                        <i class="fi-monitor mr-2"></i> Ordinateur
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                                        <i class="fi-head mr-2"></i>Imprimante
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane show active" id="home">
+                                    <div class="container-fluid">
+
+
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-box">
+                                                    <h4 class="header-title mb-3">Liste des Ordinateurs</h4>
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-centered m-0">
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>code</th>
+                                                                    <th>Marque </th>
+                                                                    <th>Date Liveraisent</th>
+                                                                    <th>RAM</th>
+                                                                    <th>Disque Dur</th>
+                                                                    <th>CPU</th>
+                                                                    <th>Signaler Panne</th>
+                                                                   
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let computer of computers">
+                                                                    <td>
+                                                                      {{computer.barCode}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.brand}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.deliveryDate}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.cpu}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.ram}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        {{computer.disk}}
+                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <button (click)="remplir(computer.id)" data-toggle="modal" data-target="#ajouter-panne" 
+                                                                        class="btn btn-sm btn-custom mr-1">
+                                                                        <i class="mdi mdi-plus"></i></button> 
+                                                                        <button  (click)="setPanneList(computer.failureDtoList)" data-toggle="modal" data-target="#show-pannes" 
+                                                                     class="btn btn-sm btn-custom">
+                                                                  <i class="mdi mdi-information-outline"></i></button> 
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr class="active">
+                                                                  <td colspan="7" class="footable-visible">
+                                                                    <div class="text-right">
+                                                                      <ul
+                                                                        class="pagination pagination-split justify-content-end footable-pagination m-t-10"
+                                                                      >
+                                                                        <li class="footable-page-arrow disabled">
+                                                                          <a data-page="first" href="#first">«</a>
+                                                                        </li>
+                                                                        <li class="footable-page-arrow disabled">
+                                                                          <a data-page="prev" href="#prev">‹</a>
+                                                                        </li>
+                                                                        <li class="footable-page active">
+                                                                          <a data-page="0" href="#">1</a>
+                                                                        </li>
+                                                                        <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                                                                        <li class="footable-page"><a data-page="2" href="#">3</a></li>
+                                                                        <li class="footable-page-arrow">
+                                                                          <a data-page="next" href="#next">›</a>
+                                                                        </li>
+                                                                        <li class="footable-page-arrow">
+                                                                          <a data-page="last" href="#last">»</a>
+                                                                        </li>
+                                                                      </ul>
+                                                                    </div>
+                                                                  </td>
+                                                                </tr>
+                                                              </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="profile">
+                                    <div class="container-fluid">
+
+
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="card-box">
+                                                    <h4 class="header-title mb-3">Liste des Imprimantes</h4>
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-centered m-0">
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#code</th>
+                                                                    <th>Marque</th>
+                                                                    <th>Date Liveraisent</th>
+                                                                    <th>Resolution</th>
+                                                                    <th>Vitesse</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let printer of printers">
+                                                                    <td>
+                                                                        {{printer.barCode}}
+                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                        {{printer.barCode}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                        {{printer.deliveryDate}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{printer.resolution}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{printer.printSpeed}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <button (click)="remplir(printer.id)" data-toggle="modal" data-target="#ajouter-panne" 
+                                                                        class="btn btn-sm btn-danger mr-2">
+                                                                        <i class="fa-warning (alias)"></i></button> 
+                                                                     <button  (click)="setPanneList(printer.failureDtoList)" data-toggle="modal" data-target="#show-pannes" 
+                                                                     class="btn btn-sm btn-custom">
+                                                                  <i class="mdi mdi-information-outline"></i></button> 
+                                                                    </td> 
+                                                                </tr>
+
+
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr class="active">
+                                                                  <td colspan="7" class="footable-visible">
+                                                                    <div class="text-right">
+                                                                      <ul
+                                                                        class="pagination pagination-split justify-content-end footable-pagination m-t-10"
+                                                                      >
+                                                                        <li class="footable-page-arrow disabled">
+                                                                          <a data-page="first" href="#first">«</a>
+                                                                        </li>
+                                                                        <li class="footable-page-arrow disabled">
+                                                                          <a data-page="prev" href="#prev">‹</a>
+                                                                        </li>
+                                                                        <li class="footable-page active">
+                                                                          <a data-page="0" href="#">1</a>
+                                                                        </li>
+                                                                        <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                                                                        <li class="footable-page"><a data-page="2" href="#">3</a></li>
+                                                                        <li class="footable-page-arrow">
+                                                                          <a data-page="next" href="#next">›</a>
+                                                                        </li>
+                                                                        <li class="footable-page-arrow">
+                                                                          <a data-page="last" href="#last">»</a>
+                                                                        </li>
+                                                                      </ul>
+                                                                    </div>
+                                                                  </td>
+                                                                </tr>
+                                                              </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- ajouter panne -->
+       <!-- Signup modal content -->
+   <div id="ajouter-panne" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+                            <h4 class="header-title m-t-0 m-b-30">Ajouter Panne</h4>
+                            <div class="form-group row">
+                                <label class="col-4 col-form-label">Date Apparaition:</label>
+                                <div class="col-8">
+                                    <input id="dateApparaision" [(ngModel)]="panne.date"  class="form-control" type="date" name="date"    >
+            
+                                </div>       
+                            </div> 
+                     
+                             
+                              
+                        </div>
+                    </div> <!-- end col -->
+ 
+                </div>
+            </div>
+            <div class="modal-footer">
+        
+                <button (click)="savePane()"   type="button" class="btn btn-primary">Ajouter panne</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+              </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+ <!-- Voir les pannes  -->
+ <div id="show-pannes" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+ aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+ <div class="modal-dialog modal-lg">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h4 class="modal-title" id="myLargeModalLabel">La liste des pannes</h4>
+         </div>
+     
+         <div class="modal-body">
+             <div class="row">
+                 <div class="col-md-12">
+                     <table class="table table-hover table-centered m-0">
+
+                         <thead>
+                             <tr>
+
+                     
+                                 <th>Date d'apparaision</th>
+                             
+                                 <th>Etat</th>
+                               
+
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr *ngFor="let panne of panneList">
+                                 <td>
+                                    {{panne.date | date}}
+                                 </td>
+                                 
+                                 <td>
+                                 <span *ngIf="panne.state == true" class="badge badge-success">Traite </span>
+                                 <span *ngIf="panne.state == false" class="badge badge-warning">En traitement </span>
+                              
+                                 </td>
+
+                             </tr> 
+                         </tbody>
+                     </table>
+                 </div> <!-- end col -->
+
+
+             </div>
+         </div>
+         <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+         </div>
+     </div><!-- /.modal-content -->
+ </div><!-- /.modal-dialog -->
+</div>
+<!--end Voir les pannes  -->
+
+
+</div>

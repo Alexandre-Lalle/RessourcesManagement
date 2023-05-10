@@ -1,0 +1,207 @@
+
+
+   <!-- ============================================================== -->
+             <!-- Start right Content here -->
+             <!-- ============================================================== -->
+    
+<div class="content">            
+    <div class="container-fluid" id="main-container">
+        
+            <ul class="list-unstyled topbar-right-menu float-right mb-0">
+            <li class="hide-phone app-search">
+                <form>
+                <input type="search" (ngModelChange)="searchFournisseurs(key.value)" #key="ngModel" ngModel  name="key" id="searchName" placeholder="Search..." class="form-control">
+                <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+            </li>
+            </ul>
+        
+        <div class="col-lg-3">
+            <a href="#" data-toggle="modal" data-target="#add-category" (click)="onOpenModal({fournisseur: null,mode: 'add'})" class="btn btn-lg btn-custom btn-block waves-effect m-t-20 waves-light">
+            <i class="fi-circle-plus"></i> Ajouter Nouveau Fournisseur
+            </a>
+        </div>
+        <div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="row">
+        <div *ngFor="let fournisseur of fournisseurs" class="col-md-6 col-xl-3">
+            <div class="card m-b-30">
+            <div class="card-body row">
+                <div class="col-6">
+                    
+                    <h5>Societe</h5>
+                    <p class="m-0">{{fournisseur?.name}}</p>
+                </div>
+                <div class="col-6 card-title align-self-center mb-0">
+                    <h5>Manager</h5>
+                    <p class="m-0">{{fournisseur?.manager}}</p>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fa fa-envelope float-right"></i>{{fournisseur?.userName}}</li>
+                <li class="list-group-item"><i class="fa fa-phone float-right"></i><strong>Lieu :</strong> {{fournisseur?.place}}</li>
+            </ul>
+            <div class="card-body">
+                <div class="float-right btn-group btn-group-sm">
+                    <a (click)="onOpenModal({fournisseur: fournisseur,mode: 'edit'})" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                    <a (click)="onOpenModal({fournisseur : fournisseur,mode: 'delete'})" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div >
+            <tfoot style="float:right;">
+                <tr class="active">
+                  <td colspan="7" class="footable-visible">
+                    <div class="text-right">
+                      <ul
+                        class="pagination pagination-split justify-content-end footable-pagination m-t-10"
+                      >
+                        <li class="footable-page-arrow disabled">
+                          <a data-page="first" href="#first">«</a>
+                        </li>
+                        <li class="footable-page-arrow disabled">
+                          <a data-page="prev" href="#prev">‹</a>
+                        </li>
+                        <li class="footable-page active">
+                          <a data-page="0" href="#">1</a>
+                        </li>
+                        <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                        <li class="footable-page"><a data-page="2" href="#">3</a></li>
+                        <li class="footable-page-arrow">
+                          <a data-page="next" href="#next">›</a>
+                        </li>
+                        <li class="footable-page-arrow">
+                          <a data-page="last" href="#last">»</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+        </div>
+ </div> 
+                <!-- Add Employee Modal -->
+                <div class="modal fade" id="addFournisseurModal" tabindex="-1" role="dialog" aria-labelledby="addFournisseurModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addFournisseurModalLabel">Ajouter Fournisseur</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form #addForm="ngForm" (ngSubmit)="onAddFournisseur(addForm)">
+                            <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" ngModel name="userName" class="form-control" id="userName" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="phone">Manager</label>
+                            <input type="text" ngModel name="manager" class="form-control" id="manager" placeholder="Manager" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="phone">Lieu</label>
+                            <input type="text" ngModel name="place" class="form-control" id="place" placeholder="Lieu" required>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                 </div>
+                </div>
+               <!-- end add modal -->
+               <!-- Edit Modal -->
+                <div class="modal fade" id="updateFournisseurModal" tabindex="-1" role="dialog" aria-labelledby="fournisseurEditModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateFournisseurModalLabel">Edit Fournisseur {{editFournisseur?.name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form #editForm="ngForm">
+                                <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" ngModel="{{editFournisseur?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+                                </div>
+                                <input type="hidden" ngModel="{{editFournisseur?.id}}" name="id" class="form-control" id="id" placeholder="Id">
+                            
+                                <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" ngModel="{{editFournisseur?.userName}}" name="userName" class="form-control" id="userName" placeholder="UserName">
+                                </div>
+                                <div class="form-group">
+                                <label for="manager">Manager</label>
+                                <input type="text" ngModel="{{editFournisseur?.manager}}" name="manager" class="form-control" id="manager" placeholder="Manager">
+                                </div>
+                                <div class="form-group">
+                                <label for="motif">Lieu</label>
+                                <input type="text" ngModel="{{editFournisseur?.place}}" name="place" class="form-control" id="place" name="place" placeholder="place">
+                                </div>
+                        
+                                <div class="modal-footer">
+                                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                                <button (click)="onUpdateFournisseur(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                 <!-- end edit modal -->
+
+                <!-- Delete Modal -->
+                <div class="modal fade" id="deleteFournisseurModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModelLabel">Delete Fournisseur</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete employee {{deleteFournisseur?.name}}?</p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <button (click)="onDeleteFournisseur(deleteFournisseur!.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                 <!-- end delet fournisseur -->
+                 <!-- Notification for no fournisseur -->
+                <div *ngIf="fournisseurs?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+                        <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">Il existe aucun fournisseur!</h4>
+                        <p>No Fournisseur were found.</p>
+                        </div>
+                </div>
+      
+</div> 
+      
+ 
+ 
+                        
+               
+         
+ 
+ 
+ 
+
+ 

@@ -1,0 +1,112 @@
+<style>
+    p {
+        margin-bottom: 0.05rem; /* Modifier la valeur en fonction de vos besoins */
+      }
+      
+</style>
+
+    <div class="content">
+        <div class="container-fluid" id="main-container">
+            <div class="row">
+
+                <div *ngFor="let report of reports; let i = index" class="col-md-6 col-xl-3" >
+                    <div class="card m-b-30">
+                        <div class="card-body row">
+                            <h5 class="card-title" >Constat de panne</h5>    
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <p ><b> Date :</b> {{report?.date | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+                                <p><b>Ressource :</b> {{report?.resourceType}}</p>
+                            </li>  
+                            <li class="list-group-item">
+                                <p><b>explication :</b>  {{report?.teacherName}}</p>
+                             </li>
+                             <div class="card-body">
+                                <button id="btn-details" class="btn btn-primary" (click)="toggleDetails(i)">
+                                    {{ isDetailsVisible[i] ? 'Moins de détails' : 'Plus de détails' }}
+                                  </button>
+                                  <div class="float-right btn-group btn-group-sm">
+                                    <button [disabled]="isEnable[i]" (click)="onOpenModal({report: report,mode: 'add',index:1})" [attr.data-index]="i" class="btn btn-primary tooltips" data-placement="top" data-original-title="demandeRetour"><i class='fa fa-comment'></i></button>
+                                  </div> 
+                             </div>
+                              <div style="padding:2px ;" id="more-details" *ngIf="isDetailsVisible[i]" > 
+                                  <h5 class="card-title">Détails de la panne</h5>
+                                  <li class="list-group-item">
+                                    <p><b>Enseignant:</b>  {{report?.teacherName}}</p>
+                                    <p><b>Departement:</b>  {{report?.teacherDep}}</p>
+                                    <p><b>Societe:</b> {{report?.fournisseurName}}</p>
+                                    <p><b>Manager:</b> {{report?.fournisseurManager}}</p>
+                                  </li>
+                              </div>
+                               
+                        </div>
+                       
+                            
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div >
+                <tfoot style="float:right;">
+                    <tr class="active">
+                      <td colspan="7" class="footable-visible">
+                        <div class="text-right">
+                          <ul
+                            class="pagination pagination-split justify-content-end footable-pagination m-t-10"
+                          >
+                            <li class="footable-page-arrow disabled">
+                              <a data-page="first" href="#first">«</a>
+                            </li>
+                            <li class="footable-page-arrow disabled">
+                              <a data-page="prev" href="#prev">‹</a>
+                            </li>
+                            <li class="footable-page active">
+                              <a data-page="0" href="#">1</a>
+                            </li>
+                            <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                            <li class="footable-page"><a data-page="2" href="#">3</a></li>
+                            <li class="footable-page-arrow">
+                              <a data-page="next" href="#next">›</a>
+                            </li>
+                            <li class="footable-page-arrow">
+                              <a data-page="last" href="#last">»</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  </tfoot>
+            </div>
+        </div>
+    </div>
+     <!-- demande de retour  Modal -->
+ <div class="modal fade" id="addDemandeRetourModal" tabindex="-1" role="dialog" aria-labelledby="demanderetourModalLabel" aria-hidden="true"  data-backdrop="static" >
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="demandeRetourModalLabel">Demande de Retour</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddDemandeRetour(addForm,i)">
+              <div class="form-group">
+                  <label for="name">Message</label>
+                  <input type="text" ngModel name="message" class="form-control" id="message" placeholder="message" required>
+              </div>
+              <input type="hidden" ngModel="{{reportInfo?.resourceId}}" name="resource_id" class="form-control" id="resource_id" placeholder="{{reportInfo?.resourceId}}">
+              
+              <div class="modal-footer">
+                  <button type="button" id="add-DemandeRetour-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+               </div>
+          </form>
+          
+         </div>
+      </div>
+   </div>  
+ </div>
+ 

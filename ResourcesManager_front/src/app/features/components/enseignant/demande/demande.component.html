@@ -1,0 +1,70 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="card-box">
+                <h4 class="header-title mb-3">Liste des notifcations</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-hover table-centered m-0">
+
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Demande</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let request of requests">
+                                <td>
+                                    {{request.id}}
+                                </td>
+
+                                <td>
+                                    <h5 class="m-0 font-weight-normal">{{request.subject}}</h5>
+                                    <p class="mb-0 text-muted"><small> {{request.content}}</small></p>
+                                </td>
+                                <td>
+                                    <!-- <span *ngIf="request.traite">Traite</span>
+                                    <span  *ngIf="!request.traite">En traitement</span> -->
+                                
+                                </td>
+                                <td>
+                                    <!-- <button  *ngIf="request.traite"class="btn btn-dark btn-sm disabled"> <i class="mdi mdi-minus"></i></button>
+                                    <button (click)="getBesoin(request.id)"  *ngIf="!request.traite"  data-toggle="modal" data-target="#add-resource" 
+                                    class="btn btn-sm btn-custom">
+                                 <i class="mdi mdi-plus"></i></button> -->
+
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

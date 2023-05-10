@@ -1,0 +1,170 @@
+<!-- Start Page content -->
+<div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box">
+
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="header-title mb-3">Liste des utilisateurs</h4>
+                        <button style="float:right" (click)="addUser()" type="button" class="col-2 mx-3 my-3 btn btn-info waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg">Ajouter User</button>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="card-box">
+                            <div class="table-rep-plugin">
+                                <div class="table-responsive" data-pattern="priority-columns">
+                                    <table id="tech-companies-1" class="table  table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th data-priority="1">first name</th>
+                                                <th data-priority="1">last name</th>
+                                                <th data-priority="1">user name</th>
+                                                <th data-priority="1">email</th>
+                                                <th data-priority="1">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let user of users">
+                                                <th>{{user.id}}</th>
+                                                <td>{{user.firstName}}</td>
+                                                <td>{{user.lastName}}</td>
+                                                <td>{{user.userName}}</td>
+                                                <td>{{user.email}}</td>
+                                                <td>
+                                                    <button (click)="modal_delete(user.id)" class="mx-2 waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm" class="btn btn-sm btn-danger mr-2">
+                                               <i class="fa fa-trash-o"></i></button>
+                                                    <!-- <button (click)="editUser(offre)" data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-sm btn-warning mr-2">
+                                                    <i class="fa fa-edit"></i></button> -->
+                                                    <!-- <button (click)="viewOffre(offre)" data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-sm btn-custom">
+                                                    <i class="fa fa-eye"></i></button> -->
+                                                </td>
+
+
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- ******************************************************** -->
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button (click)="modal_delete(-1)" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="mySmallModalLabel">
+                                <!-- < span *ngIf=" id_deleted != -1">Attention !!!? </span> -->
+                                <span *ngIf=" id_deleted == -1">Succès</span>
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div *ngIf=" id_deleted != -1"> <i class="fa fa-warning fa-2x" style="color: #ffbb00bc;"></i> Vous voulez vraiment supprimer cet utilisateur ? </div>
+                            <div *ngIf=" operation == 'add' && id_deleted == -1"><i class="fa fa-check-square-o fa-4x" style="color: #0dff00;"></i>L'utilisateur a ete ajouter avec succès</div>
+                            <div *ngIf=" operation == 'edit'  && id_deleted == -1"><i class="fa fa-check-square-o fa-4x" style="color: #0dff00;"></i>L'utilisateur a ete modifier avec succès</div>
+                            <button *ngIf=" id_deleted != -1" (click)="deleteUser(id_deleted)" class="btn btn-danger ml-30" data-dismiss="modal" aria-hidden="true">Supprimer</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+            <!--  Modal content for the above example -->
+            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="modalView">Les informations de l'utilisateur </h4>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="p-20">
+                                        <form class="form-horizontal" role="form">
+
+                                            <div class="form-group row">
+                                                <label *ngIf="operation != 'view'" class="col-2 col-form-label">first Name : </label>
+                                                <div *ngIf="operation != 'view'" class="col-4">
+                                                    <input *ngIf="operation != 'view'" [(ngModel)]="myUser.firstName" class=" form-control" type="input" name="date">
+                                                </div>
+                                                <label *ngIf="operation != 'view'" class="col-2 col-form-label">last Name : </label>
+                                                <div *ngIf="operation != 'view'" class="col-4">
+                                                    <input *ngIf="operation != 'view'" [(ngModel)]="myUser.lastName" class=" form-control" type="input" name="date">
+                                                </div>
+                                                <hr>
+                                                <label *ngIf="operation != 'view'" class="col-2 col-form-label">user Name : </label>
+                                                <div *ngIf="operation != 'view'" class="col-4">
+                                                    <input *ngIf="operation != 'view'" [(ngModel)]="myUser.userName" class=" form-control" type="input" name="date">
+                                                </div>
+                                                <label *ngIf="operation != 'view'" class="col-2 col-form-label">email : </label>
+                                                <div *ngIf="operation != 'view'" class="col-4">
+                                                    <input *ngIf="operation != 'view'" [(ngModel)]="myUser.email" class=" form-control" type="input" name="date">
+                                                </div>
+                                                <hr>
+                                                <label *ngIf="operation != 'view'" class="col-2 col-form-label">departement : </label>
+                                                <div *ngIf="operation != 'view'" class="col-4">
+                                                    <select *ngIf="operation != 'view'" name="" id="" [(ngModel)]="myUser.department" class=" form-control">
+                                                        <option value="data_science">Data science</option>
+                                                        <option value="physic">Physique</option>
+                                                        <option value="math">Mathématique</option>
+                                                    </select>
+                                                    <!-- <input *ngIf="operation != 'view'" [(ngModel)]="myUser.department" class=" form-control" type="input" name="date"> -->
+                                                </div>
+
+                                            </div>
+
+                                            <button *ngIf="operation == 'add' " (click)="persistUser()" data-dismiss="modal" aria-hidden="true" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm">Ajouter</button>
+                                            <!-- <button *ngIf="operation == 'edit' " (click)="updateUser()" data-dismiss="modal" aria-hidden="true" class="btn btn-warning waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm">Modefier</button> -->
+                                        </form>
+                                        <!-- {{myOffre | json }} -->
+
+                                    </div>
+
+                                    <div *ngIf="operation == 'view'" class="table-rep-plugin">
+
+                                        <div class="form-group row">
+                                            <label class="col-2 col-form-label">La Liste Des Soumissions :</label>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+        </div>
+        <!-- -->
+        <!-- container -->
+
+    </div>
+    <!-- content -->
