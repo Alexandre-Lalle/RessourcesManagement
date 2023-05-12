@@ -49,52 +49,48 @@ export class ResourceDetailComponent implements OnInit{
     this.printer$ = this.responsableService.findPrinterById(this.resourceId);
   }
 
-
-
-  saveChanges() {
+  
+  saveComputerChanges(computer: Computer) {
     const confirmChanges = confirm("Êtes-vous sûr de vouloir enregistrer les modifications ?");
     if (confirmChanges) {
-      if (this.isComputer()) {
-
-        this.computer$.pipe(
-          switchMap((computer) => this.responsableService.updateComputer(computer.id, computer)),
-          catchError((error) => {
-            console.error(error);
-            return of(null);
-          })
-        ).subscribe(
-          (response) => {
-            if (response) {
-              // Mettre à jour les données dans le tableau
-              console.log(response);
-            } else {
-              console.error("Une erreur s'est produite lors de l'enregistrement des modifications.");
-            }
+      this.responsableService.updateComputer(computer.id, computer).pipe(
+        catchError((error) => {
+          console.error(error);
+          return of(null);
+        })
+      ).subscribe(
+        (response) => {
+          if (response) {
+            // Mettre à jour les données dans le tableau
+            console.log(response);
+          } else {
+            console.error("Une erreur s'est produite lors de l'enregistrement des modifications.");
           }
-        );
-
-      } else if (this.isPrinter()) {
-          this.printer$.pipe(
-            switchMap((printer) => this.responsableService.updatePrinter(printer.id, printer)),
-            catchError((error) => {
-              console.error(error);
-              return of(null);
-            })
-          ).subscribe(
-            (response) => {
-              if (response) {
-                // Mettre à jour les données dans le tableau
-                console.log(response);
-              } else {
-                console.error("Une erreur s'est produite lors de l'enregistrement des modifications.");
-              }
-            }
-          );
-
-      }
+        }
+      );
     }
   }
 
+  savePrinterChanges(printer: Printer) {
+    const confirmChanges = confirm("Êtes-vous sûr de vouloir enregistrer les modifications ?");
+    if (confirmChanges) {
+      this.responsableService.updatePrinter(printer.id, printer).pipe(
+        catchError((error) => {
+          console.error(error);
+          return of(null);
+        })
+      ).subscribe(
+        (response) => {
+          if (response) {
+            // Mettre à jour les données dans le tableau
+            console.log(response);
+          } else {
+            console.error("Une erreur s'est produite lors de l'enregistrement des modifications.");
+          }
+        }
+      );
+    }
+  }
 
   deleteResource() {
     const confirmChanges = confirm("Êtes-vous sûr de vouloir supprimer la ressource ?");

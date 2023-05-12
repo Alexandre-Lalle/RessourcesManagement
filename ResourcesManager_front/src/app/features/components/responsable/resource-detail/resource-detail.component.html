@@ -60,6 +60,13 @@
                         <td><input [(ngModel)]="computer.screen"></td>
                       </tr>
                     </table>
+
+                    <div>
+                      <button class="btn btn-primary mx-2"  (click)="cancelChanges()">Annuler</button>
+                      
+                      <button class="btn btn-primary mx-2"  (click)="saveComputerChanges(computer)">Enregistrer</button>
+                    </div>
+                    
                   </ng-container>
                   
                   <ng-template #printerSection>
@@ -111,9 +118,9 @@
                           </table>
 
                       <div>
-                        <button class="btn btn-primary"  (click)="cancelChanges()">Annuler</button>
+                        <button class="btn btn-primary mx-2"  (click)="cancelChanges()">Annuler</button>
                         
-                        <button class="btn btn-primary"  (click)="saveChanges()">Enregistrer</button>
+                        <button class="btn btn-primary mx-2"  (click)="savePrinterChanges(printer)">Enregistrer</button>
                       </div>
 
                     </ng-container>

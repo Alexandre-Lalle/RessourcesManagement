@@ -1,7 +1,7 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, map, switchMap, take, tap } from 'rxjs';
+import { Observable, catchError, map, of, switchMap, take, tap } from 'rxjs';
 import { Affectation } from 'src/app/features/models/affectation.model';
 import { Computer } from 'src/app/features/models/computer.model';
 import { Printer } from 'src/app/features/models/printer.model';
@@ -92,43 +92,125 @@ export class ListeRessourcesComponent implements OnInit {
 
   ////////////////////////////////////////////////////
 
-  getAffectation(resource: any) {
-    this.affectation$ = this.responsableService.getAffectationByResourceId(resource.getId());
+ 
+  getAffectation(resource: Computer | Printer) {
+    if (!resource || typeof resource.id !== 'number') {
+      console.error('resource id is null');
+      return;
+    }
   
-    if (this.affectation$) {
-      return this.affectation$;
-    } else {
-      const affectation: Affectation = {
-        dateAffectation: new Date(),
-        teacherList: [],
-        ...resource
-      };
-      this.affectation$ = this.responsableService.addAffectation(affectation);
-      return this.affectation$;
+    console.log('resource : ', resource);
+  
+    this.responsableService.getAffectationByResourceId(resource.id).pipe(
+      catchError(error => {
+        console.error(error);
+        return of(null);
+      })
+    ).subscribe(affectation => {
+      if (affectation) {
+        this.affectation$ = of(affectation);
+        console.log("TTT ",affectation);
+      } else {
+        const newAffectation: Affectation = {
+          dateAffectation: new Date(),
+          teacherList: [],
+          resource: resource 
+        };
+        this.affectation$ = of(newAffectation);
+        console.log('Nouvelle affectation créée : ', newAffectation);
+      }
+    });
+  }
+
+  saveAAffectation() {
+    console.log("iiiiiiiii")
+    this.affectation$.pipe(
+      switchMap(affectation => {
+        // Vérifier si une affectation existe déjà pour cette resource
+        return this.responsableService.getAffectationByResourceId(affectation.resource.id).pipe(
+          switchMap(existingAffectation => {
+            if (existingAffectation) {
+              affectation.id = existingAffectation.id;
+              console.log("iiiiiiiii")
+              // Une affectation existe déjà, mettre à jour l'affectation existante
+              return this.responsableService.updateAffectation(affectation);
+            } else {
+              console.log("eeeeeeeeeeee")
+              // Aucune affectation existante, créer une nouvelle affectation
+              return this.responsableService.addAffectation(affectation);
+            }
+          }),
+          tap(() => {
+            // afficher le message de succès ici
+            alert('L\'affectation a été sauvegardée avec succès');
+          })
+        );
+      })
+    );
+  }
+  
+  async saveAAAffectation() {
+    try {
+      const affectation = await this.affectation$.pipe(
+        switchMap(affectation => {
+          // Vérifier si une affectation existe déjà pour cette resource
+          return this.responsableService.getAffectationByResourceId(affectation.resource.id).pipe(
+            switchMap(existingAffectation => {
+              if (existingAffectation) {
+                affectation.id = existingAffectation.id;
+                // Une affectation existe déjà, mettre à jour l'affectation existante
+                return this.responsableService.updateAffectation(affectation);
+              } else {
+                // Aucune affectation existante, créer une nouvelle affectation
+                return this.responsableService.addAffectation(affectation);
+              }
+            }),
+            tap(() => {
+              // afficher le message de succès ici
+              alert('L\'affectation a été sauvegardée avec succès');
+            })
+          );
+        })
+      ).toPromise();
+  
+      // Faire quelque chose avec affectation si nécessaire
+    } catch (error) {
+      // Gérer l'erreur ici
     }
   }
 
- 
-  
   saveAffectation() {
-    this.affectation$ = this.affectation$.pipe(
-    switchMap(affectation => this.responsableService.updateAffectation(affectation)),
-    tap(() => {
-      // afficher le message de succès ici
-      alert('L\'affectation a été sauvegardée avec succès');
-    })
-  );
+    this.affectation$.pipe(
+      switchMap(affectation => {
+        // Vérifier si une affectation existe déjà pour cette resource
+        return this.responsableService.getAffectationByResourceId(affectation.resource.id).pipe(
+          switchMap(existingAffectation => {
+            if (existingAffectation) {
+              affectation.id = existingAffectation.id;
+              // Une affectation existe déjà, mettre à jour l'affectation existante
+              return this.responsableService.updateAffectation(affectation);
+            } else {
+              // Aucune affectation existante, créer une nouvelle affectation
+              return this.responsableService.addAffectation(affectation);
+            }
+          }),
+          tap(() => {
+            // afficher le message de succès ici
+            alert('L\'affectation a été sauvegardée avec succès');
+          })
+        );
+      })
+    ); // pas besoin d'ajouter un abonnement si le code HTML s'abonne déjà à l'Observable affectation$
   }
-
 
   deleteTeacher(teacher: Teacher) {
     this.affectation$.pipe(take(1)).subscribe(affectation => {
       const teacherIndex = affectation.teacherList.findIndex(t => t.id === teacher.id);
       if (teacherIndex >= 0) {
         affectation.teacherList.splice(teacherIndex, 1);
-        this.responsableService.updateAffectation(affectation).subscribe(() => {
+        /*this.responsableService.updateAffectation(affectation).subscribe(() => {
           this.affectation$ = this.responsableService.getAffectationByResourceId(affectation.resource.id);
-        });
+        });*/
       }
     });
   }
@@ -138,21 +220,22 @@ export class ListeRessourcesComponent implements OnInit {
   }
 
   addTeacher() {
-
+    console.log(this.selectedTeacher)
+    //console.log(this.selectedTeacher.email + ' ' + this.selectedTeacher.lastName);
+    
     this.affectation$.pipe(take(1)).subscribe(affectation => {
       const teacherExists = affectation.teacherList.some(t => t.id === this.selectedTeacher.id);
-      if (!teacherExists) {
+      if (!teacherExists) { 
         affectation.teacherList.push(this.selectedTeacher);
-        this.responsableService.updateAffectation(affectation).subscribe(() => {
+       /* this.responsableService.updateAffectation(affectation).subscribe(() => {
           this.affectation$ = this.responsableService.getAffectationByResourceId(affectation.resource.id);
-        });
+        });*/
       }
     });
+  
     }
 
-
-
-
+   
 
 
 /*
@@ -168,3 +251,5 @@ export class ListeRessourcesComponent implements OnInit {
   }*/
 
 }
+
+

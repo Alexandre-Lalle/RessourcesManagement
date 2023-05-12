@@ -96,17 +96,19 @@
                                                                     <td>
                                                                         {{computer.disk}}
                                                                     </td>
-                                                                    <td><span class="badge label-table badge-custom"></span>
+                                                                    <td><span class="badge label-table badge-custom">
                                                                         {{ getStateLabel(computer) }}
+                                                                    </span>
+                                                                        
                                                                     </td>
                                                                     <td>
                                                                         
                                                                         <button (click)="onConsultResource(computer.id,'computer')" 
-                                                                        class="btn btn-sm btn-custom">
+                                                                        class="btn btn-sm btn-custom mx-1">
                                                                         <i class="fa fa-eye"></i>  </button>
 
                                                                         <button (click)="getAffectation(computer)" data-toggle="modal" data-target="#affectation" 
-                                                                            class="btn btn-sm btn-custom"><i class="fi-head mr-2"></i></button>
+                                                                            class="btn btn-sm btn-custom mx-1"><i class="fi-head mr-2"></i></button>
                                                                         
                                                                         
                                                                     </td>
@@ -197,8 +199,10 @@
                                                                         {{printer.printSpeed}}
                                                                     </td>
                                                                     <td>
-                                                                        <span class="badge label-table badge-custom"></span>
-                                                                        {{ getStateLabel(printer) }}
+                                                                        <span class="badge label-table badge-danger">
+                                                                            {{ getStateLabel(printer) }}
+                                                                        </span>
+                                                                        
                                                                     </td>
                                                                     <td>
                                                                         <button (click)="onConsultResource(printer.id, 'printer')" 
@@ -261,7 +265,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                           <label for="department-select">Département:</label>
-                                          <select formControlName="department" id="department-select" class="form-control" [(ngModel)]="selectedDepartment" (change)="onDepartmentSelect()">
+                                          <select id="department-select" class="form-control" [(ngModel)]="selectedDepartment" (change)="onDepartmentSelect()">
                                             <option *ngFor="let department of departments$ | async" [value]="department">{{ department }}</option>
                                           </select>
                                         </div>
@@ -269,8 +273,8 @@
                                       <div class="col-md-4">
                                         <div class="form-group">
                                           <label for="teacher-select">Enseignant:</label>
-                                          <select formControlName="teacher" id="teacher-select" class="form-control" [(ngModel)]="selectedTeacher">
-                                            <option *ngFor="let teacher of teachers$ | async" [value]="teacher">{{ teacher.firstName }} {{ teacher.lastName }}</option>
+                                          <select id="teacher-select" class="form-control" [(ngModel)]="selectedTeacher"> 
+                                            <option *ngFor="let teacher of teachers$ | async" [ngValue]="teacher">{{ teacher.firstName }} {{ teacher.lastName }}</option>                           
                                           </select>
                                         </div>
                                       </div>
@@ -320,7 +324,7 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <div class="modal-footer"> <button class="btn btn-primary" (click)="saveAffectation()">Enregistrer</button> </div>
+                        <div class="modal-footer"> <button class="btn btn-primary" (click)="saveAAAffectation()">Enregistrer</button> </div>
                     </div>
  
                 </div>

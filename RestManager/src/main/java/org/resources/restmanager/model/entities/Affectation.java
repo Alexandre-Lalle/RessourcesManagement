@@ -28,6 +28,4 @@ public class Affectation {
 	@JoinColumn(name = "ressource_id")
 	private Resource resource;
 
-
-
 }

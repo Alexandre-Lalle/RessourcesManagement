@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
 
 import java.util.Date;
@@ -21,6 +22,9 @@ public abstract class Resource {
     @Id
     @GeneratedValue
     private Long id;
+
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
     private String barCode;
     @NonNull
     private String name;

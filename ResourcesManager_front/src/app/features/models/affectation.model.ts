@@ -3,7 +3,7 @@ import { Teacher } from "./teacher.mode";
 
 export interface Affectation {
 
-    id:number;
+    id?:number;
     dateAffectation:Date;
     teacherList:Teacher[];
     resource:Resource;

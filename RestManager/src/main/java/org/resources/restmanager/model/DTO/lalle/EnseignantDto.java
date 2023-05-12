@@ -45,7 +45,7 @@ public class EnseignantDto implements Serializable {
         enseignant.setFirstName(enseignantDto.getFirstName());
         enseignant.setLastName(enseignantDto.getLastName());
         enseignant.setEmail(enseignantDto.getEmail());
-        enseignant.setDepartment(enseignantDto.getDepartement());
+       // enseignant.setDepartment(enseignantDto.getDepartement());
         return enseignant;
     }
 

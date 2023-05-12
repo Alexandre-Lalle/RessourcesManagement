@@ -85,9 +85,9 @@ public class ManagerController {
         resourcesService.deletePrinterById(id);
     }
 
-    @PostMapping("/add-affectation")
+    @PostMapping(path = "/add-affectation",produces = {"application/json"},consumes = {"application/json"})
     public AffectationDto addAffectation(@RequestBody AffectationDto affectationDto){
-
+        System.out.println("add function was called !");
         return affectationService.createAffectation(affectationDto);
     }
     @GetMapping("/affectation/{id}")
