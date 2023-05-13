@@ -23,15 +23,8 @@ public abstract class Resource {
     @Id
     @GeneratedValue
     private Long id;
-
     @Column(unique = true)
     private String barCode;
-
-//    @PrePersist
-//    public void generateBarCode() {
-//        this.barCode = UUID.randomUUID().toString();
-//    }
-
     @CreationTimestamp
     private Date dateOfRequest;
     private Date deliveryDate;

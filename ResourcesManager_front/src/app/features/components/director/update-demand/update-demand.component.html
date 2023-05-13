@@ -285,7 +285,7 @@
     </div>
     <div class="form-group text-right m-b-0">
       <button type="reset" class="btn btn-light m-1" routerLink="/director/demands">Cancel</button>
-      <button *ngIf="demand && demand.teachers.length>1 && printerDemand.printer.state!=1 && computerDemand.computer.state!=1" type="submit" class="btn btn-success m-1">Modifier</button>
+      <button *ngIf="demand && demand.teachers.length>1 && ((printerDemand && printerDemand.printer.state!=1) || true) && ((computerDemand && computerDemand.computer.state!=1) || true)" type="submit" class="btn btn-success m-1">Modifier</button>
     </div>
   </div>
   <!-- second Row end-->

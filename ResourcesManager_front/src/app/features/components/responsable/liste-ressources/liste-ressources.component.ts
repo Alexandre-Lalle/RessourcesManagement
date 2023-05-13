@@ -1,7 +1,7 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, catchError, lastValueFrom, map, of, switchMap, take, tap } from 'rxjs';
+import { Observable, catchError, of, switchMap, take, tap } from 'rxjs';
 import { Affectation } from 'src/app/features/models/affectation.model';
 import { Computer } from 'src/app/features/models/computer.model';
 import { Printer } from 'src/app/features/models/printer.model';
@@ -96,7 +96,7 @@ export class ListeRessourcesComponent implements OnInit {
         return of(null);
       })
     ).subscribe(affectation => {
-      if (affectation) {
+      if (affectation && affectation.teacherList.length == 0) {
         affectation.teacherList = resource.teachers?.slice()?? [];
         this.affectation$ = of(affectation);
         console.log("TTT ", affectation);

@@ -49,7 +49,15 @@ export class ListDemandsComponent implements OnInit {
     let confirmation = confirm("Confirmer l'envoye des demandes ?");
     if (confirmation) {
       this.demandService.sendUnavailableDemands().subscribe((res) => {
-        res ? alert("Les demandes ont etées envoyées avec succes !") : alert("Les demandes n'ont pas etées envoyées");
+        if (res) {
+          alert("Les demandes ont etées envoyées avec succes !");
+          this.demands.forEach(demand => {
+            if (demand.resource.state == -1) demand.resource.state = 0
+          });
+        }
+        else {
+          alert("Les demandes n'ont pas etés envoyées")
+        }
       })
     }
   }

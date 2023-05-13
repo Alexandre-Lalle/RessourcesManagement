@@ -14,10 +14,11 @@ import java.util.List;
 @Transactional
 public class ConsulterFournisseurService {
     private final AppUserRepository userRepository;
+    private final ProviderRepository providerRepository;
 
-
-    public ConsulterFournisseurService(AppUserRepository userRepository) {
+    public ConsulterFournisseurService(AppUserRepository userRepository, ProviderRepository providerRepository) {
         this.userRepository=userRepository;
+        this.providerRepository = providerRepository;
     }
     public Provider addProvider(Provider fournisseur){
         return userRepository.save(fournisseur);
@@ -40,7 +41,9 @@ public class ConsulterFournisseurService {
     }
 
     public Provider updateProvider(Provider fournisseur){
-        return userRepository.save(fournisseur);
+        Provider provider = providerRepository.getReferenceById(fournisseur.getId());
+        provider.setPlace(fournisseur.getPlace());
+        return userRepository.save(provider);
     }
     public void deleteProviderById(Long id){
         userRepository.deleteProviderById(id);

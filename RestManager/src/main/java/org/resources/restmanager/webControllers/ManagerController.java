@@ -163,7 +163,8 @@ public class ManagerController {
     public boolean deletePrinter(@PathVariable("id") final long id){
         return resourcesService.deletePrinterById(id);
     }
-    
+
+
     @PostMapping(path = "/add-affectation",produces = {"application/json"},consumes = {"application/json"})
     public AffectationDto addAffectation(@RequestBody AffectationDto affectationDto){
         System.out.println("add function was called !");

@@ -62,5 +62,4 @@ public class AffectationService {
         }
         return AffectationDto.toDto(affectation);
     }
-
 }

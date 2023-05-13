@@ -1,163 +1,163 @@
 
 <div class="container-fluid">
 
-    <div class="row">
-        <div class="col-10">
-            <div class="card-box">
-                <h2 class="header-title mb-3">Propriétés de la ressource</h2>
+  <div class="row">
+      <div class="col-10">
+          <div class="card-box">
+              <h2 class="header-title mb-3">Propriétés de la ressource</h2>
 
-                <ng-container *ngIf="(computer$ | async) as computer; else printerSection">
-                    <table class="table table-bordered table-striped">
-                      <tr>
-                        <td>Id </td>
-                        <td>{{ computer.id }}</td>
-                      </tr>
-                      <tr>
-                        <td>Code bar </td>
-                        <td><input class="form-control" [(ngModel)]="computer.barCode"></td>
-                      </tr>
-                      <tr>
-                        <td>Nom du fournisseur </td>
-                        <td>  {{computer.providerName}} </td>
-                      </tr>
-                      <tr>
-                        <td>Marque </td>
-                        <td><input class="form-control" [(ngModel)]="computer.brand"></td>
-                      </tr>
-                      <tr>
-                        <td>Date de demande </td>
-                        <td>{{computer.dateOfRequest | date : 'dd/mm/yyyy'}}</td>
-                      </tr>
-                      <tr>
-                        <td>Date de livraison </td>
-                        <td><input class="form-control" [(ngModel)]="computer.deliveryDate" type="date"></td>
-                      </tr>
-                      <tr>
-                        <td>Durée de garantie </td>
-                        <td><input class="form-control" [(ngModel)]="computer.warrantyDate" type="date"></td>
-                      </tr>
+              <ng-container *ngIf="(computer$ | async) as computer; else printerSection">
+                  <table class="table table-bordered table-striped">
+                    <tr>
+                      <td>Id </td>
+                      <td>{{ computer.id }}</td>
+                    </tr>
+                    <tr>
+                      <td>Code bar </td>
+                      <td><input class="form-control" [(ngModel)]="computer.barCode"></td>
+                    </tr>
+                    <tr>
+                      <td>Nom du fournisseur </td>
+                      <td>  {{computer.providerName}} </td>
+                    </tr>
+                    <tr>
+                      <td>Marque </td>
+                      <td><input class="form-control" [(ngModel)]="computer.brand"></td>
+                    </tr>
+                    <tr>
+                      <td>Date de demande </td>
+                      <td>{{computer.dateOfRequest | date : 'dd/mm/yyyy'}}</td>
+                    </tr>
+                    <tr>
+                      <td>Date de livraison </td>
+                      <td><input class="form-control" [(ngModel)]="computer.deliveryDate" type="date"></td>
+                    </tr>
+                    <tr>
+                      <td>Durée de garantie </td>
+                      <td><input class="form-control" [(ngModel)]="computer.warrantyDate" type="date"></td>
+                    </tr>
+                    
+                    <tr>
+                      <td>Etat de la ressource</td>
+                      <td style="">
+                        <span
+                          *ngIf="computer.state == -1"
+                          class="badge label-table badge-danger">Non Disponible</span>
+                        <span
+                          *ngIf="computer.state == 0"
+                          class="badge label-table badge-warning"
+                          >Traitement</span>
+                        <span
+                          *ngIf="computer.state == 1"
+                          class="badge label-table badge-success"
+                          >Disponible</span>
+                    </td>
+                    </tr>
+
+                    <tr *ngIf="isComputer()">
+                      <td>Disque </td>
+                      <td><input class="form-control" [(ngModel)]="computer.disk"></td>
+                    </tr>
+                    <tr *ngIf="isComputer()">
+                      <td>RAM :</td>
+                      <td><input class="form-control" [(ngModel)]="computer.ram"></td>
+                    </tr>
+                    <tr *ngIf="isComputer()">
+                      <td>CPU :</td>
+                      <td><input class="form-control" [(ngModel)]="computer.cpu"></td>
+                    </tr>
+                    <tr *ngIf="isComputer()">
+                      <td>Ecran</td>
+                      <td><input class="form-control" [(ngModel)]="computer.screen"></td>
+                    </tr>
+                  </table>
+
+                  <div class="note-float-right">
+                    <button class="btn btn-primary mx-2"  (click)="cancelChanges()">Annuler</button>
+
+                    <button class="btn btn-primary mx-2"  (click)="deleteResource(computer)">Supprimer</button>
+                    
+                    <button class="btn btn-primary mx-2"  (click)="saveComputerChanges(computer)">Enregistrer</button>
+                  </div>
+                  
+                </ng-container>
+                
+                <ng-template #printerSection>
+                  <ng-container *ngIf="(printer$ | async) as printer">
+                      <table class="table table-bordered table-striped">
+                          <tr>
+                            <td>Id </td>
+                            <td>{{ printer.id }}</td>
+                          </tr>
+                          <tr>
+                            <td>Code bar </td>
+                            <td><input class="form-control" [(ngModel)]="printer.barCode"></td>
+                          </tr>
+                          <tr>
+                            <td>Nom du fournisseur </td>
+                            <td>{{printer.providerName}}</td>
+                          </tr>
+                          <tr>
+                            <td>Marque </td>
+                            <td><input class="form-control" [(ngModel)]="printer.brand"></td>
+                          </tr>
+                          <tr>
+                            <td>Date de demande </td>
+                            <td>{{printer.dateOfRequest | date }}</td>
+                          </tr>
+                          <tr>
+                            <td>Date de livraison </td>
+                            <td><input type="date" class="form-control" [(ngModel)]="printer.deliveryDate"></td>
+                          </tr>
+                          <tr>
+                            <td>Durée de garantie </td>
+                            <td><input type="date" class="form-control" [(ngModel)]="printer.warrantyDate"></td>
+                          </tr>
+                          <tr>
+                            <td>Etat de la ressource</td>
+                            <td style="">
+                              <span
+                                *ngIf="printer.state == -1"
+                                class="badge label-table badge-danger">Non Disponible</span>
+                              <span
+                                *ngIf="printer.state == 0"
+                                class="badge label-table badge-warning"
+                                >Traitement</span>
+                              <span
+                                *ngIf="printer.state == 1"
+                                class="badge label-table badge-success"
+                                >Disponible</span>
+                            </td>
+                          </tr>
+    
+                          <tr *ngIf="isPrinter()">
+                            <td>Résolution </td>
+                            <td><input class="form-control" [(ngModel)]="printer.resolution"></td>
+                          </tr>
+                          <tr *ngIf="isPrinter()">
+                            <td>Vitesse d'impression </td>
+                            <td><input class="form-control" [(ngModel)]="printer.printSpeed"></td>
+                          </tr>
                       
-                      <tr>
-                        <td>Etat de la ressource</td>
-                        <td style="">
-                          <span
-                            *ngIf="computer.state == -1"
-                            class="badge label-table badge-danger">Non Disponible</span>
-                          <span
-                            *ngIf="computer.state == 0"
-                            class="badge label-table badge-warning"
-                            >Traitement</span>
-                          <span
-                            *ngIf="computer.state == 1"
-                            class="badge label-table badge-success"
-                            >Disponible</span>
-                      </td>
-                      </tr>
-
-                      <tr *ngIf="isComputer()">
-                        <td>Disque </td>
-                        <td><input class="form-control" [(ngModel)]="computer.disk"></td>
-                      </tr>
-                      <tr *ngIf="isComputer()">
-                        <td>RAM :</td>
-                        <td><input class="form-control" [(ngModel)]="computer.ram"></td>
-                      </tr>
-                      <tr *ngIf="isComputer()">
-                        <td>CPU :</td>
-                        <td><input class="form-control" [(ngModel)]="computer.cpu"></td>
-                      </tr>
-                      <tr *ngIf="isComputer()">
-                        <td>Ecran</td>
-                        <td><input class="form-control" [(ngModel)]="computer.screen"></td>
-                      </tr>
-                    </table>
+                        </table>
 
                     <div class="note-float-right">
                       <button class="btn btn-primary mx-2"  (click)="cancelChanges()">Annuler</button>
 
-                      <button class="btn btn-primary mx-2"  (click)="deleteResource(computer)">Supprimer</button>
+                      <button class="btn btn-primary mx-2"  (click)="deleteResource(printer)">Supprimer</button>
                       
-                      <button class="btn btn-primary mx-2"  (click)="saveComputerChanges(computer)">Enregistrer</button>
+                      <button class="btn btn-primary mx-2"  (click)="savePrinterChanges(printer)">Enregistrer</button>
                     </div>
-                    
+
                   </ng-container>
-                  
-                  <ng-template #printerSection>
-                    <ng-container *ngIf="(printer$ | async) as printer">
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                              <td>Id </td>
-                              <td>{{ printer.id }}</td>
-                            </tr>
-                            <tr>
-                              <td>Code bar </td>
-                              <td><input class="form-control" [(ngModel)]="printer.barCode"></td>
-                            </tr>
-                            <tr>
-                              <td>Nom du fournisseur </td>
-                              <td>{{printer.providerName}}</td>
-                            </tr>
-                            <tr>
-                              <td>Marque </td>
-                              <td><input class="form-control" [(ngModel)]="printer.brand"></td>
-                            </tr>
-                            <tr>
-                              <td>Date de demande </td>
-                              <td>{{printer.dateOfRequest | date }}</td>
-                            </tr>
-                            <tr>
-                              <td>Date de livraison </td>
-                              <td><input type="date" class="form-control" [(ngModel)]="printer.deliveryDate"></td>
-                            </tr>
-                            <tr>
-                              <td>Durée de garantie </td>
-                              <td><input type="date" class="form-control" [(ngModel)]="printer.warrantyDate"></td>
-                            </tr>
-                            <tr>
-                              <td>Etat de la ressource</td>
-                              <td style="">
-                                <span
-                                  *ngIf="printer.state == -1"
-                                  class="badge label-table badge-danger">Non Disponible</span>
-                                <span
-                                  *ngIf="printer.state == 0"
-                                  class="badge label-table badge-warning"
-                                  >Traitement</span>
-                                <span
-                                  *ngIf="printer.state == 1"
-                                  class="badge label-table badge-success"
-                                  >Disponible</span>
-                              </td>
-                            </tr>
-      
-                            <tr *ngIf="isPrinter()">
-                              <td>Résolution </td>
-                              <td><input class="form-control" [(ngModel)]="printer.resolution"></td>
-                            </tr>
-                            <tr *ngIf="isPrinter()">
-                              <td>Vitesse d'impression </td>
-                              <td><input class="form-control" [(ngModel)]="printer.printSpeed"></td>
-                            </tr>
-                        
-                          </table>
-
-                      <div class="note-float-right">
-                        <button class="btn btn-primary mx-2"  (click)="cancelChanges()">Annuler</button>
-
-                        <button class="btn btn-primary mx-2"  (click)="deleteResource(printer)">Supprimer</button>
-                        
-                        <button class="btn btn-primary mx-2"  (click)="savePrinterChanges(printer)">Enregistrer</button>
-                      </div>
-
-                    </ng-container>
-                  </ng-template>
+                </ng-template>
 
 
 
-            </div>
-        </div><!-- end col -->
-    </div>
-    <!-- end row -->
+          </div>
+      </div><!-- end col -->
+  </div>
+  <!-- end row -->
 
 </div> <!-- container -->
 
