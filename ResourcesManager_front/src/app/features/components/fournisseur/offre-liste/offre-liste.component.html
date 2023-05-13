@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-10">
             <div class="card-box">
-                <h4 class="header-title mb-3">Liste des demandes</h4>
+                <h4 class="header-title mb-3">Liste des Appels d'offres</h4>
 
                 <div class="table-responsive">
                     <table class="table table-hover table-centered m-0">
@@ -13,8 +13,6 @@
                                 <th>#</th>
                                 <th>Date Debut</th>
                                 <th>Date Fin</th>
-                                
-
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -26,24 +24,52 @@
 
                                 <td>
 
-                                    {{offre.dateDebut}}
+                                    {{offre.dateDebut | date}}
                                 </td>
                                 <td>
-                                    {{offre.dateFin }}
+                                    {{offre.dateFin | date}}
                                 </td>
                                 <td>
-                                    <!-- <a href="#" class="btn btn-sm btn-custom"><i class="mdi mdi-plus"></i></a>
-                                    <a href="#" class="btn btn-sm btn-danger"><i class="mdi mdi-minus"></i></a> -->
+ 
                                     <a (click)="setOffreID(offre.id)" data-toggle="modal" data-target="#add-soumission"
-                                        class="btn btn-sm btn-custom"><i class="mdi mdi-plus"></i></a>
+                                        class="btn btn-sm btn-success"><i class="mdi mdi-plus"></i></a>
                                     <a (click)="setOffre(offre)" data-toggle="modal" data-target="#plus-info"
-                                        class="btn btn-sm btn-custom ml-1"><i class="mdi mdi-information-outline"></i></a>
+                                        class="btn btn-sm btn-primary ml-1"><i class="mdi mdi-information-outline"></i></a>
 
                                 </td>
                             </tr>
 
 
                         </tbody>
+                        <tfoot>
+                            <tr class="active">
+                              <td colspan="7" class="footable-visible">
+                                <div class="text-right">
+                                  <ul
+                                    class="pagination pagination-split justify-content-end footable-pagination m-t-10"
+                                  >
+                                    <li class="footable-page-arrow disabled">
+                                      <a data-page="first" href="#first">«</a>
+                                    </li>
+                                    <li class="footable-page-arrow disabled">
+                                      <a data-page="prev" href="#prev">‹</a>
+                                    </li>
+                                    <li class="footable-page active">
+                                      <a data-page="0" href="#">1</a>
+                                    </li>
+                                    <li class="footable-page"><a data-page="1" href="#">2</a></li>
+                                    <li class="footable-page"><a data-page="2" href="#">3</a></li>
+                                    <li class="footable-page-arrow">
+                                      <a data-page="next" href="#next">›</a>
+                                    </li>
+                                    <li class="footable-page-arrow">
+                                      <a data-page="last" href="#last">»</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </td>
+                            </tr>
+                          </tfoot>
                     </table>
                 </div>
             </div>
@@ -65,21 +91,48 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
-                                <h4 class="header-title m-t-0 m-b-30">Ajouter Soumission</h4>
+                                <h4 class="header-title m-t-0 m-b-30">Ajouter Votre Soumission</h4>
 
                                 <div class="form-group row">
-                                    <label class="col-4 col-form-label">Marque :</label>
-                                    <div class="col-8">
+                                    <label class="col-6 col-form-label">Marque Ordinateur (s) :</label>
+                                    <div class="col-6">
 
-                                        <input [(ngModel)]="soumission.marque" type="text" class="form-control">
+                                        <input [(ngModel)]="soumission.marqueOrdinateur" type="text" class="form-control">
 
                                     </div>
 
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-4 col-form-label">Prix :</label>
-                                    <div class="col-8">
-                                        <input [(ngModel)]="soumission.prix" type="text" class="form-control">
+                                    <label class="col-6 col-form-label">Marque Imprimante (s) :</label>
+                                    <div class="col-6">
+
+                                        <input [(ngModel)]="soumission.marqueImprimante" type="text" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Date de garantie :</label>
+                                    <div class="col-6">
+
+                                        <input [(ngModel)]="soumission.dateGarentie" type="date" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Date de livraison  :</label>
+                                    <div class="col-6">
+
+                                        <input [(ngModel)]="soumission.dateLivraison" type="date" class="form-control">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-6 col-form-label">Prix :</label>
+                                    <div class="col-6">
+                                        <input [(ngModel)]="soumission.prix" type="number" class="form-control" min="0">
 
                                     </div>
 
@@ -92,7 +145,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    {{soumission | json }}
+                    
                     <button (click)="saveSoumission()" type="button" class="btn btn-primary">Ajouter</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                 </div>
@@ -113,7 +166,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
-                                <h4 class="header-title m-t-0 m-b-30">La Liste Des ressources</h4>
+                                <h4 class="header-title m-t-0 m-b-30">La Liste Des Ressources</h4>
 
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item">

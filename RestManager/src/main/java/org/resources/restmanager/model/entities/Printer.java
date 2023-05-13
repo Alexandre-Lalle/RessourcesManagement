@@ -9,7 +9,7 @@ import org.springframework.lang.NonNull;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Printer extends Resource {
@@ -18,8 +18,7 @@ public class Printer extends Resource {
     @NonNull
     private int printSpeed;
 
-    public Printer(String name, String resolution, int printSpeed){
-        super(name);
+    public Printer(String resolution, int printSpeed){
         this.resolution = resolution;
         this.printSpeed = printSpeed;
     }

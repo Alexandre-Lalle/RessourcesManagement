@@ -4,6 +4,7 @@ export interface User{
     lastName:string;
     email:string;
     password:string;
+    userName?:String;
     type:string;
 
     // constructor(id:number, firstNAme:string, lastName:string, email:string, type:string){

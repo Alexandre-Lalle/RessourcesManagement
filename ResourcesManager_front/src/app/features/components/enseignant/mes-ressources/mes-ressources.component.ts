@@ -10,48 +10,59 @@ import { EnseignantService } from 'src/app/features/services/enseignant.service'
   templateUrl: './mes-ressources.component.html',
   styleUrls: ['./mes-ressources.component.css']
 })
-export class MesRessourcesComponent implements OnInit{
-    computers:Computer[]= []; 
-    printers:Printer[]= []; 
-    panne:Panne={}; 
-  constructor(private enseignantService:EnseignantService){
+export class MesRessourcesComponent implements OnInit {
+  computers: Computer[] = [];
+  printers: Printer[] = [];
+  panne: Panne = {
+
+  };
+  panneList: Panne[] = [];
+
+  constructor(private enseignantService: EnseignantService) {
 
   }
-  ngOnInit(): void { 
-    this.getComputers(); 
-    this.getPrinters(); 
+  ngOnInit(): void {
+    this.getComputers();
+    this.getPrinters();
 
   }
-// Mes Ressouces
-  getComputers(){
+  // Mes Ressouces
+  getComputers() {
     return this.enseignantService.findCumputers()
-    .subscribe(computers => this.computers =computers)
-    ; 
+      .subscribe((computers) => {
+        this.computers = computers;
+        console.log("computer :", this.computers)
+      })
+      ;
   }
-  getPrinters(){
+  getPrinters() {
     return this.enseignantService.findPrinters()
-    .subscribe( printers => this.printers = printers )
-    ; 
+      .subscribe(printers => { this.printers = printers })
+      ;
   }
   // ajouter panne
-  remplir(id:any){
-    this.panne.ressourceDto= {
-      id:id,
+  remplir(id: any) {
+    this.panne.ressourceDto = {
+      id: id,
       barCode: NaN,
-      name:"",
+      name: "",
       assignmentDate: new Date(),
       deliveryDate: new Date(),
       warrantyDate: new Date(),
       dateOfRequest: new Date(),
       brand: "",
       resourceType: "Computer",
-      state:1
-    }; 
+      state: 1
+    };
   }
-  savePane(){
+  savePane() {
     return this.enseignantService.savePane(this.panne)
-    .subscribe( panne => alert("Le panne est ajoute avec succes "),err => alert("Il y a une erreur!!!")); 
-  
+      .subscribe(panne => alert("Le panne est ajoute avec succes "), err => alert("Il y a une erreur!!!"));
+
+  }
+  setPanneList(pannes: any) {
+    this.panneList = pannes;
+    console.log("hello there ", this.panneList);
   }
 
 

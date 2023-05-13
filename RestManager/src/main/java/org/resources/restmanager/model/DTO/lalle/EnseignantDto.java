@@ -21,13 +21,13 @@ public class EnseignantDto implements Serializable {
     private String lastName;
     private String email;
     private boolean isChef;
-    private String departement;
+    private String department;
 
     public static EnseignantDto toDto(Teacher teacher){
             return EnseignantDto.builder().
                     id(teacher.getId()).firstName(teacher.getFirstName())
                     .lastName(teacher.getLastName()).email(teacher.getEmail())
-                    .departement(teacher.getDepartment())
+                    .department(teacher.getDepartment())
                     .build();
     }
 
@@ -45,7 +45,7 @@ public class EnseignantDto implements Serializable {
         enseignant.setFirstName(enseignantDto.getFirstName());
         enseignant.setLastName(enseignantDto.getLastName());
         enseignant.setEmail(enseignantDto.getEmail());
-       // enseignant.setDepartment(enseignantDto.getDepartement());
+        enseignant.setDepartment(enseignantDto.getDepartment());
         return enseignant;
     }
 

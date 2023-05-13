@@ -5,35 +5,45 @@ import { Message } from '../models/message.model';
 import { Besoin } from '../models/Besoin.model';
 import { Computer } from '../models/computer.model';
 import { Printer } from '../models/printer.model';
+import { Teacher } from '../models/teacher.mode';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnseignantService {
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private authService:AuthService) { }
 
-  apiUrl="http://localhost:8080/enseignant"; 
+  apiUrl="http://localhost:8085/Recources-Managment/enseignant"; 
    
 
 
-  getRequests(id:any){
-    return this.http.get<Message[]>(`${this.apiUrl}/liste-demandes/${id}`) ; 
+  getRequests(){
+    const currentUser:Teacher = this.authService.getUser()
+
+    return this.http.get<Message[]>(`${this.apiUrl}/liste-demandes/${currentUser.department}`) ; 
   }
 
   getBesoin(id:any){
-    return this.http.get<Besoin>(`${this.apiUrl}/liste-demandes/besoin/${id}`) ; 
+    const currentUser:Teacher = this.authService.getUser()
+    return this.http.get<Besoin>(`${this.apiUrl}/liste-demandes/besoin/${id}/${currentUser.id}`) ; 
   }
   findCumputers(){
-   return this.http.get<Computer[]>(`${this.apiUrl}/liste-ordinateurs`) ; 
+    const currentUser:Teacher = this.authService.getUser()
+   return this.http.get<Computer[]>(`${this.apiUrl}/liste-ordinateurs/${currentUser.id}`) ; 
   }
   findPrinters(){
-    return this.http.get<Printer[]>(`${this.apiUrl}/liste-imprimantes`) ; 
+    const currentUser:Teacher = this.authService.getUser()
+    return this.http.get<Printer[]>(`${this.apiUrl}/liste-imprimantes/${currentUser.id}`) ; 
    }
-   saveRequest(besoin:Besoin){
-     return this.http.post<Besoin>(`${this.apiUrl}/ajouter-demande`,besoin); 
-   }
+  //  saveRequest(besoin:Besoin){
+  //   const currentUser:Teacher = this.authService.getUser()
+  //   besoin.enseignant_id = currentUser.id
+  //    return this.http.post<Besoin>(`${this.apiUrl}/ajouter-demande`,besoin); 
+  //  }
    savePane(panne:Panne){
-    return this.http.post<Panne>(`${this.apiUrl}/signaler-panne`,panne); 
+    const currentUser:Teacher = this.authService.getUser()
+    return this.http.post<Panne>(`${this.apiUrl}/signaler-panne/${currentUser.id}`,panne); 
    }
  
 }

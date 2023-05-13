@@ -5,6 +5,7 @@ import lombok.*;
 import jakarta.persistence.*;
 import org.resources.restmanager.model.DTO.mouhsine.OffreDTO;
 import org.resources.restmanager.model.DTO.mouhsine.ResourceDTO;
+import org.resources.restmanager.model.DTO.mouhsine.SoumissionDTO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Offre implements Serializable {
                 .dateDebut(offreDto.getDateDebut())
                 .dateFin(offreDto.getDateFin())
                 .resourceList(ResourceDTO.toEntitieList(offreDto.retournerResourceDTOList()))
-                .soumissionList(Soumission.toEntityList(offreDto.getSoumissionDTOList()))
+                .soumissionList(SoumissionDTO.toEntityList(offreDto.getSoumissionDTOList()))
                 .build();
     }
 

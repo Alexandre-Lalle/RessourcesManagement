@@ -17,9 +17,9 @@
         </li>
 
         <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle arrow-none" routerLink="/teacher/notifications" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">
                 <i class="fi-bell noti-icon"></i>
-                <span class="badge badge-danger badge-pill noti-icon-badge">4</span>
+                <span class="badge badge-danger badge-pill noti-icon-badge">3</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
 
@@ -43,43 +43,7 @@
 
             </div>
         </li>
-
-        <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <i class="fi-speech-bubble noti-icon"></i>
-                <span class="badge badge-custom badge-pill noti-icon-badge">6</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
-
-                <!-- item-->
-                <div class="dropdown-item noti-title">
-                    <h5 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>Clear All</small></a> </span>Chat</h5>
-                </div>
-
-                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 420.583px;"><div class="slimscroll" style="max-height: 230px; overflow: hidden; width: auto; height: 420.583px;">
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <div class="notify-icon"><img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt=""> </div>
-                        <p class="notify-details">Cristina Pride</p>
-                        <p class="text-muted font-13 mb-0 user-msg">Hi, How are you? What about our next meeting</p>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <div class="notify-icon"><img src="assets/images/users/avatar-6.jpg" class="img-fluid rounded-circle" alt=""> </div>
-                        <p class="notify-details">Shawn Millard</p>
-                        <p class="text-muted font-13 mb-0 user-msg">Yeah everything is fine</p>
-                    </a>
-                </div><div class="slimScrollBar" style="background: rgb(158, 165, 171); width: 8px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 150.284px;"></div><div class="slimScrollRail" style="width: 8px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
-
-                <!-- All-->
-                <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-                    View all <i class="fi-arrow-right"></i>
-                </a>
-
-            </div>
-        </li>
-
+        
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle"> <span class="ml-1">{{currentUser.firstName}}<i class="mdi mdi-chevron-down"></i> </span>

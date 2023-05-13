@@ -20,10 +20,10 @@
           vouz voullez le demander.
         </p>
         <div role="form" novalidate="">
-          <div class="container px-0 mb-4">
+          <!-- <div class="container px-0 mb-4">
             <button type="button" (click)="disablePrinterForm()" class="btn btn-outline-dark btn-rounded btn-sm tooltipstered" title="Disable the printer form">disable</button>
-          </div>
-          <div class="form-group row">
+          </div> -->
+          <!-- <div class="form-group row">
             <label for="inputEmail3" class="col-4 col-form-label">
               Nom<span class="text-danger">*</span>
             </label>
@@ -41,26 +41,27 @@
             <small *ngIf="addFormGroup.get('printer.name')?.errors && addFormGroup.get('printer.name')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
               {{getErrorMessage("Name",addFormGroup.get('printer.name')?.errors)}}
             </small>
-          </div>
+          </div> -->
           <div class="form-group row">
             <label for="hori-pass1" class="col-4 col-form-label">
-              Vitesse (mots/s)<span class="text-danger">*</span></label
+              Vitèsse (mots/s)<span class="text-danger">*</span></label
             >
             <div class="col-7">
               <select
                 formControlName="printSpeed"
                 id="hori-pass1"
                 class="form-control printer-control"
+                (change)="setAllP(addFormGroup.value.printer.printSpeed)"
               >
-                <option value="0" selcted disabled>exp : 3000 mots/s</option>
+                <option value="" selcted>Non renseigner</option>
                 <option value="10000">10000 mots/s</option>
                 <option value="5000">5000 mots/s</option>
                 <option value="2500">2500 mots/s</option>
                 <option value="1000">1000 mots/s</option>
               </select>
             </div>
-            <small *ngIf="addFormGroup.get('printer.printSpeed')?.errors && addFormGroup.get('printer.printSpeed')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
-              {{getErrorMessage("Print Speed",addFormGroup.get('printer.printSpeed')?.errors)}}
+            <small *ngIf="addFormGroup.get('printer.printSpeed')?.errors && addFormGroup.get('printer.printSpeed')?.touched && (allP!=0 && allP!=2 && allC!=0)" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Vitèsse",addFormGroup.get('printer.printSpeed')?.errors)}}
             </small>
           </div>
           <div class="form-group row">
@@ -73,13 +74,14 @@
                 class="form-control printer-control"
                 data-parsley-equalto="#hori-pass1"
                 id="hori-pass2"
+                (change)="setAllP(addFormGroup.value.printer.resolution)"
               >
-                <option value="" selected disabled>exp : 840x840</option>
+                <option value="" selected>Non renseigner</option>
                 <option value="1024x1024">1024x1024</option>
                 <option value="2048x2048">2048x2048</option>
               </select>
             </div>
-            <small *ngIf="addFormGroup.get('printer.resolution')?.errors && addFormGroup.get('printer.resolution')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+            <small *ngIf="addFormGroup.get('printer.resolution')?.errors && addFormGroup.get('printer.resolution')?.touched && (allP!=0 && allP!=2 && allC!=0)" class="fw-bold text-danger w-100 font-weight-bold col-7">
               {{getErrorMessage("Resolution",addFormGroup.get('printer.resolution')?.errors)}}
             </small>
           </div>
@@ -108,10 +110,10 @@
         </p>
 
         <div role="form" novalidate="">
-          <div class="container px-0 mb-4">
+          <!-- <div class="container px-0 mb-4">
             <button type="button" (click)="disableComputerForm()" class="btn btn-outline-dark btn-rounded btn-sm tooltipstered" title="Disable the printer form">disable</button>
-          </div>
-          <div class="form-group row">
+          </div> -->
+          <!-- <div class="form-group row">
             <label for="inputEmail3" class="col-4 col-form-label"
               >Nom <span class="text-danger">*</span></label
             >
@@ -126,7 +128,7 @@
                 placeholder="Nom ordinateur"
               />
             </div>
-          </div>
+          </div> -->
           <div class="form-group row">
             <label for="hori-pass1" class="col-4 col-form-label"
               >Espace disk<span class="text-danger">*</span></label
@@ -136,8 +138,9 @@
                 formControlName="disk"
                 class="form-control"
                 id="hori-pass1"
+                (change)="setAllP(addFormGroup.value.computer.disk)"
               >
-                <option value="" selcted disabled>exp : 256GB (ssd)</option>
+                <option value="" selcted>Non renseigner</option>
                 <optgroup label="HDDR">
                   <option value="128_GB_HDDR">128GB (hddr)</option>
                   <option value="256_GB_HDDR">256GB (hddr)</option>
@@ -152,6 +155,9 @@
                 </optgroup>
               </select>
             </div>
+            <small *ngIf="addFormGroup.get('computer.disk')?.errors && addFormGroup.get('computer.disk')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Espace disk",addFormGroup.get('computer.disk')?.errors)}}
+            </small>
           </div>
           <div class="form-group row">
             <label for="hori-pass2" class="col-4 col-form-label"
@@ -164,14 +170,18 @@
                 id="hori-pass2"
                 data-parsley-equalto="#hori-pass1"
                 required=""
+                (change)="setAllP(addFormGroup.value.computer.ram)"
               >
-                <option value="0" selcted disabled>exp : 8GB</option>
+                <option value="" selcted>Non renseigner</option>
                 <option value="8">8GB</option>
                 <option value="16">16GB</option>
                 <option value="32">32GB</option>
                 <option value="64">64GB</option>
               </select>
             </div>
+            <small *ngIf="addFormGroup.get('computer.ram')?.errors && addFormGroup.get('computer.ram')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("RAM",addFormGroup.get('computer.ram')?.errors)}}
+            </small>
           </div>
 
           <div class="form-group row">
@@ -185,8 +195,9 @@
                 parsley-type="url"
                 class="form-control"
                 id="webSite"
+                (change)="setAllP(addFormGroup.value.computer.cpu)"
               >
-                <option value="" selcted disabled>exp : i5 6Gen</option>
+                <option value="" selcted>Non renseigner</option>
                 <optgroup label="Intel">
                   <option value="core2 Dio">core2 Dio</option>
                   <option value="i3 5Gen">i3 5Gen</option>
@@ -223,6 +234,9 @@
                 <optgroup label="choix4"></optgroup>
               </select>
             </div>
+            <small *ngIf="addFormGroup.get('computer.cpu')?.errors && addFormGroup.get('computer.cpu')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("CPU",addFormGroup.get('computer.cpu')?.errors)}}
+            </small>
           </div>
           <div class="form-group row">
             <label for="webSite" class="col-4 col-form-label"
@@ -235,8 +249,9 @@
                 parsley-type="url"
                 class="form-control"
                 id="webSite"
+                (change)="setAllP(addFormGroup.value.computer.screen)"
               >
-              <option value="" selcted disabled>exp : intel card</option>
+              <option value="" selcted>Non renseigner</option>
                 <optgroup label="Intel">
                   <option value="intel card">Intel card</option>
                 </optgroup>
@@ -244,6 +259,9 @@
                 <optgroup label="Intel"></optgroup>
               </select>
             </div>
+            <small *ngIf="addFormGroup.get('computer.screen')?.errors && addFormGroup.get('computer.screen')?.touched" class="fw-bold text-danger w-100 font-weight-bold col-7">
+              {{getErrorMessage("Ecran",addFormGroup.get('computer.screen')?.errors)}}
+            </small>
           </div>
         </div>
       </div>
@@ -292,8 +310,8 @@
       </div>
     </div>
     <div class="form-group text-right m-b-0">
-      <button type="reset" class="btn btn-light m-1">Cancel</button>
-      <button type="submit" class="btn btn-success m-1" [disabled]="addFormGroup.valid" >Ajouter</button>
+      <button type="reset" routerLink="/director/demands" class="btn btn-light m-1">Cancel</button>
+      <button type="submit" class="btn btn-success m-1" [disabled]="">Ajouter</button>
     </div>
   </div>
   <!-- second Row end-->

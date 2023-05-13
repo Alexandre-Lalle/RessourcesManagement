@@ -12,20 +12,20 @@ public class FailureDTO {
     private Long id;
     private Date date;
     private String resourceType;
-    private String resourceName;
+    private String resourceBrand;
     private String teacherName;
     private String teacherEmail;
-    private boolean state;
+    private boolean processed;
 
     public static FailureDTO toDTO(@NonNull Failure failure){
         return FailureDTO.builder()
                 .id(failure.getId())
                 .date(failure.getDate())
                 .resourceType(failure.getResource().getResourceType())
-                .resourceName(failure.getResource().getName())
+                .resourceBrand(failure.getResource().getBrand())
                 .teacherName(failure.getTeacher().getFirstName()+" "+failure.getTeacher().getLastName())
                 .teacherEmail(failure.getTeacher().getEmail())
-                .state(failure.getReport()!=null)
+                .processed(failure.isProcessed())
                 .build();
     }
 }

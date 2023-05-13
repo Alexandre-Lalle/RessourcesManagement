@@ -12,11 +12,9 @@ import java.util.Date;
 @Builder
 public class PanneDto implements Serializable {
     private Long id;
-    private String explication;
-    private Date dateApp;
-    //private String frequence;
-    //private String ordre;
-    private Boolean traiter;
+    private Date date;
+
+    private Boolean state;
 
     private RessourceDto ressourceDto;
 
@@ -27,8 +25,8 @@ public class PanneDto implements Serializable {
     public static PanneDto toDto(Failure failure){
         return PanneDto.builder()
                 .id(failure.getId())
-                .dateApp(failure.getDate())
-                .traiter(failure.isProcessed())
+                .date(failure.getDate())
+                .state(failure.isProcessed())
                 .build();
 
     }

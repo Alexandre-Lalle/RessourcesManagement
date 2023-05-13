@@ -17,26 +17,32 @@
                             </a>
                         </h2>
 
-                        <form class="form-horizontal" action="#">
+                        <form [formGroup]="addFormGroup" class="form-horizontal" action="#" >
 
                             <div class="form-group row m-b-20">
                                 <div class="col-12">
-                                    <label for="username">Full Name</label>
-                                    <input class="form-control" type="email" id="username" required="" placeholder="Michael Zenaty">
+                                    <label for="username">Nom complet</label>
+                                    <input class="form-control" type="email" id="username" formControlName="name" required="" placeholder="Michael Zenaty">
                                 </div>
                             </div>
 
                             <div class="form-group row m-b-20">
                                 <div class="col-12">
-                                    <label for="emailaddress">Email address</label>
-                                    <input class="form-control" type="email" id="emailaddress" required="" placeholder="john@deo.com">
+                                    <label for="emailaddress">Adresse email</label>
+                                    <input class="form-control" type="email" id="emailaddress" formControlName="email" required="" placeholder="john@deo.com">
                                 </div>
                             </div>
 
                             <div class="form-group row m-b-20">
                                 <div class="col-12">
-                                    <label for="password">Password</label>
-                                    <input class="form-control" type="password" required="" id="password" placeholder="Enter your password">
+                                    <label for="password">Mot de passe</label>
+                                    <input class="form-control" type="password" required="" formControlName="password" id="password" placeholder="Enter your password">
+                                </div>
+                            </div>
+                            <div class="form-group row m-b-20">
+                                <div class="col-12">
+                                    <label for="password">Confirmation</label>
+                                    <input class="form-control" type="password" required="" formControlName="confirmation" id="password" placeholder="Enter your password">
                                 </div>
                             </div>
 

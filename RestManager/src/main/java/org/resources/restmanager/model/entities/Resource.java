@@ -10,12 +10,13 @@ import org.springframework.lang.NonNull;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Resource {
@@ -23,11 +24,14 @@ public abstract class Resource {
     @GeneratedValue
     private Long id;
 
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(unique = true)
     private String barCode;
-    @NonNull
-    private String name;
+
+//    @PrePersist
+//    public void generateBarCode() {
+//        this.barCode = UUID.randomUUID().toString();
+//    }
+
     @CreationTimestamp
     private Date dateOfRequest;
     private Date deliveryDate;
@@ -46,7 +50,6 @@ public abstract class Resource {
     )
     @JsonIgnore
     private List<Teacher> teachers;
-
     @JsonIgnore
     @OneToMany(mappedBy = "resource", fetch = FetchType.LAZY)
     private List<Failure> failures;
@@ -57,6 +60,8 @@ public abstract class Resource {
 
     @PrePersist
     public void setDefaults() {
+        this.barCode = UUID.randomUUID().toString();
+
         if (state == 0) {
             state = -1;
         }

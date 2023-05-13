@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, catchError, of, switchMap } from 'rxjs';
 import { Computer } from 'src/app/features/models/computer.model';
 import { Printer } from 'src/app/features/models/printer.model';
+import { Resource } from 'src/app/features/models/resource.model';
 import { ResponsableService } from 'src/app/features/services/responsable.service';
 
 @Component({
@@ -10,46 +11,46 @@ import { ResponsableService } from 'src/app/features/services/responsable.servic
   templateUrl: './resource-detail.component.html',
   styleUrls: ['./resource-detail.component.css']
 })
-export class ResourceDetailComponent implements OnInit{
-  computer!:Computer;
-  computer$!:Observable<Computer>; 
-  printer!:Printer;
-  printer$!:Observable<Printer>;
+export class ResourceDetailComponent implements OnInit {
+  computer!: Computer;
+  computer$!: Observable<Computer>;
+  printer!: Printer;
+  printer$!: Observable<Printer>;
   resourceId!: number;
   resourceType!: string;
 
-  constructor(private responsableService : ResponsableService, private route : ActivatedRoute,private router : Router){}
+  constructor(private responsableService: ResponsableService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.resourceId = +this.route.snapshot.params['id'];
     this.resourceType = this.route.snapshot.params['type'];
-    
-    if (this.resourceType === 'computer'){
+
+    if (this.resourceType === 'computer') {
       this.computer$ = this.responsableService.findComputerById(this.resourceId);
     }
-    else 
-    this.printer$ = this.responsableService.findPrinterById(this.resourceId);
+    else
+      this.printer$ = this.responsableService.findPrinterById(this.resourceId);
   }
 
   isComputer(): boolean {
-    
+
     return this.resourceType === 'computer';
   }
-  
+
   isPrinter(): boolean {
     return this.resourceType === 'printer';
   }
 
   cancelChanges() {
     // Rafraîchir les données dans le formulaire avec les données d'origine
-    if (this.isComputer()){
+    if (this.isComputer()) {
       this.computer$ = this.responsableService.findComputerById(this.resourceId);
     }
-    else 
-    this.printer$ = this.responsableService.findPrinterById(this.resourceId);
+    else
+      this.printer$ = this.responsableService.findPrinterById(this.resourceId);
   }
 
-  
+
   saveComputerChanges(computer: Computer) {
     const confirmChanges = confirm("Êtes-vous sûr de vouloir enregistrer les modifications ?");
     if (confirmChanges) {
@@ -92,64 +93,69 @@ export class ResourceDetailComponent implements OnInit{
     }
   }
 
-  deleteResource() {
-    const confirmChanges = confirm("Êtes-vous sûr de vouloir supprimer la ressource ?");
-    if (confirmChanges) {
+  deleteResource(resource:any) {
+    
       if (this.isComputer()) {
 
-        this.computer$.pipe(
-          switchMap(async (computer) => this.responsableService.deleteComputer(computer.id)),
-          catchError((error) => {
-            console.error(error);
-            return of(null);
-          })
-        ).subscribe(
-          (response) => {
-            if (response) {
-              console.log(`La ressource a été supprimée.`);
-              this.router.navigateByUrl(`resources-list`);
-
+    
+        this.deleteComputer(resource).subscribe(
+          (success) => {
+            if (success) {
+              console.log(`L'ordinateur a été supprimé.`);
+              this.router.navigateByUrl(`manager/resources-list`);
             } else {
-              console.error("Une erreur s'est produite lors de la suppression de la ressource.");
+              console.log(`La suppression de l'ordinateur a échoué.`);
             }
           }
         );
 
       } else if (this.isPrinter()) {
-          this.printer$.pipe(
-            switchMap(async (printer) => this.responsableService.deletePrinter(printer.id)),
-            catchError((error) => {
-              console.error(error);
-              return of(null);
-            })
-          ).subscribe(
-            (response) => {
-              if (response) {
-                console.log(`La ressource a été supprimée.`);
-                this.router.navigateByUrl(`resources-list`);
 
-              } else {
-                console.error("Une erreur s'est produite lors de la suppression de la ressource.");
-              }
+        this.deletePrinter(resource).subscribe(
+          (success) => {
+            if (success) {
+              console.log(`L'imprimante a été supprimée.`);
+              this.router.navigateByUrl(`manager/resources-list`);
+            } else {
+              console.log(`La suppression de l'imprimante a échoué.`);
             }
-          );
-
+          }
+        );
       }
     }
-  }
+  
 
-
-  getStateLabel(data:any): string {
-    switch (data.state) {
-      case 1:
-        return 'Disponible';
-      case 0:
-        return 'En cours de traitement';
-      case -1:
-        return 'Indisponible';
-      default:
-        return 'Indisponible';
+  deletePrinter(printer: Printer): Observable<boolean> {
+    const confirmChanges = confirm("Êtes-vous sûr de vouloir supprimer l'imprimante ?");
+    if (confirmChanges) {
+      return this.responsableService.deletePrinter(printer.id).pipe(
+        catchError((error) => {
+          console.error(error);
+          return of(false);
+        })
+      );
+    } else {
+      // Annuler la suppression
+      return of(false);
     }
   }
   
+  deleteComputer(computer: Computer): Observable<boolean> {
+    const confirmChanges = confirm("Êtes-vous sûr de vouloir supprimer l'ordinateur ?");
+    if (confirmChanges) {
+      return this.responsableService.deleteComputer(computer.id).pipe(
+        catchError((error) => {
+          console.error(error);
+          return of(false);
+        })
+      );
+    } else {
+      // Annuler la suppression
+      return of(false);
+    }
+  }
+
+
+
+
 }

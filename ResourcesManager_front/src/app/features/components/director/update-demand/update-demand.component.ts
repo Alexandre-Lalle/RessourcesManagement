@@ -20,7 +20,7 @@ export class UpdateDemandComponent implements OnInit {
   computerDemand!: ComputerDemand;
   printerDemand!: PrinterDemand;
   currentUser = { department: "data_science" };
-  all: Director = { id: NaN, firstName: "", lastName: "", password: "", email: "", department: "allDepartment", type: "" }
+  all: Director = { id: NaN, firstName: "", lastName: "", password: "", email: "Tous le departement", department: "allDepartment", type: "" }
   teachers!: Teacher[];
 
 
@@ -75,22 +75,20 @@ export class UpdateDemandComponent implements OnInit {
   private setControlls(teachers: Teacher[], control: number) {
     console.log("demandForm : ", this.demand, this.printerDemand);
 
-    let pr = this.printerDemand.printer, cp = this.computerDemand?.computer;
+    let pr = this.printerDemand?.printer, cp = this.computerDemand?.computer;
 
     this.updateFormGroup = this.fb.group({
       printer: this.fb.group({
-        'name': [pr.providerName, [Validators.minLength(2), Validators.maxLength(20)]],
-        'printSpeed': [pr.printSpeed, [Validators.required]],
-        'resolution': [pr.resolution, [Validators.required]]
+        'printSpeed': [0 + pr?.printSpeed, [Validators.required]],
+        'resolution': ["" + pr?.resolution, [Validators.required]]
       }),
       computer: this.fb.group({
-        'name': [cp?.providerName, [Validators.minLength(2), Validators.maxLength(20)]],
-        'disk': [cp?.disk, [Validators.required]],
-        'ram': [cp?.ram, [Validators.required]],
-        'cpu': [cp?.cpu, [Validators.required]],
-        'screen': [cp?.screen, [Validators.required]]
+        'disk': ["" + cp?.disk, [Validators.required]],
+        'ram': [0 + cp?.ram, [Validators.required]],
+        'cpu': ["" + cp?.cpu, [Validators.required]],
+        'screen': ["" + cp?.screen, [Validators.required]]
       }),
-      'teachers': [this.all, [Validators.required]]
+      'teachers': [teachers.length != 1 ? this.all.email : teachers[0].email, [Validators.required]]
     })
   }
 
@@ -99,22 +97,29 @@ export class UpdateDemandComponent implements OnInit {
   public updateDemand(demand: DemandForm) {
     console.log("demandForm : ", demand);
 
-    let demandp: PrinterDemand, demandc: ComputerDemand, teachers = new Array<Teacher>, added = false;
+    let demandp: PrinterDemand, demandc: ComputerDemand, teachers = new Array<Teacher>;
 
     if (this.printerDemand) {
-      demandp = { teachers: this.demand.teachers, printer: demand.printer };
-      demandp.printer.id = this.demand.resource.id;
+      demandp = { teachers: this.demand.teachers, printer: this.printerDemand.printer };
+      demandp.printer.printSpeed = demand.printer.printSpeed
+      demandp.printer.resolution = demand.printer.resolution
+
       this.demandsService.addPrinterDemand(demandp).subscribe((resp) => {
-        added = resp;
-        alert("la demande a ete modifiee avec succes : " + added);
+        resp;
+        resp ? alert("la demande a eté modifiée avec succes !") : alert("la demande n'a pas eté modifiée !");
       });
     }
     else if (this.computerDemand) {
-      demandc = { teachers: this.demand.teachers, computer: demand.computer };
-      demandc.computer.id = this.demand.resource.id;
+      demandc = { teachers: this.demand.teachers, computer: this.computerDemand.computer };
+
+      demandc.computer.disk = demand.computer.disk
+      demandc.computer.ram = demand.computer.ram
+      demandc.computer.cpu = demand.computer.cpu
+      demandc.computer.screen = demand.computer.screen
+
       this.demandsService.addComputerDemand(demandc).subscribe((resp) => {
-        added = resp;
-        alert("la demande a ete modifiee avec succes" + added);
+        resp;
+        resp ? alert("la demande a eté modifiée avec succes !") : alert("la demande n'a pas eté modifiée !");
       });
     }
 

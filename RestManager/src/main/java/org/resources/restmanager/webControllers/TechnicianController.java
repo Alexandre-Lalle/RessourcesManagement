@@ -2,6 +2,7 @@ package org.resources.restmanager.webControllers;
 
 
 import org.resources.restmanager.model.DTO.zouine.FailureDTO;
+import org.resources.restmanager.model.entities.Failure;
 import org.resources.restmanager.model.entities.Report;
 import org.resources.restmanager.services.ResourcesService;
 import org.resources.restmanager.services.DepartmentService;
@@ -26,6 +27,11 @@ public class TechnicianController {
     @GetMapping(path = "/Resource-Managment/failures",produces = {"application/json"})
     public List<FailureDTO> getFailures(){
         return resourcesService.getAllFailures();
+    }
+
+    @PutMapping(path = "/Resource-Managment/failures", consumes = {"application/json"},produces = {"application/json"})
+    public boolean updateFailures(@RequestBody Failure failure){
+        return resourcesService.updateFailure(failure);
     }
 
     @GetMapping(path = "/Resource-Managment/reports/failures/{failureId}",produces = {"application/json"})

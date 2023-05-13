@@ -2,12 +2,12 @@ package org.resources.restmanager.model.DTO.mouhsine;
 
 
 import lombok.*;
-import org.resources.restmanager.model.entities.Computer;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import lombok.experimental.SuperBuilder;
+import org.resources.restmanager.model.entities.Computer;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,8 +24,8 @@ public class OrdinateurDTO extends ResourceDTO implements Serializable {
     private boolean estPartager;
     private String marque;
     private String cpu;
-    private String dd;
-    private String ecran;
+    private String disk;
+    private String screen;
     private int ram;
     private boolean selected = false;
 //    private FournisseurDto fournisseurDto;
@@ -39,11 +39,26 @@ public class OrdinateurDTO extends ResourceDTO implements Serializable {
                 .dateGarantie(computer.getWarrantyDate())
                 .etat(computer.getState())
                 .marque(computer.getBrand())
-                .ecran(computer.getScreen())
+                .screen(computer.getScreen())
                 .cpu(computer.getCPU())
-                .dd(computer.getDisk())
+                .disk(computer.getDisk())
                 .ram(computer.getRAM())
                 .build();
+    }
+
+    public static Computer toEntity(OrdinateurDTO ordinateurDTO) {
+        Computer computer = new Computer();
+        computer.setCPU(ordinateurDTO.getCpu());
+        computer.setDisk(ordinateurDTO.getDisk());
+        computer.setRAM(ordinateurDTO.getRam());
+        computer.setScreen(ordinateurDTO.getScreen());
+        computer.setId(ordinateurDTO.getId());
+        computer.setBarCode(ordinateurDTO.getCode());
+        computer.setAssignmentDate(ordinateurDTO.getDateGarantie());
+        computer.setDeliveryDate(ordinateurDTO.getDateLiv());
+        computer.setBrand(ordinateurDTO.getMarque());
+        computer.setState(ordinateurDTO.getEtat());
+        return computer;
     }
 
     public static List<OrdinateurDTO> toDtoList(List<Computer> computerList) {

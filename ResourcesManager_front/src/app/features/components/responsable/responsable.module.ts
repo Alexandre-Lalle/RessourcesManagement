@@ -5,14 +5,21 @@ import { ResponsableRoutingModule } from './responsable-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResourceDetailComponent } from './resource-detail/resource-detail.component';
 import { OffreComponent } from './offre/offre.component';
+import { ConsulterFournisseurComponent } from './consulter-fournisseur/consulter-fournisseur.component';
+import { ConsulterPannesComponent } from './consulter-pannes/consulter-pannes.component';
+import { UserComponent } from './user/user.component';
+
 
 
 
 @NgModule({
   declarations: [
-    ListeRessourcesComponent, 
+    ListeRessourcesComponent,
     ResourceDetailComponent,
-    OffreComponent
+    OffreComponent,
+    ConsulterFournisseurComponent,
+    ConsulterPannesComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,

@@ -5,9 +5,9 @@ import { Teacher } from "./teacher.mode";
 export interface Failure {
     id: number;
     date: Date;
-    resourceName: string;
+    resourceBrand: string;
     resourceType: string;
     teacherName: string;
     teacherEmail: string;
-    state:boolean;
+    processed: boolean;
 }

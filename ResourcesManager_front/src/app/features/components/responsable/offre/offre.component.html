@@ -30,9 +30,9 @@
                                                     <button (click)="modal_delete(offre.id)" class="mx-2 waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm" class="btn btn-sm btn-danger mr-2">
                                                  <i class="fa fa-trash-o"></i></button>
                                                     <button (click)="editOffre(offre)" data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-sm btn-warning mr-2">
-                                                    <i class="fa fa-trash-o"></i></button>
+                                                      <i class="fa fa-edit"></i></button>
                                                     <button (click)="viewOffre(offre)" data-toggle="modal" data-target=".bs-example-modal-lg" class="btn btn-sm btn-custom">
-                                                        <i class="fa fa-trash-o"></i></button>
+                                                      <i class="fa fa-eye"></i></button>
                                                 </td>
 
 
@@ -44,10 +44,15 @@
                                 </div>
 
                             </div>
+
                         </div>
                     </div>
+
+
                 </div>
+
             </div>
+
         </div>
     </div>
     <!-- ******************************************************** -->
@@ -156,8 +161,8 @@
                                                                                 </td>
                                                                                 <td>{{ or.id }}</td>
                                                                                 <td>{{ or.barCode }}</td>
-                                                                                <td>{{ or.deliveryDate | date }}</td>
-                                                                                <td>{{ or.warrantyDate | date }}</td>
+                                                                                <td>{{ or.deliveryDate | date:'yyyy-MM-dd' }}</td>
+                                                                                <td>{{ or.warrantyDate | date:'yyyy-MM-dd' }}</td>
                                                                                 <td>{{ or.brand }}</td>
                                                                                 <td>{{ or.disk}}</td>
                                                                                 <td>{{ or.cpu }}</td>
@@ -172,8 +177,8 @@
                                                                                 </td>
                                                                                 <td>{{ or.id }}</td>
                                                                                 <td>{{ or.barCode }}</td>
-                                                                                <td>{{ or.deliveryDate | date }}</td>
-                                                                                <td>{{ or.warrantyDate | date }}</td>
+                                                                                <td>{{ or.deliveryDate | date:'yyyy-MM-dd' }}</td>
+                                                                                <td>{{ or.warrantyDate | date:'yyyy-MM-dd' }}</td>
                                                                                 <td>{{ or.brand }}</td>
                                                                                 <td>{{ or.disk}}</td>
                                                                                 <td>{{ or.cpu }}</td>
@@ -222,8 +227,8 @@
                                                                                 </td>
                                                                                 <td>{{ im.id }}</td>
                                                                                 <td>{{ im.barCode }}</td>
-                                                                                <td>{{ im.deliveryDate | date }}</td>
-                                                                                <td>{{ im.warrantyDate | date }}</td>
+                                                                                <td>{{ im.deliveryDate | date:'yyyy-MM-dd' }}</td>
+                                                                                <td>{{ im.warrantyDate | date:'yyyy-MM-dd' }}</td>
                                                                                 <td>{{ im.brand }}</td>
                                                                                 <td>{{ im.resolution}}</td>
                                                                                 <td>{{ im.printSpeed }}</td>
@@ -235,8 +240,8 @@
                                                                                 </td>
                                                                                 <td>{{ im.id }}</td>
                                                                                 <td>{{ im.barCode }}</td>
-                                                                                <td>{{ im.deliveryDate | date }}</td>
-                                                                                <td>{{ im.warrantyDate | date }}</td>
+                                                                                <td>{{ im.deliveryDate | date:'yyyy-MM-dd' }}</td>
+                                                                                <td>{{ im.warrantyDate | date:'yyyy-MM-dd' }}</td>
                                                                                 <td>{{ im.brand }}</td>
                                                                                 <td>{{ im.resolution}}</td>
                                                                                 <td>{{ im.printSpeed }}</td>
@@ -252,6 +257,115 @@
                                                 </div>
 
                                             </div>
+                                            <!-- 7777777777777777777777777777777777777 -->
+
+                                            <!-- <div class="form-group row">
+                                                <label class="col-2 col-form-label">Ordinateurs :</label>
+                                            </div>
+
+                                            <table id="datatable" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th *ngIf="operation != 'view'">
+
+                                                            <i (click)="selectToutOrdinateur()" *ngIf="selectToutOrd == false" class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i>
+                                                            <i (click)="selectToutOrdinateur()" *ngIf="selectToutOrd == true" class="fa fa-check-square-o fa-2x" style="color: #53ff28ce;"></i>
+                                                        </th>
+                                                        <th>id</th>
+                                                        <th>code Bar</th>
+                                                        <th>dateLiv</th>
+                                                        <th>dateGarantie</th>
+                                                        <th>marque</th>
+                                                        <th>disk dur</th>
+                                                        <th>cpu</th>
+                                                        <th>ecran</th>
+                                                        <th>ram</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let or of myOffre.ordinateurDtoList">
+                                                        <td *ngIf="operation != 'view'">
+                                                            <i (click)="selectOrdinateur(or)" *ngIf="or.selected == false" class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i>
+                                                            <i (click)="selectOrdinateur(or)" *ngIf="or.selected == true" class="fa fa-check-square-o fa-2x" style="color: #53ff28ce;"></i>
+                                                        </td>
+                                                        <td>{{ or.id }}</td>
+                                                        <td>{{ or.code }}</td>
+                                                        <td>{{ or.dateLiv | date }}</td>
+                                                        <td>{{ or.dateGarantie | date }}</td>
+                                                        <td>{{ or.marque }}</td>
+                                                        <td>{{ or.dd}}</td>
+                                                        <td>{{ or.cpu }}</td>
+                                                        <td>{{ or.ecran }}</td>
+                                                        <td>{{ or.ram }} Go</td>
+                                                    </tr>
+                                                    <tr *ngFor="let or of ordinateurWithoutOffre">
+                                                        <td *ngIf="operation != 'view'">
+
+                                                            <i (click)="selectOrdinateur(or)" *ngIf="or.selected == false" class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i>
+                                                            <i (click)="selectOrdinateur(or)" *ngIf="or.selected == true" class="fa fa-check-square-o fa-2x" style="color: #53ff28ce;"></i>
+                                                        </td>
+                                                        <td>{{ or.id }}</td>
+                                                        <td>{{ or.code }}</td>
+                                                        <td>{{ or.dateLiv | date }}</td>
+                                                        <td>{{ or.dateGarantie | date }}</td>
+                                                        <td>{{ or.marque }}</td>
+                                                        <td>{{ or.dd}}</td>
+                                                        <td>{{ or.cpu }}</td>
+                                                        <td>{{ or.ecran }}</td>
+                                                        <td>{{ or.ram }} Go</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="form-group row">
+                                                <label class="col-2 col-form-label">Imprimentes :</label>
+                                            </div>
+
+                                            <table id="datatable" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th *ngIf="operation != 'view'">
+
+                                                            <i (click)="selectToutImprimante()" *ngIf="selectToutImp == false" class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i>
+                                                            <i (click)="selectToutImprimante()" *ngIf="selectToutImp == true" class="fa fa-check-square-o fa-2x" style="color: #53ff28ce;"></i>
+                                                        </th>
+                                                        <th>id</th>
+                                                        <th>code Bar</th>
+                                                        <th>dateLiv</th>
+                                                        <th>dateGarantie</th>
+                                                        <th>marque</th>
+                                                        <th>resolution</th>
+                                                        <th>vitesse</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let im of myOffre.imprimanteDtoList">
+                                                        <td *ngIf="operation != 'view'">
+                                                            <i (click)="selectImprimante(im)" *ngIf="im.selected == false" class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i>
+                                                            <i (click)="selectImprimante(im)" *ngIf="im.selected == true" class="fa fa-check-square-o fa-2x" style="color: #53ff28ce;"></i>
+                                                        </td>
+                                                        <td>{{ im.id }}</td>
+                                                        <td>{{ im.code }}</td>
+                                                        <td>{{ im.dateLiv | date }}</td>
+                                                        <td>{{ im.dateGarantie | date }}</td>
+                                                        <td>{{ im.marque }}</td>
+                                                        <td>{{ im.resolution}}</td>
+                                                        <td>{{ im.vitesse }}</td>
+                                                    </tr>
+                                                    <tr *ngFor="let im of imprimanteWithoutOffre">
+                                                        <td *ngIf="operation != 'view'">
+                                                            <i (click)="selectImprimante(im)" *ngIf="im.selected == false" class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i>
+                                                            <i (click)="selectImprimante(im)" *ngIf="im.selected == true" class="fa fa-check-square-o fa-2x" style="color: #53ff28ce;"></i>
+                                                        </td>
+                                                        <td>{{ im.id }}</td>
+                                                        <td>{{ im.code }}</td>
+                                                        <td>{{ im.dateLiv | date }}</td>
+                                                        <td>{{ im.dateGarantie | date }}</td>
+                                                        <td>{{ im.marque }}</td>
+                                                        <td>{{ im.resolution}}</td>
+                                                        <td>{{ im.vitesse }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table> -->
 
                                             <button *ngIf="operation == 'add' " (click)="persistOffre()" data-dismiss="modal" aria-hidden="true" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm">Ajouter</button>
                                             <button *ngIf="operation == 'edit' " (click)="updateOffre()" data-dismiss="modal" aria-hidden="true" class="btn btn-warning waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-sm">Modefier</button>
@@ -271,7 +385,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th data-priority="1">marque</th>
+                                                        <th data-priority="1">marque Ordinateur</th>
+                                                        <th data-priority="1">marque Imprimante</th>
+                                                        <th data-priority="1">date garantie</th>
+                                                        <th data-priority="1">date livraison</th>
                                                         <th data-priority="1">prix</th>
                                                         <th data-priority="1">etat</th>
                                                     </tr>
@@ -279,11 +396,14 @@
                                                 <tbody>
                                                     <tr *ngFor="let sm of myOffre.soumissionDTOList">
                                                         <th>{{sm.id}}</th>
-                                                        <td>{{sm.marque}}</td>
+                                                        <td>{{sm.marqueOrdinateur}}</td>
+                                                        <td>{{sm.marqueImprimante}}</td>
+                                                        <td>{{sm.dateGarentie|date:'yyyy-MM-dd'}}</td>
+                                                        <td>{{sm.dateLivraison|date:'yyyy-MM-dd'}}</td>
                                                         <td>{{sm.prix}}</td>
-                                                        <td *ngIf="sm.etat == 0"><i class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i></td>
-                                                        <td *ngIf="sm.etat == 1"><i class="fa fa-check-square-o" style="color: #53ff28ce;"></i></td>
-                                                        <td *ngIf="sm.etat == -1"> <i class="fa fa-times-rectangle-o" style="color: #ff2828ce;"></i></td>
+                                                        <td (click)="accepterSoumission(sm.id)" *ngIf="sm.etat == 0"><i class="fa fa-square-o fa-2x" style="color: #284cffbc;"></i></td>
+                                                        <td (click)="accepterSoumission(sm.id)" *ngIf="sm.etat == 1"><i class="fa fa-check-square-o fa-2x" style="color: #53ff28ce;"></i></td>
+                                                        <td (click)="accepterSoumission(sm.id)" *ngIf="sm.etat == -1"> <i class="fa fa-times-rectangle-o fa-2x" style="color: #ff2828ce;"></i></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -306,4 +426,3 @@
 
     </div>
     <!-- content -->
-</div>

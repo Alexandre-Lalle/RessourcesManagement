@@ -22,22 +22,6 @@
         
         <div role="form" novalidate="">
           <div class="form-group row">
-            <label for="inputEmail3" class="col-4 col-form-label">
-              Nom<span class="text-danger">*</span>
-            </label>
-            <div class="col-7">
-              <input
-                formControlName="name"
-                type="text"
-                required="true"
-                parsley-type="text"
-                class="form-control"
-                id="inputEmail3"
-                placeholder="Nom imprimente"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
             <label for="hori-pass1" class="col-4 col-form-label">
               Vitesse (mots/s)<span class="text-danger">*</span></label
             >
@@ -47,7 +31,7 @@
                 id="hori-pass1"
                 class="form-control"
               >
-                <option value="0" disabled>exp : 3000 mots/s</option>
+                <option value="0" selected>Non renseigner</option>
                 <option value="10000" selected>10000 mots/s</option>
                 <option value="5000">5000 mots/s</option>
                 <option value="2500">2500 mots/s</option>
@@ -67,7 +51,7 @@
                 data-parsley-equalto="#hori-pass1"
                 id="hori-pass2"
               >
-                <option value="" selected disabled>exp : 840x840</option>
+                <option value="" selected>Non renseigner</option>
                 <option value="1024x1024">1024x1024</option>
                 <option value="2048x2048">2048x2048</option>
               </select>
@@ -96,7 +80,7 @@
       formGroupName="computer"
       class="col-lg-6 border border-success"
       style="
-        border-right: 0px !important;
+        border-left: 0px !important;
         border-top: 0px !important;
         border-bottom: 0px !important;
       "
@@ -110,22 +94,6 @@
 
         <div role="form" novalidate="">
           <div class="form-group row">
-            <label for="inputEmail3" class="col-4 col-form-label"
-              >Nom <span class="text-danger">*</span></label
-            >
-            <div class="col-7">
-              <input
-                formControlName="name"
-                type="text"
-                required=""
-                parsley-type="text"
-                class="form-control small"
-                id="inputEmail3"
-                placeholder="Nom ordinateur"
-              />
-            </div>
-          </div>
-          <div class="form-group row">
             <label for="hori-pass1" class="col-4 col-form-label"
               >Espace disk<span class="text-danger">*</span></label
             >
@@ -135,7 +103,7 @@
                 class="form-control"
                 id="hori-pass1"
               >
-                <option value="" selcted disabled>exp : 256GB (ssd)</option>
+                <option value="" selcted>Non renseigner</option>
                 <optgroup label="HDDR">
                   <option value="128_GB_HDDR">128GB (hddr)</option>
                   <option value="256_GB_HDDR">256GB (hddr)</option>
@@ -163,7 +131,7 @@
                 data-parsley-equalto="#hori-pass1"
                 required=""
               >
-                <option value="0" selcted disabled>exp : 8GB</option>
+                <option value="0" selcted>Non renseigner</option>
                 <option value="8">8GB</option>
                 <option value="16">16GB</option>
                 <option value="32">32GB</option>
@@ -184,7 +152,7 @@
                 class="form-control"
                 id="webSite"
               >
-                <option value="" selcted disabled>exp : i5 6Gen</option>
+                <option value="" selcted>Non renseigner</option>
                 <optgroup label="Intel">
                   <option value="core2 Dio">core2 Dio</option>
                   <option value="i3 5Gen">i3 5Gen</option>
@@ -234,13 +202,23 @@
                 class="form-control"
                 id="webSite"
               >
-              <option value="" selcted disabled>exp : intel card</option>
+              <option value="" selcted>Non renseigner</option>
                 <optgroup label="Intel">
                   <option value="intel card">Intel card</option>
                 </optgroup>
                 <optgroup label="Intel"></optgroup>
                 <optgroup label="Intel"></optgroup>
               </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="hori-pass2" class="col-4 col-form-label"
+              >Demandé le <span class="text-danger">*</span></label
+            >
+            <div class="col-7">
+                <div class="input-group">
+                    <input disabled type="text" value="{{computerDemand.computer.dateOfRequest|date:'yyyy-MM-dd  HH:MM a'}}" class="form-control" id="datepicker">
+                </div>
             </div>
           </div>
         </div>
@@ -263,13 +241,13 @@
 
       <div novalidate="">
         <p class="mb-1 mt-4 font-weight-bold text-muted">Utilisateur(s)</p>
-        <input type="hidden" 
+        <!-- <input type="hidden" 
           formControlName="teachers"
           class="form-control"
           tabindex="-1"
-          aria-hidden="true">
+          aria-hidden="true"> -->
         
-        <input *ngIf="demand" type="text" readonly [value]="demand.teachers.length>1?'Tous le departement':demand.teachers[0].email" 
+        <input *ngIf="demand" type="text" readonly formControlName="teachers"
           class="form-control"
           tabindex="-1"
           aria-hidden="true">
@@ -306,8 +284,8 @@
       </div>
     </div>
     <div class="form-group text-right m-b-0">
-      <button type="reset" class="btn btn-light m-1">Cancel</button>
-      <button [disabled]="demand && demand.teachers.length>1" type="submit" class="btn btn-success m-1">Modifier</button>
+      <button type="reset" class="btn btn-light m-1" routerLink="/director/demands">Cancel</button>
+      <button *ngIf="demand && demand.teachers.length>1 && printerDemand.printer.state!=1 && computerDemand.computer.state!=1" type="submit" class="btn btn-success m-1">Modifier</button>
     </div>
   </div>
   <!-- second Row end-->

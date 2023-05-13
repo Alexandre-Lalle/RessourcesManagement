@@ -14,35 +14,42 @@ import { Director } from '../../models/director.model';
   providedIn: 'root'
 })
 export class DemandsService {
+  APIUrl = "http://localhost:8085/Recources-Managment";
 
-  constructor(private http: HttpClient, private authService:AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getDemand(id: number): Observable<any> {
-    return this.http.get<any>("http://localhost:8085/Recources-Managment/demands/" + id)
+    return this.http.get<any>(`${this.APIUrl}/demands/` + id)
   }
 
   getAllDemands(): Observable<any> {
-    const currentUser:Director = this.authService.getUser();
-    console.log("the director : ",currentUser);
-    return this.http.get("http://localhost:8085/Recources-Managment/demands/department/" + currentUser.department);
+    const currentUser: Director = this.authService.getUser();
+    console.log("the director : ", currentUser);
+    return this.http.get(`${this.APIUrl}/demands/department/` + currentUser.department);
   }
 
   addComputerDemand(demand: ComputerDemand): Observable<boolean> {
     const headers = { 'content-type': 'application/json' };
-    return this.http.post<boolean>("http://localhost:8085/Recources-Managment/computer/demands", JSON.stringify(demand), { 'headers': headers });
+    return this.http.post<boolean>(`${this.APIUrl}/computer/demands`, JSON.stringify(demand), { 'headers': headers });
   }
 
   addPrinterDemand(demand: PrinterDemand): Observable<boolean> {
     const headers = { 'content-type': 'application/json' };
-    return this.http.post<boolean>("http://localhost:8085/Recources-Managment/printer/demands", JSON.stringify(demand), { 'headers': headers });
+    return this.http.post<boolean>(`${this.APIUrl}/printer/demands`, JSON.stringify(demand), { 'headers': headers });
   }
 
   updateDemand() {
 
   }
 
-  deleteDemand(demand:Demand):Observable<boolean> {
-    return this.http.delete<boolean>("http://localhost:8085/Recources-Managment/demands/"+demand.resource.id);
+  deleteDemand(demand: Demand): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.APIUrl}/demands/` + demand.resource.id);
+  }
+
+  sendUnavailableDemands(): Observable<boolean> {
+    const headers = { 'content-type': 'application/json' };
+    const currentUser: Director = this.authService.getUser()
+    return this.http.post<boolean>(`${this.APIUrl}/send-demands`, currentUser.department, { 'headers': headers })
   }
 
   getDemandsPage() {
@@ -54,16 +61,15 @@ export class DemandsService {
   }
 
   getTeachers(department: string): Observable<any> {
-    return this.http.get("http://localhost:8085/Recources-Managment/teachers/" + department);
+    return this.http.get(`${this.APIUrl}/teachers/` + department);
   }
 
   getTeacherMails(department: string): Observable<any> {
-    return this.http.get("http://localhost:8085/Recources-Managment/teachers/mails/" + department);
+    return this.http.get(`${this.APIUrl}/teachers/mails/` + department);
   }
 
   getDepartments(): Observable<any> {
     return this.http.get("http://localhost:8085/Recources-Managment/departments");
   }
 
-  
 }

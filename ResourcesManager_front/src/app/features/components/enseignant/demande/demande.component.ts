@@ -16,60 +16,11 @@ export class DemandeComponent implements OnInit {
   constructor(private enseignantService: EnseignantService) {
   }
   ngOnInit(): void {
-    this.getRequests(1);
+    this.getRequests();
   }
-  getRequests(id: any) {
-    return this.enseignantService.getRequests(id)
+
+  getRequests() {
+    return this.enseignantService.getRequests()
       .subscribe(requests => this.requests = requests)
-  }
-  computer: Computer = {
-    id: NaN,
-    barCode: NaN,
-    assignmentDate: new Date(),
-    deliveryDate: new Date(),
-    warrantyDate: new Date(),
-    dateOfRequest: new Date(),
-    brand: "",
-    providerName: "",
-    resourceType: "Computer",
-    state: -1,
-    cpu: "",
-    disk: "",
-    screen: "",
-    ram: 0
-  };
-  printer: Printer = {
-    id: NaN,
-    barCode: NaN,
-    assignmentDate: new Date(),
-    deliveryDate: new Date(),
-    warrantyDate: new Date(),
-    dateOfRequest: new Date(),
-    brand: "",
-    resourceType: "Computer",
-    providerName: "",
-    state: -1,
-    printSpeed: 0,
-    resolution: ""
-  }
-
-  besoin: Besoin = {}
-  save(computer: Computer, printer: Printer) {
-    this.besoin.ordinateurDto = computer;
-    this.besoin.imprimanteDto = printer;
-    return this.enseignantService.saveRequest(this.besoin)
-      .subscribe((besoin) => {
-        if (besoin.imprimanteDto != null)
-          alert("Votre demande est ajoute avec succes");
-        else alert("Votre demande n'est pas ajouter contacte le chef");
-      });
-  }
-  getBesoin(id: any) {
-    return this.enseignantService.getBesoin(id)
-      .subscribe((besoin) => {
-        if (besoin.imprimanteDto != null) this.printer = besoin.imprimanteDto
-        if (besoin.ordinateurDto != null) this.computer = besoin.ordinateurDto
-
-      })
   }
 }

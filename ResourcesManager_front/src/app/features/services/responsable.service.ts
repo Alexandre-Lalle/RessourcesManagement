@@ -27,8 +27,8 @@ export class ResponsableService {
     return this.http.get<Computer>(`${this.apiUrl}/ordinateur/${id}`); 
    }
 
-   deleteComputer(id: number): void{
-    this.http.delete<Computer>(`${this.apiUrl}/ordinateur/${id}`); 
+   deleteComputer(id: number): Observable<any>{
+    return this.http.delete<Computer>(`${this.apiUrl}/ordinateur/${id}`); 
    }
 
   findComputerByBarCode(barCode: number): Observable<Computer> {
@@ -55,8 +55,8 @@ export class ResponsableService {
     return this.http.get<Printer>(`${this.apiUrl}/imprimante/${id}`) ; 
   }
 
-  deletePrinter(id: number): void{
-    this.http.delete<Printer>(`${this.apiUrl}/imprimante/${id}`) ; 
+  deletePrinter(id: number):  Observable<any>{
+    return this.http.delete<Printer>(`${this.apiUrl}/imprimante/${id}`); 
   }
 
   updatePrinter(id: number, printer : Printer): Observable<Printer>{
@@ -70,6 +70,8 @@ export class ResponsableService {
     );
   }
 
+
+  // lale
   addAffectation(affectation:Affectation) : Observable<Affectation>{
     return this.http.post<Affectation>(`${this.apiUrl}/add-affectation`, affectation); 
   }

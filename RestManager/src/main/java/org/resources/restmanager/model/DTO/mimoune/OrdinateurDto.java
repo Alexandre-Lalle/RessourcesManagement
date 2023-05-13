@@ -2,6 +2,7 @@ package org.resources.restmanager.model.DTO.mimoune;
 
 import lombok.*;
 import org.resources.restmanager.model.entities.Computer;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,17 +15,18 @@ import java.util.Date;
 
 public class OrdinateurDto implements Serializable {
   private long id;
-    private String code;
-    private Date dateLiv;
-    private Date dateGarantie;
-    private int etat;
-    private boolean estPartager;
-    private String marque;
-    private String cpu;
-    private String dd;
-    private String ecran;
+  private String barCode;
+  private String brand;
+  private String CPU;
+  private String disk;
+  private int RAM;
+  private String screen;
+  private int state;
+  private Date dateOfRequest;
+  private Date deliveryDate;
+  private Date warrantyDate;
+  private Date assignmentDate;
 
-    private int ram;
     int qty;
     private FournisseurDto fournisseurDto;
 
@@ -32,25 +34,21 @@ public class OrdinateurDto implements Serializable {
     public static OrdinateurDto toDto(Computer computer){
         return OrdinateurDto.builder().
             id(computer.getId())
-        .code(computer.getBarCode())
-                .dateLiv(computer.getDeliveryDate())
-                .dateGarantie(computer.getWarrantyDate())
-                .etat(computer.getState())
-                .marque(computer.getBrand())
-                .ecran(computer.getScreen())
-                .cpu(computer.getCPU())
-                .dd(computer.getDisk())
+                .screen(computer.getScreen())
+                .CPU(computer.getCPU())
+                .disk(computer.getDisk())
                 .qty(1)
-                .ram(computer.getRAM())
+                .RAM(computer.getRAM())
+                .state(computer.getState())
 //                .fournisseurDto(FournisseurDto.toDto(ordinateur.getFournisseur()))
 //                .enseignantDto(EnseignantDto.toDto(ordinateur.getEnseignant()))
                 .build();
     }
     public static boolean equals(OrdinateurDto ordinateurDto, Computer computer){
-        return (ordinateurDto.cpu.equals(computer.getCPU()) &&
-                ordinateurDto.dd == computer.getDisk() &&
-                ordinateurDto.ecran == computer.getScreen() &&
-                ordinateurDto.ram == computer.getRAM()) ;
+        return (ordinateurDto.CPU.equals(computer.getCPU()) &&
+                ordinateurDto.disk.equals(computer.getDisk()) &&
+                ordinateurDto.screen.equals(computer.getScreen())  &&
+                ordinateurDto.RAM == computer.getRAM()) ;
     }
 //public static OrdinateurDto toDto(Ordinateur ordinateur){
 //    return OrdinateurDto.builder()

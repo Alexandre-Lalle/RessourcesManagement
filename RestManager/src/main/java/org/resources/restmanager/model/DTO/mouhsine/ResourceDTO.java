@@ -2,8 +2,6 @@ package org.resources.restmanager.model.DTO.mouhsine;
 
 
 
-import org.resources.restmanager.model.entities.Computer;
-import org.resources.restmanager.model.entities.Printer;
 import org.resources.restmanager.model.entities.Resource;
 
 import java.util.ArrayList;
@@ -19,10 +17,10 @@ public class ResourceDTO {
         Resource resource = null;
         for (ResourceDTO resourceDTO : resourceDTOList) {
             if (resourceDTO.getResourceType() == "Computer") {
-                resource = Computer.toEntity((OrdinateurDTO) resourceDTO);
+                resource = OrdinateurDTO.toEntity((OrdinateurDTO) resourceDTO);
                 resourceList.add(resource);
             } else if (resourceDTO.getResourceType() == "Printer") {
-                  resource = Printer.toEntity((ImprimanteDTO) resourceDTO);
+                  resource = ImprimanteDTO.toEntity((ImprimanteDTO) resourceDTO);
                   resourceList.add(resource);
             }
         }

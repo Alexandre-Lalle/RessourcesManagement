@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.resources.restmanager.model.entities.Printer;
+import org.resources.restmanager.model.entities.Teacher;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class imprimanteDto implements Serializable {
     private String resolution;
     private int printSpeed;
     private String providerName;
+    private List<Teacher> teachers;
 
     public static imprimanteDto toDto(Printer printer){
         return imprimanteDto.builder().
@@ -39,6 +41,7 @@ public class imprimanteDto implements Serializable {
                 .resolution(printer.getResolution())
                 .printSpeed(printer.getPrintSpeed())
                 .providerName(printer.getProviderName())
+                .teachers(printer.getTeachers())
                 .build();
     }
 

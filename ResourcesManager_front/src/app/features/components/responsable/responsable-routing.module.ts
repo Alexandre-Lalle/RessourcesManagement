@@ -6,9 +6,13 @@ import { ResourceDetailComponent } from './resource-detail/resource-detail.compo
 import { ResponsableLayoutComponent } from 'src/app/core/components/responsable/responsable-layout/responsable-layout.component';
 import { DashboardComponent } from 'src/app/core/components/dashboard/dashboard.component';
 import { OffreComponent } from './offre/offre.component';
+import { ConsulterFournisseurComponent } from './consulter-fournisseur/consulter-fournisseur.component';
+import { ConsulterPannesComponent } from './consulter-pannes/consulter-pannes.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
-  {path: "",
+  {
+    path: "",
     children: [
       { path: "", component: ResponsableLayoutComponent, children: [{ path: "", component: DashboardComponent, outlet: "center" }] },
       {
@@ -21,15 +25,33 @@ const routes: Routes = [
         path: "resource-detail",
         children: [
           { path: ":type/:id", component: ResponsableLayoutComponent, children: [{ path: "", component: ResourceDetailComponent, outlet: "center" }] },
-        ] 
+        ]
       },
       {
         path: "offre",
         children: [
           { path: "", component: ResponsableLayoutComponent, children: [{ path: "", component: OffreComponent, outlet: "center" }] },
-        ] 
-      }
         ]
+      },
+      {
+        path: "consulterF",
+        children: [
+          { path: "", component: ResponsableLayoutComponent, children: [{ path: "", component: ConsulterFournisseurComponent, outlet: "center" }] },
+        ]
+      },
+      {
+        path: "consulterP",
+        children: [
+          { path: "", component: ResponsableLayoutComponent, children: [{ path: "", component: ConsulterPannesComponent, outlet: "center" }] },
+        ]
+      },
+      {
+        path: "teachers",
+        children: [
+          { path: "", component: ResponsableLayoutComponent, children: [{ path: "", component: UserComponent, outlet: "center" }] }
+        ]
+      },
+    ]
   },
 ];
 

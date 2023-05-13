@@ -1,14 +1,19 @@
 package org.resources.restmanager.webControllers;
 
-import org.resources.restmanager.model.DTO.lalle.AffectationDto;
-import org.resources.restmanager.model.DTO.lalle.imprimanteDto;
-import org.resources.restmanager.model.DTO.lalle.ordinateurDto;
+import org.resources.restmanager.model.DTO.Old.ImprimanteDto;
+import org.resources.restmanager.model.DTO.Old.OrdinateurDto;
+import org.resources.restmanager.model.DTO.lalle.*;
 import org.resources.restmanager.model.DTO.mouhsine.OffreDTO;
+import org.resources.restmanager.model.DTO.rachid.DemandeRetourDto;
+import org.resources.restmanager.model.DTO.rachid.ReportDto;
+import org.resources.restmanager.model.entities.DemandeRetour;
+import org.resources.restmanager.model.entities.Provider;
+import org.resources.restmanager.model.entities.Report;
 import org.resources.restmanager.model.entities.Resource;
-import org.resources.restmanager.services.AffectationService;
-import org.resources.restmanager.services.OffreService;
-import org.resources.restmanager.services.ResourcesService;
+import org.resources.restmanager.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +31,81 @@ public class ManagerController {
     @Autowired
     private OffreService offreService;
     @Autowired
+    private ConsulterFournisseurService consulterFournisseurService;
+    @Autowired
+    private DemandeRetourservice demandeRetourservice;
+    @Autowired
+    private ReportService reportService;
+    @Autowired
     private AffectationService affectationService;
+
+
+    @GetMapping("/consulterFournisseur/all")
+    public ResponseEntity<List<Provider>> getAllFournisseurs(){
+        List<Provider> fournisseurs = consulterFournisseurService.findAllProviders2();
+        for (Provider fournisseur1 : fournisseurs) {
+            System.out.println(fournisseur1.toString());
+        }
+        return new ResponseEntity<>(fournisseurs, HttpStatus.OK);
+    }
+    @GetMapping("/consulterFournisseur/all2")
+    public ResponseEntity<List<Provider>> getAllFournisseurs2(){
+        List<Provider> fournisseurs = consulterFournisseurService.findAllProviders2();
+        for (Provider fournisseur1 : fournisseurs) {
+            System.out.println(fournisseur1.toString());
+        }
+        return new ResponseEntity<>(fournisseurs, HttpStatus.OK);
+    }
+    @PostMapping("/consulterFournisseur/find")
+    public ResponseEntity<Provider> findFournisseur(@RequestBody Provider fournisseur){
+        Provider newFournisseur = consulterFournisseurService.findProvider(fournisseur);
+        return new ResponseEntity<>(newFournisseur, HttpStatus.OK);
+    }
+    @PostMapping("/consulterPannes/add")
+    public DemandeRetourDto addDemandeRetour(@RequestBody DemandeRetourDto demandeRetour){
+        System.out.println(demandeRetour);
+        demandeRetourservice.addDemandeRetour(demandeRetour);
+        return null ;
+    }
+    @PutMapping("/consulterFournisseur/update")
+    public ResponseEntity<Provider> updateEmployee(@RequestBody Provider fournisseur){
+        Provider updateFournisseur = consulterFournisseurService.updateProvider(fournisseur);
+        return new ResponseEntity<>(updateFournisseur,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/consulterFournisseur/delete/{id}")
+    public ResponseEntity<?> deleteFournisseur(@PathVariable("id") Long id) {
+        consulterFournisseurService.deleteProviderById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+//    @PostMapping("/consulterPannes/add")
+//    public ResponseEntity<DemandeRetourDto> addDemandeRetour(@RequestBody DemandeRetourDto demandeRetour){
+////        Resource r = resourcesService.getRessourceById(demandeRetour.getResource().getId());
+//        DemandeRetourDto newDemandeRetour = demandeRetourservice.addDemandeRetour(demandeRetour);
+//        return new ResponseEntity<>(newDemandeRetour, HttpStatus.CREATED);
+//    }
+    @GetMapping("/consulterPannes/all")
+    public ResponseEntity<List<Report>> getAllReports(){
+        List<Report> reports = reportService.findAllReports();
+        return  new ResponseEntity<>(reports, HttpStatus.OK);
+    }
+    @GetMapping("/consulterPannes/reportInfo")
+    public ResponseEntity<List<ReportDto>> getAllReportInfo(){
+        List<ReportDto> reports = reportService.getReportInfo();
+        return  new ResponseEntity<>(reports, HttpStatus.OK);
+    }
+    @PostMapping("/consulterPannes/demands")
+    public ResponseEntity<List<DemandeRetour>> getALlDemandeRetour(){
+        List<DemandeRetour> demandeRetours = demandeRetourservice.findAllDemandes();
+        return new ResponseEntity<>(demandeRetours, HttpStatus.OK);
+    }
+//    @GetMapping("/consulterPannes/findDemandeByRId/{id}")
+//    public ResponseEntity<DemandeRetour> findDemandeByRId(@PathVariable("id") long id){
+//
+//        return new ResponseEntity<>(demandeRetourservice.findDemandeByRId(id) , HttpStatus.OK) ;
+//    }
+
+    /////////////////////////// alex ///////////////////////////////////
 
 
     @GetMapping("/liste-ordinateurs/{state}")
@@ -54,8 +133,8 @@ public class ManagerController {
     }
 
     @DeleteMapping("/ordinateur/{id}")
-    public void deleteComputer(@PathVariable("id") final long id){
-        resourcesService.deleteComputerById(id);
+    public boolean deleteComputer(@PathVariable("id") final long id){
+        return resourcesService.deleteComputerById(id);
     }
 
     @GetMapping("/liste-imprimantes/{state}")
@@ -81,13 +160,14 @@ public class ManagerController {
     }
 
     @DeleteMapping("/imprimante/{id}")
-    public void deletePrinter(@PathVariable("id") final long id){
-        resourcesService.deletePrinterById(id);
+    public boolean deletePrinter(@PathVariable("id") final long id){
+        return resourcesService.deletePrinterById(id);
     }
-
+    
     @PostMapping(path = "/add-affectation",produces = {"application/json"},consumes = {"application/json"})
     public AffectationDto addAffectation(@RequestBody AffectationDto affectationDto){
         System.out.println("add function was called !");
+        System.out.println("the content : \n"+affectationDto);
         return affectationService.createAffectation(affectationDto);
     }
     @GetMapping("/affectation/{id}")
@@ -101,8 +181,6 @@ public class ManagerController {
 
         return affectationService.updateAffectation(affectationDto);
     }
-
-
 
 
     //////////////////////////////////////////// abdel //////////////////////////////////////////////////
@@ -190,6 +268,17 @@ public class ManagerController {
             return true;
         }catch (Exception e){
             System.out.println("erreur can not delete offre id: "+id+": "+e.getMessage());
+            return false;
+        }
+    }
+
+    @GetMapping("/offres/accepterSoumission/{id}")
+    public boolean accepterSoumission(@PathVariable Long id){
+        try {
+            offreService.accepterSoumission((Long)id);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
             return false;
         }
     }

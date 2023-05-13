@@ -9,22 +9,27 @@ import { Failure } from '../../models/failure.model';
 })
 export class FailureService {
 
-  constructor(private http:HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  public getFailures():Observable<Failure[]>{
+  public getFailures(): Observable<Failure[]> {
     return this.http.get<Failure[]>("http://localhost:8085/Resource-Managment/failures");
   }
 
-  public getReport(id:number):Observable<any>{
-    return this.http.get<any>("http://localhost:8085/Resource-Managment/reports/failures/"+id);
+  public getReport(id: number): Observable<any> {
+    return this.http.get<any>("http://localhost:8085/Resource-Managment/reports/failures/" + id);
   }
 
-  public updateReport(report:Report):Observable<boolean>{
-    const headers={'content-type':'application/json'}
-    return this.http.put<boolean>("http://localhost:8085/Resource-Managment/reports",JSON.stringify(report),{'headers':headers});
+  public updateFailure(failure: Failure): Observable<any> {
+    const headers = { 'content-type': 'application/json' }
+    return this.http.put<boolean>("http://localhost:8085/Resource-Managment/failures", JSON.stringify(failure), { 'headers': headers });
   }
 
-  public deleteReport(report:Report):Observable<boolean>{
-    return this.http.delete<boolean>("http://localhost:8085/Resource-Managment/reports/"+report.id);
+  public updateReport(report: Report): Observable<boolean> {
+    const headers = { 'content-type': 'application/json' }
+    return this.http.put<boolean>("http://localhost:8085/Resource-Managment/reports", JSON.stringify(report), { 'headers': headers });
+  }
+
+  public deleteReport(report: Report): Observable<boolean> {
+    return this.http.delete<boolean>("http://localhost:8085/Resource-Managment/reports/" + report.id);
   }
 }

@@ -34,9 +34,9 @@ public class Computer extends Resource {
     public static Computer toEntity(OrdinateurDTO ordinateurDTO) {
         Computer computer = new Computer();
         computer.setCPU(ordinateurDTO.getCpu());
-        computer.setDisk(ordinateurDTO.getDd());
+        computer.setDisk(ordinateurDTO.getDisk());
         computer.setRAM(ordinateurDTO.getRam());
-        computer.setScreen(ordinateurDTO.getEcran());
+        computer.setScreen(ordinateurDTO.getScreen());
         computer.setId(ordinateurDTO.getId());
         computer.setBarCode(ordinateurDTO.getCode());
         computer.setAssignmentDate(ordinateurDTO.getDateGarantie());
@@ -45,6 +45,4 @@ public class Computer extends Resource {
         computer.setState(ordinateurDTO.getEtat());
         return computer;
     }
-
-
 }

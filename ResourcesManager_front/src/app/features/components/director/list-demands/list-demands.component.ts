@@ -16,9 +16,9 @@ export class ListDemandsComponent implements OnInit {
   constructor(private demandService: DemandsService) { }
 
   ngOnInit(): void {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.fetchDemends();
-    },300);
+    }, 300);
   }
 
   public async fetchDemends(): Promise<Demand[]> {
@@ -34,13 +34,22 @@ export class ListDemandsComponent implements OnInit {
   }
 
 
-  deleteDemand(demand:Demand){
+  deleteDemand(demand: Demand) {
     let confirmation = confirm("Voullez vous vraiment supprimer cette demande ?");
     let index = this.demands.indexOf(demand);
-    if(confirmation){
-      this.demandService.deleteDemand(demand).subscribe((res)=>{
-        this.demands.splice(index,1);
-        alert("La demande a ete supprimée avec succes ! : "+res);
+    if (confirmation) {
+      this.demandService.deleteDemand(demand).subscribe((res) => {
+        this.demands.splice(index, 1);
+        alert("La demande a ete supprimée avec succes ! : " + res);
+      })
+    }
+  }
+
+  public sendUnavailableDemands() {
+    let confirmation = confirm("Confirmer l'envoye des demandes ?");
+    if (confirmation) {
+      this.demandService.sendUnavailableDemands().subscribe((res) => {
+        res ? alert("Les demandes ont etées envoyées avec succes !") : alert("Les demandes n'ont pas etées envoyées");
       })
     }
   }

@@ -1,5 +1,6 @@
 package org.resources.restmanager.model.DTO.mouhsine;
 
+
 import lombok.*;
 import org.resources.restmanager.model.entities.Offre;
 
@@ -28,6 +29,16 @@ public class OffreDTO implements Serializable {
                 .ordinateurDtoList(OrdinateurDTO.toDtoList(offre.getCmputers()))
                 .imprimanteDtoList(ImprimanteDTO.toDtoList(offre.getPrinters()))
                 .soumissionDTOList(SoumissionDTO.toDtoList(offre.getSoumissionList()))
+                .build();
+    }
+    public static Offre toEntity(OffreDTO offreDto) {
+        System.out.println("toEtitie getResourceDTOList: "+ offreDto.retournerResourceDTOList());
+        return Offre.builder()
+                .id(offreDto.getId())
+                .dateDebut(offreDto.getDateDebut())
+                .dateFin(offreDto.getDateFin())
+                .resourceList(ResourceDTO.toEntitieList(offreDto.retournerResourceDTOList()))
+                .soumissionList(SoumissionDTO.toEntityList(offreDto.getSoumissionDTOList()))
                 .build();
     }
 

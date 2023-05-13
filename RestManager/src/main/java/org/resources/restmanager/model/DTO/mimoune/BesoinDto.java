@@ -13,6 +13,7 @@ import java.io.Serializable;
 @ToString
 @Data
 public class BesoinDto implements Serializable {
+    private Long enseignant_id;
     private OrdinateurDto ordinateurDto;
     private ImprimanteDto imprimanteDto;
 

@@ -6,10 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { AjouterSoumissionComponent } from './ajouter-soumission/ajouter-soumission.component';
 import { OffreListeComponent } from './offre-liste/offre-liste.component';
 import { SoumissionComponent } from './soumission/soumission.component';
+import { MessageRetourComponent } from './message-retour/message-retour.component';
 
 
 @NgModule({
-  declarations: [AjouterSoumissionComponent, OffreListeComponent, SoumissionComponent],
+  declarations: [AjouterSoumissionComponent, OffreListeComponent, SoumissionComponent, MessageRetourComponent],
   imports: [
     CommonModule,
     FournisseurRoutingModule,

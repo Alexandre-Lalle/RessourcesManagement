@@ -19,9 +19,10 @@ export class NewDemandComponent implements OnInit {
   demand!: DemandForm;
   currentUser = { department: "data_science" };
   teachers!: Array<Teacher>;
-  all:Director={id:NaN,firstName:"",lastName:"",password:"",email:"",department:"allDepartment",type:""}
+  all: Director = { id: NaN, firstName: "", lastName: "", password: "", email: "", department: "allDepartment", type: "" }
   teacherMails!: Array<string>
-  state=state
+  allP!: number;
+  allC!: number;
 
 
 
@@ -29,22 +30,25 @@ export class NewDemandComponent implements OnInit {
   constructor(private demandsService: DemandsService, private fb: FormBuilder, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    this.allC = 0;
+    this.allP = 0;
+
     this.getTeachers();
 
     let controls = {
       printer: this.fb.group({
-        'name': ['',[Validators.minLength(2),Validators.maxLength(20)]],
-        'printSpeed': [0,[Validators.required]],
-        'resolution': ['',[Validators.required]]
+        'name': ['', [Validators.minLength(2), Validators.maxLength(20)]],
+        'printSpeed': ['', [Validators.required]],
+        'resolution': ['', [Validators.required]]
       }),
       computer: this.fb.group({
-        'name': ['',[Validators.minLength(2),Validators.maxLength(20)]],
-        'disk': ['',[Validators.required]],
-        'ram': [0,[Validators.required]],
-        'cpu': ['',[Validators.required]],
-        'screen': ['',[Validators.required]]
+        'name': ['', [Validators.minLength(2), Validators.maxLength(20)]],
+        'disk': ['', [Validators.required]],
+        'ram': ['', [Validators.required]],
+        'cpu': ['', [Validators.required]],
+        'screen': ['', [Validators.required]]
       }),
-      'teachers': [this.all,[Validators.required]]
+      'teachers': [this.all, [Validators.required]]
     }
 
     this.addFormGroup = this.fb.group(controls);
@@ -74,60 +78,71 @@ export class NewDemandComponent implements OnInit {
   public addDemand(demand: DemandForm) {
     console.log("the content : ", this.addFormGroup.value, "\n", demand);
 
-    let demandp:PrinterDemand, demandc:ComputerDemand, teachers = new Array<Teacher>, added = false;
+    let demandp: PrinterDemand, demandc: ComputerDemand, teachers = new Array<Teacher>, added = false;
 
     (demand.teachers.department == "allDepartment") ? teachers = this.teachers : teachers.push(demand.teachers);
 
     console.log("teachers : ", teachers);
 
-    if (demand.printer) {
-      if(this.addFormGroup.get('printer')?.invalid || 1){
-      let rs = this.addFormGroup.get('printer')?.pristine;
-        console.log('printer failed ! : ',rs);
-      }
-      // demandp = { teachers: teachers, printer: demand.printer };
-      // this.demandsService.addPrinterDemand(demandp).subscribe((resp) => {
-      //   added = resp;
-      //   alert("la demande a ete modifiee avec succes : " + added);
-      // });
+    if (demand.printer.printSpeed) {
+
+      demandp = { teachers: teachers, printer: demand.printer };
+      this.demandsService.addPrinterDemand(demandp).subscribe((resp) => {
+        added = resp;
+        resp ? alert("la demande a ete ajoutée avec succes !") : alert("la demande n'a pas etée ajoutée !");
+      });
     }
-    // else if (demand.computer) {
-    //   demandc = { teachers: teachers, computer: demand.computer };
-    //   this.demandsService.addComputerDemand(demandc).subscribe((resp) => {
-    //     added = resp;
-    //     alert("la demande a ete modifiee avec succes" + added);
-    //   });
-    // }
+
+    if (demand.computer.disk) {
+
+      demandc = { teachers: teachers, computer: demand.computer };
+      this.demandsService.addComputerDemand(demandc).subscribe((resp) => {
+        added = resp;
+        resp ? alert("la demande a ete ajoutée avec succes !") : alert("la demande n'a pas etée ajoutée !");
+      });
+    }
   }
 
 
 
   getErrorMessage(fieldName: string, errors: any) {
-    if(errors['required']){
-      return "*"+fieldName+" is required !";
-    }else if(errors['min']){
-      return "*"+fieldName+" must be greater than(or equal) "+errors['min']['min'];
-    }else if(errors['max']){
-      return "*"+fieldName+" must be lower than(or equal) "+errors['max']['max']+" (ex: "+0.12*errors['max']['max']+")";
+    if (errors['required']) {
+      return "*" + fieldName + " is required !";
+    } else if (errors['min']) {
+      return "*" + fieldName + " must be greater than(or equal) " + errors['min']['min'];
+    } else if (errors['max']) {
+      return "*" + fieldName + " must be lower than(or equal) " + errors['max']['max'] + " (ex: " + 0.12 * errors['max']['max'] + ")";
     }
-    else if(errors['minlength']){
-      return "*"+fieldName+" should have at least "+errors['minlength']['requiredLength']+" characters !"
-    }else return "";
+    else if (errors['minlength']) {
+      return "*" + fieldName + " should have at least " + errors['minlength']['requiredLength'] + " characters !"
+    } else return "";
   }
 
 
-  private isFormEmpty(form: FormGroup,element:string): boolean {
-  return Object.keys(form.controls[element]).every(key => {
-    const control = form.controls[key];
-    return !control.value || control.value === '';
-  });
+  private isFormEmpty(form: FormGroup, element: string): boolean {
+    return Object.keys(form.controls[element]).every(key => {
+      const control = form.controls[key];
+      return !control.value || control.value === '';
+    });
   }
 
-  disableComputerForm(){
-    
+  public setAllP(value: any) {
+    console.log("the value : ", value)
+
+    this.allP = this.allP + 1
+    value == "" ? this.allP = this.allP + 1 : this.allP = this.allP + 1;
+    console.log("ctr : ", this.allC);
   }
 
-  disablePrinterForm(){
-    
+  public setAllC(value: any) {
+    value == "" ? this.allC -= 1 : this.allC += 1;
+  }
+
+  disableComputerForm() {
+
+  }
+
+  disablePrinterForm() {
+
   }
 }

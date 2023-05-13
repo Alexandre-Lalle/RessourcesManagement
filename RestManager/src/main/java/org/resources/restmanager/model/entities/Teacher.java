@@ -2,14 +2,12 @@ package org.resources.restmanager.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.resources.restmanager.model.entities.auth.User;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
+
 
 @Entity
 @NoArgsConstructor
@@ -35,4 +33,9 @@ public class Teacher extends User {
         super(firstName,lastName,userName,password);
         this.department = department;
     }
+//
+//    public Teacher(Long id, String firstName, String lastName, String userName, String password,String email, String department){
+//        super(id,firstName,lastName,userName,password,email);
+//        this.department = department;
+//    }
 }

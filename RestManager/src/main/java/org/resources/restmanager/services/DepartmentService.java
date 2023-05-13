@@ -31,13 +31,8 @@ public class DepartmentService {
     public List<Teacher> getTeachers(String department){
         return teacherRepository.findAllByDepartment(department);
     }
-
     public List<String> getTeacherMails(String department){
         return teacherRepository.findAllMailsByDepartment(department);
-    }
-
-    public List<String> getAllDepartements(){
-        return teacherRepository.findAllDepartments();
     }
 
     public Optional<Notification> getNotification(Long id){
@@ -92,6 +87,9 @@ public class DepartmentService {
         }
     }
 
+    public List<String> getAllDepartements(){
+        return teacherRepository.findAllDepartments();
+    }
 
 
 

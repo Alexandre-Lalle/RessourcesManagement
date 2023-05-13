@@ -7,7 +7,9 @@ import org.resources.restmanager.model.DTO.mouhsine.OrdinateurDTO;
 import org.resources.restmanager.model.DTO.mouhsine.ResourceDTO;
 import org.resources.restmanager.model.entities.Offre;
 import org.resources.restmanager.model.entities.Resource;
+import org.resources.restmanager.model.entities.Soumission;
 import org.resources.restmanager.repositories.OffreRepo;
+import org.resources.restmanager.repositories.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +25,14 @@ public class OffreService {
     private OffreRepo offreRepo;
     @Autowired
     private ResourcesService ressourceService;
+    @Autowired
+    private SoumissionService soumissionService;
+    @Autowired
+    private ResourceRepository resourceRepository;
 
     public OffreDTO getOffreById(Long offreId) {
         Optional<Offre> offreOptional = offreRepo.findById(offreId);
-        return OffreDTO.toDto(offreOptional.get()) ;
+        return OffreDTO.toDto(offreOptional.get());
     }
 
     public List<OffreDTO> getAllOffres() {
@@ -86,5 +92,19 @@ public class OffreService {
         Offre offreOptional = offreRepo.getReferenceById(offreId);
         offreRepo.delete(offreOptional);
     }
+
+    public boolean accepterSoumission(Long id){
+        Soumission sm = soumissionService.getSoumissionById(id);
+        List<Resource>resources = sm.getOffre().getResourceList();
+
+        for (Resource r:resources) {
+            r.setDeliveryDate(sm.getDateLivraison());
+            r.setWarrantyDate(sm.getDateGarentie());
+        }
+
+        resourceRepository.saveAll(resources);
+        return soumissionService.AcceptSoumission(id,sm.getOffre().getId());
+    }
+
 
 }

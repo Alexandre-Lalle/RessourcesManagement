@@ -23,6 +23,7 @@ public class Provider extends User {
     @NonNull
     @Column(table = "provider")
     private String name;
+    private String place;
     @JsonIgnore
     @OneToMany(mappedBy = "provider", fetch = FetchType.LAZY)
     private List<Resource> resources;
