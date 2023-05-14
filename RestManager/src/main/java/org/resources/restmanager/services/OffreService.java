@@ -100,6 +100,7 @@ public class OffreService {
         for (Resource r:resources) {
             r.setDeliveryDate(sm.getDateLivraison());
             r.setWarrantyDate(sm.getDateGarentie());
+            r.setProvider(sm.getFournisseurS());
         }
 
         resourceRepository.saveAll(resources);
