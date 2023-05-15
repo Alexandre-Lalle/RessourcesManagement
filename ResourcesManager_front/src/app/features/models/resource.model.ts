@@ -1,8 +1,9 @@
 import { Panne } from "./panne";
+import { Teacher } from "./teacher.mode";
 
 export interface Resource {
     id: number;
-    barCode: number;
+    barCode: any;
     name: string;
     brand: string;
     dateOfRequest: Date;
@@ -14,6 +15,7 @@ export interface Resource {
     providerName?: String;
     failureDtoList?: Panne[]
     resourceType: string;
+    teachers?: Teacher[];
 
     // constructor(name:string, dateOfRequest:Date, state:number){
     //     this.name = name;

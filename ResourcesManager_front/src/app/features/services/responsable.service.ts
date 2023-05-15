@@ -27,8 +27,8 @@ export class ResponsableService {
     return this.http.get<Computer>(`${this.apiUrl}/ordinateur/${id}`); 
    }
 
-   deleteComputer(id: number): void{
-    this.http.delete<Computer>(`${this.apiUrl}/ordinateur/${id}`); 
+   deleteComputer(id: number): Observable<any>{
+    return this.http.delete<Computer>(`${this.apiUrl}/ordinateur/${id}`); 
    }
 
   findComputerByBarCode(barCode: number): Observable<Computer> {
@@ -47,7 +47,7 @@ export class ResponsableService {
      return this.http.get<Printer[]>(`${this.apiUrl}/liste-imprimantes`) ; 
    }
 
-  findPrintersBySate(state: number): Observable<Printer[]>{
+  findPrintersByState(state: number): Observable<Printer[]>{
      return this.http.get<Printer[]>(`${this.apiUrl}/liste-imprimantes/${state}`) ; 
    }
 
@@ -55,8 +55,8 @@ export class ResponsableService {
     return this.http.get<Printer>(`${this.apiUrl}/imprimante/${id}`) ; 
   }
 
-  deletePrinter(id: number): void{
-    this.http.delete<Printer>(`${this.apiUrl}/imprimante/${id}`) ; 
+  deletePrinter(id: number):  Observable<any>{
+    return this.http.delete<Printer>(`${this.apiUrl}/imprimante/${id}`); 
   }
 
   updatePrinter(id: number, printer : Printer): Observable<Printer>{
@@ -83,6 +83,7 @@ export class ResponsableService {
   getAffectationByResourceId(resourceId:number) : Observable<Affectation>{
     return this.http.get<Affectation>(`${this.apiUrl}/affectation/${resourceId}`); 
   }
+
 
 
 }

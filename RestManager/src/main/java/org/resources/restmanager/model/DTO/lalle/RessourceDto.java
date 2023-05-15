@@ -6,9 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.resources.restmanager.model.DTO.mimoune.FournisseurDto;
 import org.resources.restmanager.model.entities.Resource;
+import org.resources.restmanager.model.entities.Teacher;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class RessourceDto implements Serializable {
     private Date warrantyDate;
     private int state;
     private String brand;
+    private List<Teacher> teachers;
 
     public static RessourceDto toDto(Resource resource){
         return RessourceDto.builder().
@@ -32,6 +35,7 @@ public class RessourceDto implements Serializable {
                 .warrantyDate(resource.getWarrantyDate())
                 .state(resource.getState())
                 .brand(resource.getBrand())
+                .teachers(resource.getTeachers())
                 .build();
     }
 

@@ -3,6 +3,7 @@ package org.resources.restmanager.model.DTO.lalle;
 import lombok.*;
 
 import org.resources.restmanager.model.entities.Computer;
+import org.resources.restmanager.model.entities.Teacher;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class ordinateurDto implements Serializable {
     private String screen;
     private int ram;
     private String providerName;
+    private List<Teacher> teachers;
 
-    //private EnseignantDto enseignantDto;
 
     public static ordinateurDto toDto(Computer computer){
         return ordinateurDto.builder().
@@ -46,6 +47,7 @@ public class ordinateurDto implements Serializable {
                 .disk(computer.getDisk())
                 .ram(computer.getRAM())
                 .providerName(computer.getProviderName())
+                .teachers(computer.getTeachers())
                 .build();
     }
 

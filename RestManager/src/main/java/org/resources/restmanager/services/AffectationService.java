@@ -20,6 +20,7 @@ public class AffectationService {
     public AffectationDto createAffectation(AffectationDto affectationDto) {
         Resource r = resourceRepository.getReferenceById(affectationDto.getResourceId());
         Affectation affectation = AffectationDto.toEntity(affectationDto, r);
+        //affectation.setTeacherList(r.getTeachers());
         // Mettre l'état à disponible
         affectation.getResource().setState(1);
         return affectationDto.toDto(affectationRepository.save(affectation));
@@ -54,11 +55,11 @@ public class AffectationService {
 
     public AffectationDto getAffectationByResourceId(Long resourceId) {
         Affectation affectation = affectationRepository.findByResourceId(resourceId);
+
         if(affectation == null) {
             //throw new NotFoundException("Affectation not found with resource id : " + resourceId);
             return null;
         }
         return AffectationDto.toDto(affectation);
     }
-
 }

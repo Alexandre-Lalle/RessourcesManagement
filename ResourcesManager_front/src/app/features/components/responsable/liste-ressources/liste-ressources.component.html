@@ -36,10 +36,10 @@
                                                             <div class="row">
                                                               <div class="col-12 text-sm-center form-inline">
                                                                 <div class="form-group mr-2">
-                                                                  <select id="demo-foo-filter-status" class="custom-select" [(ngModel)]="selectedStatus1" (ngModelChange)="onStatusSelected()">
+                                                                  <select id="demo-foo-filter-status" class="custom-select" [(ngModel)]="selectedStatus1" (ngModelChange)="onStatusSelected(selectedStatus1)">
                                                                     <option value="">Show all</option>
                                                                     <option value="available">Available</option>
-                                                                    <option value="unvailable">Unvailable</option>
+                                                                    <option value="unavailable">Unvailable</option>
                                                                     <option value="processing">Processing</option>
                                                                   </select>
                                                                 </div>
@@ -55,7 +55,9 @@
                                                               </div>
                                                             </div>
                                                           </div>
-                                                        <table class="table table-hover table-centered m-0">
+                                                        <table id="demo-foo-filtering"
+                                                        class="table table-striped table-bordered toggle-circle m-b-0"
+                                                        data-page-size="10">
 
                                                             <thead>
                                                                 <tr>
@@ -63,53 +65,66 @@
                                                                     <th>Marque </th>
                                                                     <th>Date de Demande</th>
                                                                     <th>Date Livraison</th>
-                                                                    <th>RAM</th>
+                                                                    <!--<th>RAM</th>-->
                                                                     <th>Disque Dur</th>
                                                                     <th>CPU</th>
                                                                     <th>Etat</th>
-                                                                    <th>Action</th>
+                                                                    <th class="text-center">Actions</th>
                                                                    
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr *ngFor="let computer of computers$ | async">
                                                                     <td>
-                                                                      {{computer.barCode}}
+                                                                        <span *ngIf="computer.barCode == null">null</span>
+                                                                      {{computer.barCode.substring(0, 8) + "..."}}
+                                                                      
                                                                     </td>
                                                                     <td>
+                                                                        <span *ngIf="computer.brand == null">null</span>
                                                                         {{computer.brand}}
                                                                     </td>
                                                                     <td>
                                                                         {{computer.dateOfRequest | date:'yyyy-MM-dd' }}
                                                                     </td>
                                                                     <td>
+                                                                        <span *ngIf="computer.deliveryDate == null">null</span>
                                                                         {{computer.deliveryDate | date:'yyyy-MM-dd' }}
+                                                                    </td>
+                                                                    <!--<td>
+                                                                        {{computer.ram}}
+                                        
+                                                                    </td>-->
+                                                                    <td>
+                                                                        {{computer.disk}}
+                                        
                                                                     </td>
                                                                     <td>
                                                                         {{computer.cpu}}
-                                        
                                                                     </td>
-                                                                    <td>
-                                                                        {{computer.ram}}
-                                        
-                                                                    </td>
-                                                                    <td>
-                                                                        {{computer.disk}}
-                                                                    </td>
-                                                                    <td><span class="badge label-table badge-custom"></span>
-                                                                        {{ getStateLabel(computer) }}
-                                                                    </td>
-                                                                    <td>
-                                                                        
-                                                                        <button (click)="onConsultResource(computer.id,'computer')" 
-                                                                        class="btn btn-sm btn-warning">
+                                                                    
+                                                                    <td style="">
+                                                                        <span
+                                                                          *ngIf="computer.state == -1"
+                                                                          class="badge label-table badge-danger">Non Disponible</span>
+                                                                        <span
+                                                                          *ngIf="computer.state == 0"
+                                                                          class="badge label-table badge-warning"
+                                                                          >Traitement</span>
+                                                                        <span
+                                                                          *ngIf="computer.state == 1"
+                                                                          class="badge label-table badge-success"
+                                                                          >Disponible</span>
+                                                                      </td>
+                                                                      <td class="text-center">
+                                                                        <button [disabled]="computer.state !==1" (click)="onConsultResource(computer.id, 'computer')" 
+                                                                        class="btn btn-sm btn-warning mr-1">
                                                                         <i class="fa fa-eye"></i>  </button>
 
-                                                                        <button (click)="getAffectation(computer)" data-toggle="modal" data-target="#affectation" 
-                                                                            class="btn btn-sm btn-custom ml-1"><i class="fi-head mr-2"></i></button>
+                                                                        <button (click)="getAffectation(computer)"  data-toggle="modal" data-target="#affectation" 
+                                                                            class="btn btn-sm btn-custom ml-1"> <i class="fi-head"></i></button>
                                                                         
-                                                                        
-                                                                    </td>
+                                                                    </td> 
 
                                                                 </tr>
 
@@ -139,10 +154,10 @@
                                                             <div class="row">
                                                               <div class="col-12 text-sm-center form-inline">
                                                                 <div class="form-group mr-2">
-                                                                  <select id="demo-foo-filter-status" class="custom-select" [(ngModel)]="selectedStatus2" (ngModelChange)="onStatusSelected()">
+                                                                  <select id="demo-foo-filter-status" class="custom-select" [(ngModel)]="selectedStatus2" (ngModelChange)="onStatusSelected(selectedStatus2)">
                                                                     <option value="">Show all</option>
                                                                     <option value="available">Available</option>
-                                                                    <option value="unvailable">Unvailable</option>
+                                                                    <option value="unavailable">Unvailable</option>
                                                                     <option value="processing">Processing</option>
                                                                   </select>
                                                                 </div>
@@ -159,7 +174,9 @@
                                                             </div>
                                                           </div>
 
-                                                        <table class="table table-hover table-centered m-0">
+                                                        <table id="demo-foo-filtering"
+                                                        class="table table-striped table-bordered toggle-circle m-b-0"
+                                                        data-page-size="10">
 
                                                             <thead>
                                                                 <tr>
@@ -170,17 +187,17 @@
                                                                     <th>Resolution</th>
                                                                     <th>Vitesse</th>
                                                                     <th>Etat</th>
-                                                                    <th>Consulter</th>
+                                                                    <th class="text-center">Actions</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr *ngFor="let printer of printers$ | async">
                                                                     <td>
-                                                                        {{printer.barCode}}
-                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                        {{printer.barCode.substring(0, 8) + "..."}}
+                                                                        <span *ngIf="printer.barCode == null">null</span>
                                                                     </td>
                                                                     <td>
-                                                                        <span *ngIf="printer.deliveryDate == null">null</span>
+                                                                        <span *ngIf="printer.brand == null">null</span>
                                                                         {{printer.brand}}
                                                                     </td>
                                                                     <td>
@@ -196,20 +213,29 @@
                                                                     <td>
                                                                         {{printer.printSpeed}}
                                                                     </td>
-                                                                    <td>
-                                                                        <span class="badge label-table badge-custom"></span>
-                                                                        {{ getStateLabel(printer) }}
+                                                                    
+                                                                    <td style="">
+                                                                        <span
+                                                                          *ngIf="printer.state == -1"
+                                                                          class="badge label-table badge-danger">Non Disponible</span>
+                                                                        <span
+                                                                          *ngIf="printer.state == 0"
+                                                                          class="badge label-table badge-warning"
+                                                                          >Traitement</span>
+                                                                        <span
+                                                                          *ngIf="printer.state == 1"
+                                                                          class="badge label-table badge-success"
+                                                                          >Disponible</span>
                                                                     </td>
-                                                                    <td>
-                                                                        <button (click)="onConsultResource(printer.id, 'printer')" 
-                                                                        class="btn btn-sm btn-warning">
-                                                                        <i class="fa fa-eye"></i>  </button>
-
-                                                                        <button (click)="getAffectation(printer)"    data-toggle="modal" data-target="#affectation" 
-                                                                            class="btn btn-sm btn-custom ml-1"> <!-- *ngIf="printer.state === 1"
-                                                                        <i class="mdi mdi-plus"></i>--> <i class="fi-head mr-2"></i></button>
-                                                                        
-                                                                    </td> 
+                                                                    <td class="text-center">
+                                                                        <button [disabled]="printer.state !==1" (click)="onConsultResource(printer.id, 'printer')" class="btn btn-sm btn-warning mr-1">
+                                                                            <i class="fa fa-eye"></i>  
+                                                                        </button>
+                                                                    
+                                                                        <button (click)="getAffectation(printer)" data-toggle="modal" data-target="#affectation" class="btn btn-sm btn-custom ml-1">
+                                                                            <i class="fi-head"></i>
+                                                                        </button>
+                                                                    </td>
                                                                 </tr>
 
 
@@ -319,7 +345,7 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <div class="modal-footer"> <button class="btn btn-primary" (click)="saveAAAffectation()">Enregistrer</button> </div>
+                        <div class="modal-footer"> <button class="btn btn-primary" (click)="saveAffectation()">Enregistrer</button> </div>
                     </div>
  
                 </div>

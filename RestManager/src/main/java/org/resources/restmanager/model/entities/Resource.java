@@ -23,8 +23,7 @@ public abstract class Resource {
     @Id
     @GeneratedValue
     private Long id;
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @GenericGenerator(name= "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(unique = true)
     private String barCode;
     @CreationTimestamp
     private Date dateOfRequest;
@@ -54,6 +53,8 @@ public abstract class Resource {
 
     @PrePersist
     public void setDefaults() {
+        this.barCode = UUID.randomUUID().toString();
+
         if (state == 0) {
             state = -1;
         }

@@ -93,64 +93,69 @@ export class ResourceDetailComponent implements OnInit {
     }
   }
 
-  deleteResource() {
-    const confirmChanges = confirm("Êtes-vous sûr de vouloir supprimer la ressource ?");
-    if (confirmChanges) {
+  deleteResource(resource:any) {
+    
       if (this.isComputer()) {
 
-        this.computer$.pipe(
-          switchMap(async (computer) => this.responsableService.deleteComputer(computer.id)),
-          catchError((error) => {
-            console.error(error);
-            return of(null);
-          })
-        ).subscribe(
-          (response) => {
-            if (response) {
-              console.log(`La ressource a été supprimée.`);
-              this.router.navigateByUrl(`resources-list`);
-
+    
+        this.deleteComputer(resource).subscribe(
+          (success) => {
+            if (success) {
+              console.log(`L'ordinateur a été supprimé.`);
+              this.router.navigateByUrl(`manager/resources-list`);
             } else {
-              console.error("Une erreur s'est produite lors de la suppression de la ressource.");
+              console.log(`La suppression de l'ordinateur a échoué.`);
             }
           }
         );
 
       } else if (this.isPrinter()) {
-        this.printer$.pipe(
-          switchMap(async (printer) => this.responsableService.deletePrinter(printer.id)),
-          catchError((error) => {
-            console.error(error);
-            return of(null);
-          })
-        ).subscribe(
-          (response) => {
-            if (response) {
-              console.log(`La ressource a été supprimée.`);
-              this.router.navigateByUrl(`resources-list`);
 
+        this.deletePrinter(resource).subscribe(
+          (success) => {
+            if (success) {
+              console.log(`L'imprimante a été supprimée.`);
+              this.router.navigateByUrl(`manager/resources-list`);
             } else {
-              console.error("Une erreur s'est produite lors de la suppression de la ressource.");
+              console.log(`La suppression de l'imprimante a échoué.`);
             }
           }
         );
-
       }
     }
-  }
+  
 
-
-  getStateLabel(data: any): string {
-    switch (data?.state) {
-      case 1:
-        return 'Disponible';
-      case 0:
-        return 'En cours de traitement';
-      case -1:
-        return 'Indisponible';
-      default:
-        return 'Indisponible';
+  deletePrinter(printer: Printer): Observable<boolean> {
+    const confirmChanges = confirm("Êtes-vous sûr de vouloir supprimer l'imprimante ?");
+    if (confirmChanges) {
+      return this.responsableService.deletePrinter(printer.id).pipe(
+        catchError((error) => {
+          console.error(error);
+          return of(false);
+        })
+      );
+    } else {
+      // Annuler la suppression
+      return of(false);
     }
   }
+  
+  deleteComputer(computer: Computer): Observable<boolean> {
+    const confirmChanges = confirm("Êtes-vous sûr de vouloir supprimer l'ordinateur ?");
+    if (confirmChanges) {
+      return this.responsableService.deleteComputer(computer.id).pipe(
+        catchError((error) => {
+          console.error(error);
+          return of(false);
+        })
+      );
+    } else {
+      // Annuler la suppression
+      return of(false);
+    }
+  }
+
+
+
 
 }

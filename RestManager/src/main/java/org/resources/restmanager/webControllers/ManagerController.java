@@ -164,11 +164,6 @@ public class ManagerController {
         return resourcesService.deletePrinterById(id);
     }
 
-//    @DeleteMapping("/imprimante/{id}")
-//    public Object deletePrinter(@PathVariable("id") final long id){
-//        resourcesService.deletePrinterById(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT) ;
-//    }
 
     @PostMapping(path = "/add-affectation",produces = {"application/json"},consumes = {"application/json"})
     public AffectationDto addAffectation(@RequestBody AffectationDto affectationDto){
