@@ -5,6 +5,7 @@ import { Observable, catchError, of, switchMap, take, tap } from 'rxjs';
 import { Affectation } from 'src/app/features/models/affectation.model';
 import { Computer } from 'src/app/features/models/computer.model';
 import { Printer } from 'src/app/features/models/printer.model';
+import { state } from 'src/app/features/models/state.enum';
 import { Teacher } from 'src/app/features/models/teacher.mode';
 import { DemandsService } from 'src/app/features/services/demand/demand.service';
 import { ResponsableService } from 'src/app/features/services/responsable.service';
@@ -39,28 +40,31 @@ export class ListeRessourcesComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     // détecte les changements de la propriété selectedStatus
-    if (changes['selectedStatus1'] || changes['selectedStatus2']) {
-      this.filterData();
+    if (changes['selectedStatus1']) {
+      this.filterData(this.selectedStatus1);
+    }
+    if (changes['selectedStatus2']) {
+      this.filterData(this.selectedStatus2);
     }
     if (changes['selectedDepartment']) {
       this.onDepartmentSelect();
     }
   }
 
-  filterData(): void {
+  filterData(selectedStatus:string): void {
     // retourne les données filtrées en fonction de la valeur sélectionnée
-    if (this.selectedStatus1 === "available" || this.selectedStatus2 === "available") {
+    if (selectedStatus === "available") {
       this.computers$ = this.responsableService.findComputersByState(1);
-      this.printers$ = this.responsableService.findPrintersBySate(1);
+      this.printers$ = this.responsableService.findPrintersByState(1);
 
     }
-    else if (this.selectedStatus1 === "unavailable" || this.selectedStatus2 === "unavailable") {
-      this.computers$ = this.responsableService.findComputersByState(-1);
-      this.printers$ = this.responsableService.findPrintersBySate(-1);
+    else if (selectedStatus === "unavailable") {
+      this.computers$ = this.responsableService.findComputersByState(state.not_available);
+      this.printers$ = this.responsableService.findPrintersByState(state.not_available);
     }
-    else if (this.selectedStatus1 === "processing" || this.selectedStatus2 === "processing") {
+    else if (selectedStatus === "processing") {
       this.computers$ = this.responsableService.findComputersByState(0);
-      this.printers$ = this.responsableService.findPrintersBySate(0);
+      this.printers$ = this.responsableService.findPrintersByState(0);
     }
     else {
       this.computers$ = this.responsableService.findComputers();
@@ -68,9 +72,9 @@ export class ListeRessourcesComponent implements OnInit {
     }
   }
 
-  onStatusSelected(): void {
+  onStatusSelected(selectedStatus:string): void {
     // appelle filterData() chaque fois que la valeur sélectionnée change
-    this.filterData();
+    this.filterData(selectedStatus);
   }
 
   onConsultResource(id: number, type: 'computer' | 'printer'): void {
@@ -96,8 +100,9 @@ export class ListeRessourcesComponent implements OnInit {
         return of(null);
       })
     ).subscribe(affectation => {
-      if (affectation && affectation.teacherList.length == 0) {
-        affectation.teacherList = resource.teachers?.slice()?? [];
+      if (affectation ) {
+        //&& affectation.teacherList.length == 0
+       // affectation.teacherList = resource.teachers?.slice()?? [];
         this.affectation$ = of(affectation);
         console.log("TTT ", affectation);
       } else {

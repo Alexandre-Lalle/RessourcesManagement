@@ -47,7 +47,7 @@ export class ResponsableService {
      return this.http.get<Printer[]>(`${this.apiUrl}/liste-imprimantes`) ; 
    }
 
-  findPrintersBySate(state: number): Observable<Printer[]>{
+  findPrintersByState(state: number): Observable<Printer[]>{
      return this.http.get<Printer[]>(`${this.apiUrl}/liste-imprimantes/${state}`) ; 
    }
 
